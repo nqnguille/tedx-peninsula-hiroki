@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto — TEDxPeninsulaHiroki</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .contact-page {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 0 80px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-top: 48px;
+    }
+
+    .contact-info h2 {
+      margin-bottom: 20px;
+    }
+
+    .contact-info p {
+      font-size: 16px;
+      line-height: 1.75;
+      margin-bottom: 40px;
+    }
+
+    .contact-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .contact-detail-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .contact-detail-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+
+    .contact-detail-value {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .contact-form-card {
+      background: #0f0f0f;
+      border: 1px solid var(--border-mid);
+      padding: 44px 40px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-status {
+      display: none;
+      padding: 14px 18px;
+      border-radius: 2px;
+      font-size: 14px;
+      margin-top: 12px;
+      font-weight: 500;
+    }
+
+    .form-status.success {
+      background: rgba(34, 197, 94, 0.08);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      color: #86efac;
+    }
+
+    .form-status.error {
+      background: rgba(230, 43, 30, 0.08);
+      border: 1px solid rgba(230, 43, 30, 0.2);
+      color: #fca5a5;
+    }
+
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .form-row     { grid-template-columns: 1fr; }
+      .contact-form-card { padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav id="nav" class="scrolled">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="ted">TEDx</span><span class="name">PeninsulaHiroki</span>
+      </a>
+      <div class="nav-right">
+        <a href="index.html" class="btn-ghost" style="font-size:13px;padding:8px 18px;">Volver al inicio</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="contact-page">
+  <div class="container">
+    <div class="section-label">Contacto</div>
+    <div class="contact-grid">
+
+      <!-- Info -->
+      <div class="contact-info">
+        <h2>Hablemos.</h2>
+        <p>¿Tenés una pregunta, una idea o querés explorar cómo ser parte de TEDxPeninsulaHiroki? Escribinos.</p>
+        <div class="contact-detail">
+          <div class="contact-detail-item">
+            <span class="contact-detail-label">Email</span>
+            <span class="contact-detail-value">nqnguille@gmail.com</span>
+          </div>
+          <div class="contact-detail-item">
+            <span class="contact-detail-label">Ubicación</span>
+            <span class="contact-detail-value">Neuquén Capital, Patagonia, Argentina</span>
+          </div>
+          <div class="contact-detail-item">
+            <span class="contact-detail-label">Evento</span>
+            <span class="contact-detail-value">2026</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="contact-form-card">
+        <form
+          id="contactForm"
+          onsubmit="handleContact(event)"
+        >
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Nombre</label>
+              <input class="form-input" type="text" name="nombre" placeholder="Tu nombre" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input class="form-input" type="email" name="email" placeholder="tu@email.com" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Motivo</label>
+            <select class="form-select" name="motivo" required>
+              <option value="" disabled selected>— Seleccioná un motivo —</option>
+              <option value="lista-espera">Lista de espera</option>
+              <option value="speaker">Postular como speaker</option>
+              <option value="voluntario">Ser voluntario</option>
+              <option value="partner">Ser partner</option>
+              <option value="prensa">Prensa / medios</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Mensaje</label>
+            <textarea class="form-textarea" name="mensaje" placeholder="Contanos en qué podemos ayudarte." required style="min-height:120px;"></textarea>
+          </div>
+
+          <!-- Honeypot anti-spam -->
+          <input type="text" name="_gotcha" style="display:none">
+
+          <button type="submit" class="form-submit" id="contactSubmit">Enviar mensaje</button>
+
+          <div class="form-status success" id="formSuccess">
+            Mensaje recibido. Te respondemos pronto.
+          </div>
+          <div class="form-status error" id="formError">
+            Algo salió mal. Intentá de nuevo o escribinos directo al email.
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <p>Este evento TEDx es organizado de forma independiente bajo licencia de TED.</p>
+      <p>TEDxPeninsulaHiroki &copy; 2026</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* Nav scroll */
+  document.getElementById('nav').classList.add('scrolled');
+
+  const WORKER_URL = 'https://tedx-forms.nqnguille.workers.dev';
+
+  /* Form submit */
+  async function handleContact(e) {
+    e.preventDefault();
+
+    const form   = document.getElementById('contactForm');
+    const btn    = document.getElementById('contactSubmit');
+    const ok     = document.getElementById('formSuccess');
+    const err    = document.getElementById('formError');
+
+    btn.textContent          = 'Enviando...';
+    btn.disabled             = true;
+    form.style.opacity       = '0.6';
+    form.style.pointerEvents = 'none';
+    ok.style.display         = 'none';
+    err.style.display        = 'none';
+
+    const formData = new FormData(form);
+    const payload  = {};
+    formData.forEach((v, k) => { payload[k] = v; });
+    payload.formType = 'contacto';
+
+    try {
+      const res = await fetch(WORKER_URL, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        form.reset();
+        ok.style.display         = 'block';
+        ok.setAttribute('role', 'alert');
+        form.style.opacity       = '1';
+        form.style.pointerEvents = '';
+      } else {
+        throw new Error('server error');
+      }
+    } catch {
+      err.style.display        = 'block';
+      err.setAttribute('role', 'alert');
+      form.style.opacity       = '1';
+      form.style.pointerEvents = '';
+      btn.disabled             = false;
+      btn.textContent          = 'Reintentar';
+    }
+  }
+</script>
+
+</body>
+</html>
