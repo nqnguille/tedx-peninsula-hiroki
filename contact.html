@@ -88,8 +88,8 @@
     }
 
     .form-status.error {
-      background: rgba(230, 43, 30, 0.08);
-      border: 1px solid rgba(230, 43, 30, 0.2);
+      background: rgba(235, 0, 40, 0.08);
+      border: 1px solid rgba(235, 0, 40, 0.2);
       color: #fca5a5;
     }
 
@@ -105,8 +105,11 @@
 <header>
   <nav id="nav" class="scrolled">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <span class="ted">TEDx</span><span class="name">PeninsulaHiroki</span>
+      <a href="index.html" class="nav-logo" aria-label="TEDxPeninsulaHiroki">
+        <svg class="nav-logo-svg" viewBox="0 0 220 32" height="28" aria-hidden="true" focusable="false">
+          <text y="26" font-family="'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="700" font-size="28" letter-spacing="-0.02" fill="#EB0028">TEDx</text>
+          <text x="86" y="26" font-family="'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="300" font-size="14" letter-spacing="0.01" fill="rgba(255,255,255,0.55)">PeninsulaHiroki</text>
+        </svg>
       </a>
       <div class="nav-right">
         <a href="index.html" class="btn-ghost" style="font-size:13px;padding:8px 18px;">Volver al inicio</a>
@@ -196,7 +199,7 @@
 <footer>
   <div class="footer-inner">
     <div class="footer-bottom">
-      <p>Este evento TEDx es organizado de forma independiente bajo licencia de TED.</p>
+      <p class="footer-license">This independent TEDx event is operated under license from TED.</p>
       <p>TEDxPeninsulaHiroki &copy; 2026</p>
     </div>
   </div>

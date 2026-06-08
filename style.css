@@ -1,7 +1,7 @@
 /* ============================================================
    TEDxPeninsulaHiroki 2026 — Redesign Editorial
    Sistema: DM Serif Display + DM Sans
-   Paleta: #0A0A0A / #E62B1E / #FFFFFF / #B8A99A
+   Paleta: #0A0A0A / #EB0028 / #FFFFFF / #B8A99A
    ============================================================ */
 
 /* ── Reset ── */
@@ -18,8 +18,8 @@ html {
 
 /* ── Tokens ── */
 :root {
-  --red:         #E62B1E;
-  --red-dark:    #BF1F14;
+  --red:         #EB0028;
+  --red-dark:    #B8001E;
   --black:       #0A0A0A;
   --surface:     #101010;
   --surface-2:   #141414;
@@ -194,25 +194,33 @@ a {
 
 .nav-logo {
   display: flex;
-  align-items: baseline;
-  gap: 0;
+  align-items: center;
   flex-shrink: 0;
+  line-height: 1;
 }
 
+.nav-logo-svg {
+  display: block;
+  width: auto;
+  overflow: visible;
+}
+
+/* Legacy — kept for contact.html compatibility */
 .nav-ted {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 22px;
-  font-weight: 400;
+  font-weight: 700;
   color: var(--red);
   letter-spacing: -0.02em;
 }
 
 .nav-name {
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 300;
   color: rgba(255,255,255,0.3);
   letter-spacing: 0.01em;
   margin-left: 1px;
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .nav-links {
@@ -385,20 +393,25 @@ a {
 
 .hero-ted-badge {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  line-height: 1;
 }
 
+/* Legacy spans — kept for fallback */
 .badge-ted {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 15px;
+  font-weight: 700;
   color: var(--red);
   letter-spacing: -0.01em;
 }
 
 .badge-name {
   font-size: 11px;
+  font-weight: 300;
   color: rgba(255,255,255,0.3);
   letter-spacing: 0.02em;
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .hero-meta-sep {
@@ -1416,24 +1429,36 @@ footer {
 
 .fb-logo {
   display: flex;
-  align-items: baseline;
-  gap: 0;
+  align-items: center;
   margin-bottom: 12px;
+  line-height: 1;
 }
 
+/* Legacy — kept for contact.html compatibility */
 .fb-ted {
-  font-family: 'DM Serif Display', serif;
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 22px;
+  font-weight: 700;
   color: var(--red);
   letter-spacing: -0.02em;
 }
 
 .fb-name {
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 300;
   color: rgba(255,255,255,0.3);
   letter-spacing: 0.01em;
   margin-left: 1px;
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* Texto oficial requerido por TED */
+.footer-license {
+  font-size: 11px;
+  color: rgba(255,255,255,0.22);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.01em;
 }
 
 .fb-loc {

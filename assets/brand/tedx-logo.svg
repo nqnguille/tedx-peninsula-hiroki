@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 72" role="img" aria-label="TEDxPeninsulaHiroki">
+  <!-- TEDx wordmark — guidelines: Helvetica / Inter Light, TEDx in red #EB0028, event name same height, black/white background -->
+  <style>
+    .tedx-mark {
+      font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 700;
+      font-size: 52px;
+      letter-spacing: -0.02em;
+    }
+    .event-name {
+      font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 300;
+      font-size: 18px;
+      letter-spacing: 0.01em;
+    }
+  </style>
+  <!-- TEDx in official red -->
+  <text class="tedx-mark" x="0" y="52" fill="#EB0028">TEDx</text>
+  <!-- Event name: PeninsulaHiroki, same baseline, white -->
+  <text class="event-name" x="164" y="52" fill="#FFFFFF">PeninsulaHiroki</text>
+</svg>
