@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TEDxPeninsulaHiroki — Cultivando Conciencia · Neuquén 2026</title>
-  <meta name="description" content="Un atardecer. Cien personas. Ideas que cambian la forma de mirar. TEDxPeninsulaHiroki 2026 — Neuquén Capital, Patagonia.">
+  <meta name="description" content="Un atardecer. Cien personas. Ideas que cambian la forma de mirar. TEDxPeninsulaHiroki 2026 — Neuquén Capital, Patagonia. 12 de septiembre de 2026.">
   <meta property="og:title" content="TEDxPeninsulaHiroki — Cultivando Conciencia">
   <meta property="og:description" content="Un atardecer. Cien personas. La Patagonia tiene algo para decir.">
   <meta property="og:type" content="website">
@@ -20,6 +20,323 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ── SECCIONES NUEVAS ── */
+
+    /* MANIFIESTO */
+    #manifiesto {
+      background: #0a0a0a;
+      padding: 120px 0;
+    }
+    .manifesto-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .manifesto-inner .sec-label {
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .manifesto-quote {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.2;
+      color: #fff;
+      margin: 0 0 40px;
+      font-style: italic;
+    }
+    .manifesto-quote em {
+      color: #EB0028;
+      font-style: normal;
+    }
+    .manifesto-body {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.65);
+      margin: 0 0 24px;
+    }
+    .manifesto-body + .manifesto-body {
+      margin-top: 0;
+    }
+    .manifesto-rule {
+      width: 48px;
+      height: 1px;
+      background: #EB0028;
+      margin: 48px auto;
+    }
+
+    /* TEMA PROFUNDO */
+    #tema {
+      background: #111;
+      padding: 120px 0;
+    }
+    .tema-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .tema-grid { grid-template-columns: 1fr; gap: 48px; }
+    }
+    .tema-left {}
+    .tema-left h2 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      color: #fff;
+      line-height: 1.15;
+      margin: 0 0 24px;
+    }
+    .tema-left p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.6);
+      margin: 0 0 16px;
+    }
+    .tema-right {}
+    .subtopico-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .subtopico-item {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 28px 0;
+    }
+    .subtopico-item:last-child {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .subtopico-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #EB0028;
+      margin-bottom: 8px;
+    }
+    .subtopico-title {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .subtopico-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.45);
+    }
+
+    /* TERRITORIO */
+    #territorio {
+      background: #0a0a0a;
+      padding: 120px 0;
+    }
+    .territorio-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    @media (max-width: 768px) {
+      .territorio-layout { grid-template-columns: 1fr; gap: 48px; }
+    }
+    .territorio-visual {
+      position: relative;
+    }
+    .territorio-map-block {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 4px;
+      padding: 48px 40px;
+    }
+    .tmb-rivers {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .tmb-river {
+      flex: 1;
+      height: 3px;
+      border-radius: 2px;
+    }
+    .tmb-river.neuquen { background: #EB0028; }
+    .tmb-river.limay { background: rgba(255,255,255,0.25); }
+    .tmb-confluence {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      white-space: nowrap;
+    }
+    .tmb-coords {
+      font-family: 'Inter', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 24px;
+    }
+    .tmb-fact {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.45);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 24px;
+    }
+    .tmb-fact strong {
+      color: rgba(255,255,255,0.7);
+    }
+    .territorio-text h2 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      color: #fff;
+      line-height: 1.15;
+      margin: 0 0 24px;
+    }
+    .territorio-text p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.6);
+      margin: 0 0 16px;
+    }
+    .territorio-dato {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .td-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .td-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #EB0028;
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+    .td-text {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.55);
+    }
+    .td-text strong {
+      color: rgba(255,255,255,0.8);
+    }
+
+    /* CITAS / SPIRIT */
+    #espiritu {
+      background: #111;
+      padding: 100px 0;
+    }
+    .espiritu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    @media (max-width: 768px) {
+      .espiritu-grid { grid-template-columns: 1fr; }
+    }
+    .espiritu-card {
+      background: #0a0a0a;
+      padding: 48px 36px;
+    }
+    .espiritu-card:first-child {
+      background: #EB0028;
+    }
+    .ec-quote {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 1.3rem;
+      line-height: 1.4;
+      color: #fff;
+      margin: 0 0 24px;
+      font-style: italic;
+    }
+    .ec-attr {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+    }
+    .espiritu-card:first-child .ec-attr {
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* SECCIÓN SPEAKER EXPANDIDA */
+    .speaker-idea-block {
+      background: rgba(235,0,40,0.06);
+      border: 1px solid rgba(235,0,40,0.2);
+      border-radius: 4px;
+      padding: 32px;
+      margin-top: 32px;
+    }
+    .sib-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #EB0028;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .sib-text {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.6);
+    }
+    .sib-text strong {
+      color: rgba(255,255,255,0.85);
+    }
+
+    /* QUÉ ES TEDx — actualizado con más profundidad */
+    .quees-manifesto {
+      margin-top: 48px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .qm-item {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+    .qm-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #EB0028;
+      letter-spacing: 0.08em;
+      padding-top: 3px;
+      flex-shrink: 0;
+      width: 24px;
+    }
+    .qm-text {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.55);
+    }
+    .qm-text strong {
+      color: rgba(255,255,255,0.8);
+    }
+  </style>
 </head>
 <body>
 
@@ -98,7 +415,7 @@
       <span class="hero-meta-sep"></span>
       <span>Neuquén Capital · Patagonia</span>
       <span class="hero-meta-sep"></span>
-      <span>2026</span>
+      <span>12 · 09 · 2026</span>
     </div>
 
     <div class="hero-poster">
@@ -135,22 +452,63 @@
 
   <div class="hero-ticker" aria-hidden="true">
     <div class="ticker-inner" id="tickerInner">
-      <span>Ideas worth spreading</span>
+      <span>Ideas que cambian todo</span>
       <span class="ticker-dot">·</span>
-      <span>Licencia independiente de TED</span>
-      <span class="ticker-dot">·</span>
-      <span>Reserva Natural Península Hiroki</span>
-      <span class="ticker-dot">·</span>
-      <span>Confluencia ríos Neuquén y Limay</span>
-      <span class="ticker-dot">·</span>
-      <span>Ideas worth spreading</span>
-      <span class="ticker-dot">·</span>
-      <span>Licencia independiente de TED</span>
+      <span>12 de septiembre de 2026</span>
       <span class="ticker-dot">·</span>
       <span>Reserva Natural Península Hiroki</span>
       <span class="ticker-dot">·</span>
       <span>Confluencia ríos Neuquén y Limay</span>
       <span class="ticker-dot">·</span>
+      <span>Neuquén Capital · Patagonia</span>
+      <span class="ticker-dot">·</span>
+      <span>Licencia independiente de TED</span>
+      <span class="ticker-dot">·</span>
+      <span>Ideas que cambian todo</span>
+      <span class="ticker-dot">·</span>
+      <span>12 de septiembre de 2026</span>
+      <span class="ticker-dot">·</span>
+      <span>Reserva Natural Península Hiroki</span>
+      <span class="ticker-dot">·</span>
+      <span>Confluencia ríos Neuquén y Limay</span>
+      <span class="ticker-dot">·</span>
+      <span>Neuquén Capital · Patagonia</span>
+      <span class="ticker-dot">·</span>
+      <span>Licencia independiente de TED</span>
+      <span class="ticker-dot">·</span>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFIESTO DE LA EDICIÓN -->
+<section id="manifiesto">
+  <div class="container">
+    <div class="manifesto-inner reveal-fade">
+      <div class="sec-label">Manifiesto · Edición 2026</div>
+
+      <h2 class="manifesto-quote">
+        Vivimos conectados a todo<br>y presentes en <em>casi nada.</em>
+      </h2>
+
+      <p class="manifesto-body">
+        Hay algo que se perdió en el ruido. No es información lo que falta. Es atención. Es presencia. Es la capacidad de mirar algo durante el tiempo suficiente como para entenderlo de verdad.
+      </p>
+
+      <div class="manifesto-rule"></div>
+
+      <p class="manifesto-body">
+        "Cultivando Conciencia" no es una metáfora de jardín. Es una pregunta sobre cómo vivimos. Cómo elegimos lo que elegimos. Cómo construimos ideas en un mundo que prefiere reacciones. Cómo una comunidad en el extremo austral de América puede pensar con más claridad sobre lo que le pasa al planeta.
+      </p>
+
+      <p class="manifesto-body">
+        Neuquén no es una ciudad de paso. Es un punto de llegada: dos ríos que confluyen, una región que produce energía para medio país, una Patagonia que el mundo mira de lejos y que nosotros habitamos. Hay algo que sabemos desde acá que no se puede saber desde otra parte. Esta edición existe para decirlo.
+      </p>
+
+      <div class="manifesto-rule"></div>
+
+      <p class="manifesto-body">
+        El 12 de septiembre de 2026, cien personas se reúnen en la confluencia del Neuquén y el Limay. No para consumir contenido. Para pensar juntos. Lo que se diga ahí puede ser escuchado en cualquier parte del mundo.
+      </p>
     </div>
   </div>
 </section>
@@ -164,8 +522,8 @@
         <h2 class="momento-headline">Un momento que no se repite.</h2>
       </div>
       <div class="momento-right reveal-fade delay-1">
-        <p>La Reserva Natural Península Hiroki está en la confluencia de los ríos Neuquén y Limay. Un atardecer en la Patagonia. Cien personas elegidas. Charlas breves con ideas que pesan.</p>
-        <p>No es un congreso. No es un workshop. Es un momento que se convirtió en charlas que cualquier persona en el mundo puede ver.</p>
+        <p>La Reserva Natural Península Hiroki está donde el río Neuquén y el Limay se encuentran. Un atardecer patagónico. Cien personas seleccionadas por su curiosidad y su capacidad de aportar. Charlas breves con ideas que pesan.</p>
+        <p>No es un congreso. No es un workshop. No es networking. Es un momento que se convierte en charlas que cualquier persona en el mundo puede ver, para siempre.</p>
         <div class="momento-stats">
           <div class="ms-item">
             <div class="ms-num">100</div>
@@ -187,13 +545,144 @@
   </div>
 </section>
 
+<!-- TEMA EN PROFUNDIDAD -->
+<section id="tema">
+  <div class="container">
+    <div class="tema-grid reveal-fade">
+      <div class="tema-left">
+        <div class="sec-label">El tema · 2026</div>
+        <h2>Por qué "Cultivar<br>Conciencia" ahora,<br>y por qué acá.</h2>
+        <p>
+          La conciencia es el tema que TED lleva décadas explorando sin agotarlo. Desde neurocientistas que estudian cómo el cerebro construye la realidad hasta filósofos que preguntan qué significa ser uno mismo: la pregunta sigue abierta.
+        </p>
+        <p>
+          En 2026, esa pregunta tiene una urgencia nueva. La inteligencia artificial puede imitar el pensamiento. Los algoritmos moldean lo que elegimos ver. Las comunidades se forman en burbujas. ¿Qué queda del juicio propio? ¿Qué significa "estar despierto" en este contexto?
+        </p>
+        <p>
+          La Patagonia tiene algo propio para decir. Acá, la relación entre el ser humano y la naturaleza todavía no está resuelta. Hay preguntas sobre el territorio, los recursos, la identidad de una región que el mundo proyecta pero que sus habitantes conocen de otra manera. Esa tensión es fértil. De ahí salen ideas que no aparecen en ninguna otra parte.
+        </p>
+      </div>
+      <div class="tema-right">
+        <ul class="subtopico-list">
+          <li class="subtopico-item">
+            <div class="subtopico-num">01</div>
+            <div class="subtopico-title">Atención en un mundo de estímulos</div>
+            <div class="subtopico-desc">Qué le pasa al pensamiento profundo cuando todo compite por los primeros tres segundos. Cómo se recupera la capacidad de sostener una idea.</div>
+          </li>
+          <li class="subtopico-item">
+            <div class="subtopico-num">02</div>
+            <div class="subtopico-title">Naturaleza como maestra</div>
+            <div class="subtopico-desc">Lo que los ecosistemas patagónicos enseñan sobre sistemas complejos, interdependencia y resiliencia. Biología aplicada a cómo organizamos comunidades.</div>
+          </li>
+          <li class="subtopico-item">
+            <div class="subtopico-num">03</div>
+            <div class="subtopico-title">Identidad y territorio</div>
+            <div class="subtopico-desc">Cómo el lugar donde vivimos da forma a quiénes somos. La Patagonia como experiencia de límite, vastedad y pertenencia.</div>
+          </li>
+          <li class="subtopico-item">
+            <div class="subtopico-num">04</div>
+            <div class="subtopico-title">Salud y cuerpo con conciencia</div>
+            <div class="subtopico-desc">Nuevas formas de entender el bienestar: desde la medicina integrativa hasta las plantas como herramienta terapéutica respaldada por ciencia.</div>
+          </li>
+          <li class="subtopico-item">
+            <div class="subtopico-num">05</div>
+            <div class="subtopico-title">El yo en la era de la IA</div>
+            <div class="subtopico-desc">Cuando las máquinas pueden razonar, ¿qué queda de propiamente humano? Qué conservar, qué ceder, cómo relacionarse con inteligencias que no son conscientes.</div>
+          </li>
+          <li class="subtopico-item">
+            <div class="subtopico-num">06</div>
+            <div class="subtopico-title">Comunidad como práctica</div>
+            <div class="subtopico-desc">Cómo se construye pertenencia real en una época de conexiones virtuales. Organizaciones que funcionan, vínculos que sostienen, culturas que duran.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EL TERRITORIO COMO ARGUMENTO -->
+<section id="territorio">
+  <div class="container">
+    <div class="territorio-layout">
+      <div class="territorio-visual reveal-fade">
+        <div class="territorio-map-block">
+          <div class="tmb-coords">38°57'S · 68°04'O · Neuquén Capital</div>
+          <div class="tmb-rivers">
+            <div class="tmb-river neuquen"></div>
+            <div class="tmb-confluence">confluencia</div>
+            <div class="tmb-river limay"></div>
+          </div>
+          <div class="tmb-fact">
+            <strong>Río Neuquén + Río Limay = Río Negro.</strong> Acá nace uno de los cinco ríos más caudalosos de Argentina. El mismo punto donde el 12 de septiembre de 2026 se reúnen cien personas a compartir ideas.
+          </div>
+        </div>
+        <div style="height:20px"></div>
+        <div class="territorio-map-block">
+          <div class="tmb-fact">
+            <strong>La Reserva Natural Península Hiroki</strong> fue inaugurada en 2022. Recibe más de 2.000 familias cada fin de semana. Es el primer área protegida dentro de los límites de la ciudad de Neuquén. Un lugar que la mayoría de sus propios habitantes estaba descubriendo cuando se abrió.
+          </div>
+        </div>
+      </div>
+      <div class="territorio-text reveal-fade delay-1">
+        <div class="sec-label">El lugar</div>
+        <h2>El venue no es un detalle.<br>Es parte del argumento.</h2>
+        <p>
+          La Península Hiroki no fue elegida por su capacidad de producción. Fue elegida porque el lugar dice algo. Estar en la confluencia de dos ríos que forman un tercero tiene un significado propio: dos cosas distintas que se encuentran y crean algo nuevo. Así deberían funcionar las ideas.
+        </p>
+        <p>
+          El nombre viene de la familia Hiroki, agricultores japoneses que tuvieron una chacra en la punta de la confluencia. La tierra pasó a ser protegida. El paisaje, que era de una familia, es ahora de todos. También eso dice algo sobre lo que pasa cuando las ideas se hacen públicas.
+        </p>
+        <div class="territorio-dato">
+          <div class="td-item">
+            <div class="td-dot"></div>
+            <div class="td-text"><strong>1.800 metros de sendero</strong> a lo largo de los márgenes del Limay, con bosque ribereño nativo y avistaje de fauna.</div>
+          </div>
+          <div class="td-item">
+            <div class="td-dot"></div>
+            <div class="td-text"><strong>A 300 metros</strong> del punto exacto donde el Neuquén y el Limay confluyen para formar el Río Negro.</div>
+          </div>
+          <div class="td-item">
+            <div class="td-dot"></div>
+            <div class="td-text"><strong>Primer área protegida</strong> dentro de los límites urbanos de Neuquén Capital. Naturaleza en el corazón de la ciudad.</div>
+          </div>
+          <div class="td-item">
+            <div class="td-dot"></div>
+            <div class="td-text"><strong>Un atardecer patagónico</strong> en septiembre: cielos limpios, luz lateral, la Patagonia en su momento más claro.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CITAS DE ESPÍRITU -->
+<section id="espiritu">
+  <div class="container">
+    <div class="sec-label" style="margin-bottom:48px">El espíritu del movimiento</div>
+    <div class="espiritu-grid">
+      <div class="espiritu-card reveal-fade">
+        <p class="ec-quote">"Las ideas cambian perspectivas. Las perspectivas cambian vidas. Las vidas cambiadas cambian comunidades. Las comunidades cambiadas cambian el mundo."</p>
+        <div class="ec-attr">TED — Misión institucional</div>
+      </div>
+      <div class="espiritu-card reveal-fade delay-1">
+        <p class="ec-quote">"Los políticos van y vienen. Las ideas son para siempre. Y son de todos."</p>
+        <div class="ec-attr">Chris Anderson — Líder de TED</div>
+      </div>
+      <div class="espiritu-card reveal-fade delay-2">
+        <p class="ec-quote">"El mejor trabajo que hacemos no es lo que hacemos nosotros. Es lo que empoderamos a otros a hacer."</p>
+        <div class="ec-attr">TED — Principio de generosidad</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- COUNTDOWN / ESCASEZ -->
 <section id="escasez" class="section-red">
   <div class="container">
     <div class="escasez-inner reveal-fade">
-      <p class="escasez-eyebrow">Fecha por confirmar · 2026</p>
+      <p class="escasez-eyebrow">12 de septiembre de 2026 · Neuquén Capital</p>
       <h2 class="escasez-headline">Los cupos son limitados.<br>La lista se mueve.</h2>
-      <p class="escasez-body">No hay fecha confirmada todavía. Hay una lista de personas que ya se anotaron. Cuando confirmemos el evento, los primeros en enterarse son los que están en la waitlist.</p>
+      <p class="escasez-body">Cien lugares para una experiencia que no va a repetirse. Cuando abramos la selección, los primeros en enterarse son los que ya están en la waitlist.</p>
       <a href="#asistir" class="btn-white" onclick="navScroll(event,'asistir')">
         Anotarme ahora
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -207,24 +696,43 @@
   <div class="container">
     <div class="quees-layout">
       <div class="quees-left reveal-fade">
-        <div class="sec-label">El contexto</div>
-        <h2>Cuarenta años de ideas.<br>En tu ciudad.</h2>
-        <p>TED lleva más de cuarenta años reuniendo ideas que valen la pena. TEDx lleva esas conversaciones a cualquier ciudad del mundo, con licencia independiente de TED.</p>
-        <p>Una charla grabada en Neuquén puede ser vista en cualquier parte del planeta.</p>
+        <div class="sec-label">El movimiento</div>
+        <h2>Cuarenta años de ideas.<br>Ahora en Neuquén.</h2>
+        <p>TED lleva más de cuatro décadas reuniendo las ideas más potentes del mundo. No noticias. No análisis. Ideas: algo que te cambia la perspectiva, que te hace pensar distinto, que te da algo que podés aplicar.</p>
+        <p>TEDx lleva esas conversaciones a cualquier ciudad. Con licencia independiente de TED, organizada por voluntarios locales, con speakers locales. Una charla grabada en Neuquén puede ser vista en cualquier parte del planeta.</p>
+
+        <div class="quees-manifesto">
+          <div class="qm-item">
+            <div class="qm-num">01</div>
+            <div class="qm-text"><strong>Ideas locales, alcance global.</strong> Lo que decís en un escenario de Neuquén queda publicado en el ecosistema mundial de TED. Sin filtros, sin intermediarios, para siempre.</div>
+          </div>
+          <div class="qm-item">
+            <div class="qm-num">02</div>
+            <div class="qm-text"><strong>Diversidad de disciplinas.</strong> TED fue fundado en la intersección de tecnología, entretenimiento y diseño. Hoy incluye ciencia, arte, filosofía, activismo, medicina, economía. El único criterio es que la idea valga la pena.</div>
+          </div>
+          <div class="qm-item">
+            <div class="qm-num">03</div>
+            <div class="qm-text"><strong>Rigor sin pedantería.</strong> Las charlas TED son verificadas, precisas, respaldadas. Pero están contadas para cualquier persona, no para especialistas. El experto es el orador. La audiencia es el mundo.</div>
+          </div>
+          <div class="qm-item">
+            <div class="qm-num">04</div>
+            <div class="qm-text"><strong>Formato que obliga a la claridad.</strong> Entre ocho y dieciocho minutos. Una idea central. Sin paneles, sin presentaciones corporativas, sin jerga. Si no podés explicarlo claro, todavía no lo entendés del todo.</div>
+          </div>
+        </div>
       </div>
       <div class="quees-right reveal-fade delay-2">
         <div class="quees-stats">
           <div class="qs-item">
             <div class="qs-num" data-target="18000" data-suffix="+">0</div>
-            <div class="qs-label">Charlas publicadas en el ecosistema TEDx</div>
+            <div class="qs-label">Charlas en el ecosistema TEDx</div>
           </div>
           <div class="qs-item">
             <div class="qs-num qs-static">1B+</div>
-            <div class="qs-label">Visualizaciones globales</div>
+            <div class="qs-label">Visualizaciones globales de charlas TEDx</div>
           </div>
           <div class="qs-item">
-            <div class="qs-num" data-target="3500" data-suffix="+">0</div>
-            <div class="qs-label">Eventos TEDx por año</div>
+            <div class="qs-num" data-target="3000" data-suffix="+">0</div>
+            <div class="qs-label">Eventos TEDx por año en el mundo</div>
           </div>
           <div class="qs-item">
             <div class="qs-num" data-target="170" data-suffix="+">0</div>
@@ -244,7 +752,8 @@
       <div class="part-info reveal-fade">
         <div class="sec-label">Audiencia</div>
         <h2>Vivirlo en primera persona.</h2>
-        <p>Una sala seleccionada. Charlas breves, ideas con peso. Una producción pensada para que cada momento importe.</p>
+        <p>Una experiencia curada de principio a fin. Charlas breves con ideas con peso. Conversaciones reales con personas que llegaron por la misma razón que vos: porque les importa pensar.</p>
+        <p>La selección de asistentes es intencional. No es exclusiva por status. Es para que cada persona en la sala tenga algo genuino que aportar al momento. Científicos, artistas, emprendedores, educadores, activistas, curiosos.</p>
 
         <ul class="part-list">
           <li>Charlas entre 8 y 18 minutos por speaker</li>
@@ -357,13 +866,23 @@
       </div>
 
       <div class="part-info reveal-fade">
-        <div class="sec-label">Ideas</div>
-        <h2>Voces locales que merecen ser escuchadas en todo el mundo.</h2>
-        <p>Neuquén tiene ideas que el mundo todavía no escuchó. Las charlas TEDx son ideas específicas, bien contadas: dieciocho minutos en un escenario local que, cuando termina el evento, quedan publicadas en el ecosistema global de TED.</p>
+        <div class="sec-label">La idea que tenés</div>
+        <h2>No necesitás ser famoso.<br>Necesitás tener algo que decir.</h2>
+
+        <p>Las mejores charlas TEDx no vinieron de personas que ya eran conocidas. Vinieron de personas que tenían una idea específica, la conocían de verdad, y podían contarla de forma que cualquiera pudiera entender.</p>
+
+        <p>No buscamos motivadores ni expertos en hablar en público. Buscamos ideas que vengan de la experiencia real: de haber hecho algo, estudiado algo, vivido algo que cambia la forma de entender un problema.</p>
+
+        <div class="speaker-idea-block">
+          <div class="sib-label">Lo que buscamos</div>
+          <p class="sib-text">
+            Una <strong>idea concreta</strong>, no una historia de vida. Algo que la audiencia pueda llevarse: un concepto nuevo, una perspectiva que no habían considerado, un marco para entender algo que ya conocen pero de otra manera. Si podés explicarla en una oración, vas por buen camino.
+          </p>
+        </div>
 
         <div class="reach-block">
           <div class="rb-label">Después del evento</div>
-          <p class="rb-text">Tu charla queda publicada en el canal de TEDxPeninsulaHiroki — parte del ecosistema global de TED. Lo que decís en Neuquén puede ser escuchado en cualquier parte del mundo.</p>
+          <p class="rb-text">Tu charla queda publicada en el canal de TEDxPeninsulaHiroki — parte del ecosistema global de TED. Lo que decís en Neuquén puede ser escuchado en cualquier parte del mundo, para siempre, de forma gratuita.</p>
           <div class="rb-stats">
             <div class="rb-stat"><span class="rb-num">18.000+</span><span class="rb-lab">charlas en el ecosistema</span></div>
             <div class="rb-stat"><span class="rb-num">1B+</span><span class="rb-lab">visualizaciones globales</span></div>
@@ -375,12 +894,13 @@
           <li>Formato: entre 8 y 18 minutos, una idea central</li>
           <li>Primera vez en un escenario: el equipo acompaña cada etapa</li>
           <li>Preparación, ensayos y coaching antes del evento</li>
+          <li>No hace falta haber hablado en público antes</li>
         </ul>
 
         <div class="speaker-tags">
           <span>Científicos</span><span>Artistas</span><span>Emprendedores</span>
           <span>Investigadores</span><span>Educadores</span><span>Activistas</span>
-          <span>Técnicos</span><span>Creadores</span>
+          <span>Técnicos</span><span>Creadores</span><span>Curiosos</span>
         </div>
       </div>
     </div>
@@ -395,7 +915,8 @@
       <div class="part-info reveal-fade">
         <div class="sec-label">Equipo</div>
         <h2>Construir algo memorable, desde adentro.</h2>
-        <p>Cada parte de la experiencia tiene a alguien detrás. La producción, el flujo de la noche, los detalles que hacen que todo se sienta bien — son el trabajo del equipo.</p>
+        <p>TEDxPeninsulaHiroki es posible porque hay personas que deciden que vale la pena hacerlo. El equipo organiza, produce, cura, comunica y acompaña cada detalle de la experiencia.</p>
+        <p>Ser voluntario no es solo ayudar. Es ser parte de algo que queda: las charlas, el registro, la comunidad que se forma alrededor del evento.</p>
 
         <div class="areas-grid">
           <div class="area-item">
@@ -525,8 +1046,9 @@
 
       <div class="part-info reveal-fade">
         <div class="sec-label">Partners</div>
-        <h2>Las marcas que acompañan las ideas también construyen territorio.</h2>
-        <p>Ser partner de TEDxPeninsulaHiroki es asociarse a TED, la plataforma de ideas más grande del mundo, en un evento local, humano y curado en Neuquén Capital.</p>
+        <h2>Las organizaciones que acompañan ideas también construyen territorio.</h2>
+        <p>Ser partner de TEDxPeninsulaHiroki es estar asociado al ecosistema global de TED en un evento local, humano y curado. Una audiencia seleccionada de cien personas que llegaron porque les importa pensar. Y charlas que quedan publicadas para siempre.</p>
+        <p>No es un sponsoreo tradicional. Es una alianza con una idea.</p>
 
         <ul class="part-list">
           <li>Presencia en el evento y en todas las comunicaciones</li>
@@ -573,7 +1095,7 @@
               <span class="faq-icon" aria-hidden="true"></span>
             </button>
             <div class="faq-a">
-              <p>No hace falta. Buscamos ideas potentes, no oradores perfectos. El equipo acompaña cada etapa: preparación, ensayos y coaching antes del evento.</p>
+              <p>No hace falta. No buscamos oradores perfectos ni figuras públicas. Buscamos ideas concretas con sustento real. Si tenés algo específico que decir y lo conocés de verdad, podés postular. El equipo acompaña cada etapa: preparación, ensayos y coaching antes del evento.</p>
             </div>
           </div>
 
@@ -583,7 +1105,7 @@
               <span class="faq-icon" aria-hidden="true"></span>
             </button>
             <div class="faq-a">
-              <p>Es un evento íntimo, hasta 100 personas. La selección de asistentes es curada para que cada persona en la sala tenga algo genuino que aportar.</p>
+              <p>Es un evento íntimo, hasta 100 personas. La selección es curada: buscamos que cada persona en la sala tenga algo genuino que aportar al momento, ya sea desde su profesión, su experiencia o su perspectiva.</p>
             </div>
           </div>
 
@@ -593,7 +1115,7 @@
               <span class="faq-icon" aria-hidden="true"></span>
             </button>
             <div class="faq-a">
-              <p>En Neuquén Capital, en la zona de la Reserva Natural Península Hiroki. El venue exacto se confirma a los seleccionados.</p>
+              <p>En Neuquén Capital, en la zona de la Reserva Natural Península Hiroki, en la confluencia de los ríos Neuquén y Limay. El venue exacto se confirma a los seleccionados. La Patagonia, en su momento más claro.</p>
             </div>
           </div>
 
@@ -603,17 +1125,27 @@
               <span class="faq-icon" aria-hidden="true"></span>
             </button>
             <div class="faq-a">
-              <p>La fecha exacta todavía no está confirmada. Quienes están en la waitlist son los primeros en enterarse. Anotarte ya es la mejor forma de no perdértelo.</p>
+              <p>El 12 de septiembre de 2026. Quienes están en la waitlist son los primeros en recibir toda la información cuando abramos la selección.</p>
             </div>
           </div>
 
           <div class="faq-item">
             <button class="faq-q" aria-expanded="false">
-              ¿Qué pasa si aplico y no quedé seleccionado?
+              ¿Qué pasa si postulo como speaker y no quedé seleccionado?
               <span class="faq-icon" aria-hidden="true"></span>
             </button>
             <div class="faq-a">
-              <p>Te avisamos por email. Las postulaciones quedan en consideración para ediciones futuras.</p>
+              <p>Te avisamos por email con feedback. Las postulaciones quedan en consideración para ediciones futuras. No es un rechazo a la idea, sino una decisión de curaduría para esta edición específica.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              ¿Puedo ver las charlas si no fui al evento?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <p>Sí. Todas las charlas quedan publicadas de forma gratuita en el canal de TEDxPeninsulaHiroki, parte del ecosistema global de TED. Cualquier persona en cualquier parte del mundo puede verlas.</p>
             </div>
           </div>
 
@@ -627,8 +1159,8 @@
 <section id="cta-final" class="section-cta-final">
   <div class="container">
     <div class="ctaf-inner reveal-fade">
-      <p class="ctaf-sub">Neuquén Capital · Patagonia · 2026</p>
-      <h2 class="ctaf-headline">No te lo pierdas.</h2>
+      <p class="ctaf-sub">Neuquén Capital · Patagonia · 12 de septiembre de 2026</p>
+      <h2 class="ctaf-headline">La Patagonia<br>tiene algo para decir.</h2>
       <p class="ctaf-body">Cien personas. Un atardecer. Ideas que permanecen.<br>La lista está abierta.</p>
       <div class="ctaf-actions">
         <a href="#asistir" class="btn-red-lg" onclick="navScroll(event,'asistir')">
@@ -653,15 +1185,17 @@
               <text x="97" y="28" font-family="'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="300" font-size="14" letter-spacing="0.01" fill="rgba(255,255,255,0.35)">PeninsulaHiroki</text>
             </svg>
           </div>
-          <p class="fb-loc">Neuquén Capital · Patagonia · 2026</p>
+          <p class="fb-loc">Neuquén Capital · Patagonia · 12 · 09 · 2026</p>
           <p class="fb-tag">La Patagonia tiene algo para decir.</p>
         </div>
         <nav class="footer-nav">
+          <a href="#manifiesto">Manifiesto</a>
+          <a href="#tema">El tema</a>
+          <a href="#territorio">El lugar</a>
           <a href="#asistir">Asistir</a>
           <a href="#speaker">Ser speaker</a>
           <a href="#voluntario">Voluntario</a>
           <a href="#partner">Partner</a>
-          <a href="#que-es">Qué es TEDx</a>
           <a href="contact.html">Contacto</a>
         </nav>
         <div class="footer-cta">
