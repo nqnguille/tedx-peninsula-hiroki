@@ -1,198 +1,159 @@
-/* ============================================
+/* ============================================================
    TEDxPeninsulaHiroki 2026 — Script
-   ============================================ */
+   ============================================================ */
 
-/* ------------------------------------------
-   NAV: scroll behavior
-   ------------------------------------------ */
+/* ── Nav: scroll ── */
 const nav = document.getElementById('nav');
-
 window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40);
+  nav.classList.toggle('scrolled', window.scrollY > 60);
 }, { passive: true });
 
-/* ------------------------------------------
-   MOBILE MENU
-   ------------------------------------------ */
+/* ── Mobile menu ── */
 const mobileMenu = document.getElementById('mobileMenu');
 const hamburger  = document.getElementById('hamburger');
 
 function toggleMenu() {
   const isOpen = mobileMenu.classList.toggle('open');
   hamburger.classList.toggle('open', isOpen);
+  hamburger.setAttribute('aria-expanded', String(isOpen));
+  mobileMenu.setAttribute('aria-hidden', String(!isOpen));
   document.body.style.overflow = isOpen ? 'hidden' : '';
 }
 
 function closeMenu() {
   mobileMenu.classList.remove('open');
   hamburger.classList.remove('open');
+  hamburger.setAttribute('aria-expanded', 'false');
+  mobileMenu.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
 }
 
-/* ------------------------------------------
-   SMOOTH SCROLL (offset for fixed nav)
-   ------------------------------------------ */
+/* ── Smooth scroll ── */
 function smoothScroll(id) {
   const el = document.getElementById(id);
   if (!el) return;
-  const offset = 72;
+  const offset = 80;
   const top = el.getBoundingClientRect().top + window.scrollY - offset;
   window.scrollTo({ top, behavior: 'smooth' });
   closeMenu();
 }
 
-/* ------------------------------------------
-   REVEAL ON SCROLL
-   ------------------------------------------ */
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('is-visible');
-      revealObserver.unobserve(entry.target);
-    }
+function navScroll(e, id) {
+  e.preventDefault();
+  smoothScroll(id);
+}
+
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    const id = link.getAttribute('href').slice(1);
+    if (!id) return;
+    e.preventDefault();
+    smoothScroll(id);
   });
-}, {
-  threshold: 0.12,
-  rootMargin: '0px 0px -40px 0px'
 });
 
-document.querySelectorAll('.reveal-up').forEach(el => revealObserver.observe(el));
+/* ── Hero poster reveal ── */
+(function() {
+  const poster = document.querySelector('.hero-poster');
+  if (!poster) return;
+  // trigger after a brief paint delay
+  requestAnimationFrame(() => {
+    setTimeout(() => poster.classList.add('revealed'), 80);
+  });
+})();
 
-/* ------------------------------------------
-   COUNTER ANIMATION
-   ------------------------------------------ */
-function easeOutCubic(t) {
-  return 1 - Math.pow(1 - t, 3);
-}
+/* ── Reveal on scroll ── */
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal-fade').forEach(el => revealObs.observe(el));
+
+/* ── Counter animation ── */
+function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
 
 function animateCounter(el, target, suffix, duration) {
-  const startTime = performance.now();
-
-  function update(currentTime) {
-    const elapsed  = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    const value    = Math.round(easeOutCubic(progress) * target);
-
-    el.textContent = value.toLocaleString('es-AR') + (progress >= 1 ? suffix : '');
-
-    if (progress < 1) {
-      requestAnimationFrame(update);
-    }
-  }
-
-  requestAnimationFrame(update);
+  const start = performance.now();
+  (function tick(now) {
+    const pct = Math.min((now - start) / duration, 1);
+    const val = Math.round(easeOutCubic(pct) * target);
+    el.textContent = val.toLocaleString('es-AR') + (pct >= 1 ? suffix : '');
+    if (pct < 1) requestAnimationFrame(tick);
+  })(performance.now());
 }
 
-const counterObserver = new IntersectionObserver((entries) => {
+const counterObs = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
-
     entry.target.querySelectorAll('[data-target]').forEach(el => {
-      const target   = parseInt(el.dataset.target, 10);
-      const suffix   = el.dataset.suffix || '';
-      const duration = target > 1000 ? 2000 : target > 100 ? 1800 : target > 20 ? 1400 : 1000;
-      animateCounter(el, target, suffix, duration);
+      const t = parseInt(el.dataset.target, 10);
+      const s = el.dataset.suffix || '';
+      const d = t > 1000 ? 2000 : t > 100 ? 1600 : 1200;
+      animateCounter(el, t, s, d);
     });
-
-    counterObserver.unobserve(entry.target);
+    counterObs.unobserve(entry.target);
   });
 }, { threshold: 0.25 });
 
 document.querySelectorAll('[data-target]').forEach(el => {
-  const section = el.closest('section');
-  if (section) counterObserver.observe(section);
+  const sec = el.closest('section');
+  if (sec) counterObs.observe(sec);
 });
 
-/* ------------------------------------------
-   COUNTDOWN
-   ------------------------------------------ */
-const EVENT_DATE = new Date('2026-09-12T00:00:00-03:00');
-
-function updateCountdown() {
-  const now  = Date.now();
-  const diff = EVENT_DATE.getTime() - now;
-
-  if (diff <= 0) {
-    document.getElementById('cd-dias').textContent  = '000';
-    document.getElementById('cd-horas').textContent = '00';
-    document.getElementById('cd-min').textContent   = '00';
-    document.getElementById('cd-seg').textContent   = '00';
-    return;
-  }
-
-  const dias  = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const min   = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const seg   = Math.floor((diff % (1000 * 60)) / 1000);
-
-  document.getElementById('cd-dias').textContent  = String(dias).padStart(3, '0');
-  document.getElementById('cd-horas').textContent = String(horas).padStart(2, '0');
-  document.getElementById('cd-min').textContent   = String(min).padStart(2, '0');
-  document.getElementById('cd-seg').textContent   = String(seg).padStart(2, '0');
-}
-
-updateCountdown();
-setInterval(updateCountdown, 1000);
-
-/* ------------------------------------------
-   FAQ ACCORDION
-   ------------------------------------------ */
+/* ── FAQ accordion ── */
 document.querySelectorAll('.faq-item').forEach(item => {
-  const trigger = item.querySelector('.faq-trigger');
-  const body    = item.querySelector('.faq-body');
+  const btn  = item.querySelector('.faq-q');
+  const body = item.querySelector('.faq-a');
 
-  trigger.addEventListener('click', () => {
+  btn.addEventListener('click', () => {
     const isOpen = item.classList.contains('open');
 
-    // Cerrar todos los demás
     document.querySelectorAll('.faq-item.open').forEach(other => {
       other.classList.remove('open');
-      other.querySelector('.faq-body').style.maxHeight = '0';
+      other.querySelector('.faq-a').style.maxHeight = '0';
+      other.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
     });
 
     if (!isOpen) {
       item.classList.add('open');
       body.style.maxHeight = body.scrollHeight + 'px';
+      btn.setAttribute('aria-expanded', 'true');
     }
   });
 });
 
-/* ------------------------------------------
-   EXPANDABLE CARDS
-   ------------------------------------------ */
-function toggleExpand(id) {
+/* ── Form card toggle ── */
+function toggleForm(id) {
   const card = document.getElementById(id);
   if (!card) return;
   card.classList.toggle('open');
 }
 
-/* ------------------------------------------
-   INLINE FORM SUBMIT — POST to Cloudflare Worker
-   ------------------------------------------ */
+/* ── Inline form submit → Cloudflare Worker ── */
 const WORKER_URL = 'https://tedx-forms.nqnguille.workers.dev';
 
-async function handleInlineSubmit(e, cardId, successMsg) {
+async function handleSubmit(e, cardId, successMsg) {
   e.preventDefault();
+  const form = e.target;
+  const btn  = form.querySelector('[type="submit"]');
+  const card = document.getElementById(cardId);
 
-  const form   = e.target;
-  const btn    = form.querySelector('[type="submit"]');
-  const inner  = form.closest('.expand-inner');
+  // Honeypot
+  const hp = form.querySelector('[name="_hp"]');
+  if (hp && hp.value) return;
 
-  // Loading state
-  btn.textContent         = 'Enviando...';
-  btn.disabled            = true;
-  form.style.opacity      = '0.6';
+  btn.textContent = 'Enviando...';
+  btn.disabled    = true;
+  form.style.opacity       = '0.6';
   form.style.pointerEvents = 'none';
 
-  // Honeypot check (client-side)
-  if (form.querySelector('[name="_hp"]') && form.querySelector('[name="_hp"]').value) {
-    return;
-  }
-
-  const formData = new FormData(form);
-  const payload  = {};
-  formData.forEach((v, k) => { payload[k] = v; });
-  payload.formType = cardId;
+  const payload = { formType: cardId };
+  new FormData(form).forEach((v, k) => { payload[k] = v; });
 
   try {
     const res = await fetch(WORKER_URL, {
@@ -202,50 +163,39 @@ async function handleInlineSubmit(e, cardId, successMsg) {
     });
 
     if (res.ok) {
-      inner.innerHTML = `
-        <div class="expand-success visible" role="alert">
-          <div class="expand-success-icon">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-              <circle cx="14" cy="14" r="13" stroke="#E62B1E" stroke-width="1.5"/>
-              <path d="M8 14l4 4 8-8" stroke="#E62B1E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
+      // Show success inline
+      const formWrap = form.closest('.fc-form') || form.parentElement;
+      formWrap.innerHTML = `
+        <div class="fc-success visible" role="alert">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="15" stroke="#E62B1E" stroke-width="1.5"/>
+            <path d="M9 16l5 5 9-9" stroke="#E62B1E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
           <h4>Recibido.</h4>
           <p>${successMsg}</p>
         </div>`;
     } else {
-      throw new Error('server error');
+      throw new Error('server');
     }
   } catch {
-    form.style.opacity      = '1';
+    form.style.opacity       = '1';
     form.style.pointerEvents = '';
-    btn.disabled            = false;
-    btn.textContent         = 'Reintentar';
+    btn.disabled    = false;
+    btn.textContent = 'Reintentar';
 
-    const errEl = form.querySelector('.inline-form-error') || document.createElement('p');
-    errEl.className   = 'inline-form-error';
-    errEl.textContent = 'Algo salió mal. Intentá de nuevo.';
-    errEl.setAttribute('role', 'alert');
-    if (!form.querySelector('.inline-form-error')) form.appendChild(errEl);
+    let err = form.querySelector('.form-error-msg');
+    if (!err) {
+      err = document.createElement('p');
+      err.className = 'form-error-msg';
+      err.setAttribute('role', 'alert');
+      form.appendChild(err);
+    }
+    err.textContent = 'Algo salió mal. Intentá de nuevo.';
   }
 }
 
-/* ------------------------------------------
-   VIDEO BACKGROUNDS — fade in when ready
-   ------------------------------------------ */
-document.querySelectorAll('.hero-video, .section-video').forEach(video => {
-  video.addEventListener('loadeddata', () => video.classList.add('loaded'));
-  if (video.readyState >= 3) video.classList.add('loaded');
-});
-
-/* ------------------------------------------
-   NAV LINKS: close menu on anchor click
-   ------------------------------------------ */
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener('click', e => {
-    const id = link.getAttribute('href').slice(1);
-    if (!id) return;
-    e.preventDefault();
-    smoothScroll(id);
-  });
+/* ── Video backgrounds: fade in on ready ── */
+document.querySelectorAll('.hero-video, .section-video').forEach(v => {
+  v.addEventListener('loadeddata', () => v.classList.add('loaded'));
+  if (v.readyState >= 3) v.classList.add('loaded');
 });

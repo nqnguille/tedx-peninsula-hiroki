@@ -3,43 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TEDxPeninsulaHiroki — Neuquén Capital 2026</title>
-  <meta name="description" content="TEDxPeninsulaHiroki. Neuquén Capital, 2026. Ideas que merecen ser escuchadas. Cultivando Conciencia.">
-  <meta property="og:title" content="TEDxPeninsulaHiroki — Neuquén Capital 2026">
-  <meta property="og:description" content="Ideas que merecen ser escuchadas. La Patagonia tiene algo para decir.">
+  <title>TEDxPeninsulaHiroki — Cultivando Conciencia · Neuquén 2026</title>
+  <meta name="description" content="Un atardecer. Cien personas. Ideas que cambian la forma de mirar. TEDxPeninsulaHiroki 2026 — Neuquén Capital, Patagonia.">
+  <meta property="og:title" content="TEDxPeninsulaHiroki — Cultivando Conciencia">
+  <meta property="og:description" content="Un atardecer. Cien personas. La Patagonia tiene algo para decir.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://tedxpeninsulaHiroki.com">
+  <meta property="og:url" content="https://tedx-peninsula-hiroki.pages.dev">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="TEDxPeninsulaHiroki 2026">
-  <meta name="twitter:description" content="Ideas que merecen ser escuchadas. Neuquén Capital, 2026.">
-  <link rel="canonical" href="https://tedxpeninsulaHiroki.com">
+  <meta name="twitter:description" content="Un atardecer. Cien personas. Cultivando Conciencia.">
+  <link rel="canonical" href="https://tedx-peninsula-hiroki.pages.dev">
+
+  <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- SVG ICON DEFS — referenced via <use href="#icon-*"> throughout -->
+<!-- SVG DEFS -->
 <svg aria-hidden="true" style="display:none">
   <defs>
-    <!-- Asistir: ticket -->
     <symbol id="icon-asistir" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M22 10V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v4a2 2 0 1 1 0 4v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 1 1 0-4z"/>
       <line x1="9" y1="4" x2="9" y2="20" stroke-dasharray="2 3"/>
     </symbol>
-    <!-- Speaker: microphone -->
     <symbol id="icon-speaker" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <rect x="9" y="2" width="6" height="11" rx="3"/>
       <path d="M19 10v1a7 7 0 0 1-14 0v-1"/>
       <line x1="12" y1="18" x2="12" y2="22"/>
       <line x1="8" y1="22" x2="16" y2="22"/>
     </symbol>
-    <!-- Voluntario: wrench -->
     <symbol id="icon-voluntario" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
     </symbol>
-    <!-- Partner: link -->
     <symbol id="icon-partner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
       <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
@@ -51,8 +50,8 @@
 <header>
   <nav id="nav">
     <div class="nav-inner">
-      <a href="#" class="nav-logo">
-        <span class="ted">TEDx</span><span class="name-sm">PeninsulaHiroki</span>
+      <a href="#" class="nav-logo" aria-label="TEDxPeninsulaHiroki">
+        <span class="nav-ted">TEDx</span><span class="nav-name">PeninsulaHiroki</span>
       </a>
       <ul class="nav-links">
         <li><a href="#asistir">Asistir</a></li>
@@ -61,189 +60,231 @@
         <li><a href="#partner">Partner</a></li>
       </ul>
       <div class="nav-right">
-        <button class="nav-cta" onclick="smoothScroll('asistir')">Waitlist</button>
-        <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú">
+        <a href="#asistir" class="nav-cta" onclick="navScroll(event,'asistir')">Anotarme</a>
+        <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
     </div>
   </nav>
-  <div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
     <a href="#asistir" onclick="closeMenu()">Asistir</a>
     <a href="#speaker" onclick="closeMenu()">Speaker</a>
     <a href="#voluntario" onclick="closeMenu()">Voluntario</a>
     <a href="#partner" onclick="closeMenu()">Partner</a>
-    <button onclick="smoothScroll('asistir'); closeMenu()">Waitlist</button>
+    <a href="#asistir" class="mobile-cta" onclick="closeMenu()">Anotarme en la waitlist</a>
   </div>
 </header>
 
 <!-- HERO -->
 <section id="hero">
-  <!-- Pexels free license · "Stunning aerial timelapse of city lights at night" -->
   <video class="hero-video" autoplay muted loop playsinline>
-    <source src="https://videos.pexels.com/video-files/36703282/15557411_1920_1080_30fps.mp4" type="video/mp4">
+    <source src="https://videos.pexels.com/video-files/3214448/3214448-uhd_2560_1440_25fps.mp4" type="video/mp4">
   </video>
-  <div class="hero-bg"></div>
-  <div class="hero-overlay"></div>
+  <div class="hero-veil"></div>
 
   <div class="hero-content">
-    <div class="hero-eyebrow reveal-hero">
-      <span class="hero-brand"><span class="ted">TEDx</span><span class="name-sm">PeninsulaHiroki</span></span>
-      <span class="hero-sep">·</span>
-      <span>Neuquén Capital</span>
-      <span class="hero-sep">·</span>
+
+    <div class="hero-meta" id="heroMeta">
+      <span class="hero-ted-badge"><span class="badge-ted">TEDx</span><span class="badge-name">PeninsulaHiroki</span></span>
+      <span class="hero-meta-sep"></span>
+      <span>Neuquén Capital · Patagonia</span>
+      <span class="hero-meta-sep"></span>
       <span>2026</span>
     </div>
 
-    <h1 class="hero-title reveal-hero delay-1">
-      Ideas que merecen<br>ser escuchadas.
-    </h1>
-
-    <p class="hero-sub reveal-hero delay-2">
-      Neuquén Capital. 2026.<br>
-      Cultivando Conciencia.
-    </p>
-
-    <!-- COUNTDOWN -->
-    <div class="hero-countdown reveal-hero delay-2">
-      <div class="cd-block">
-        <div class="cd-num" id="cd-dias">000</div>
-        <div class="cd-label">días</div>
+    <div class="hero-poster">
+      <div class="hero-line hero-line-1" id="heroLine1">
+        <span class="hl-word">Cultivando</span>
       </div>
-      <div class="cd-sep">:</div>
-      <div class="cd-block">
-        <div class="cd-num" id="cd-horas">00</div>
-        <div class="cd-label">horas</div>
-      </div>
-      <div class="cd-sep">:</div>
-      <div class="cd-block">
-        <div class="cd-num" id="cd-min">00</div>
-        <div class="cd-label">min</div>
-      </div>
-      <div class="cd-sep">:</div>
-      <div class="cd-block">
-        <div class="cd-num" id="cd-seg">00</div>
-        <div class="cd-label">seg</div>
+      <div class="hero-line hero-line-2" id="heroLine2">
+        <span class="hl-word hl-word-outline">Conciencia</span>
       </div>
     </div>
 
-    <div class="hero-cta-grid reveal-hero delay-3">
-
-      <button class="hcc hcc-primary" onclick="smoothScroll('asistir')">
-        <svg class="hcc-icon" aria-hidden="true"><use href="#icon-asistir"/></svg>
-        <div class="hcc-title">Quiero asistir</div>
-        <div class="hcc-sub">Waitlist</div>
-        <span class="hcc-arrow">→</span>
-      </button>
-
-      <button class="hcc" onclick="smoothScroll('voluntario')">
-        <svg class="hcc-icon" aria-hidden="true"><use href="#icon-voluntario"/></svg>
-        <div class="hcc-title">Quiero ser voluntario</div>
-        <div class="hcc-sub">Sumarme al equipo</div>
-        <span class="hcc-arrow">→</span>
-      </button>
-
-      <button class="hcc" onclick="smoothScroll('speaker')">
-        <svg class="hcc-icon" aria-hidden="true"><use href="#icon-speaker"/></svg>
-        <div class="hcc-title">Quiero postular una idea</div>
-        <div class="hcc-sub">Speaker · publicación global</div>
-        <span class="hcc-arrow">→</span>
-      </button>
-
-      <button class="hcc" onclick="smoothScroll('partner')">
-        <svg class="hcc-icon" aria-hidden="true"><use href="#icon-partner"/></svg>
-        <div class="hcc-title">Quiero apoyar el evento</div>
-        <div class="hcc-sub">Ser partner o sponsor</div>
-        <span class="hcc-arrow">→</span>
-      </button>
-
+    <div class="hero-claim" id="heroClaim">
+      <span class="hc-num">100</span>
+      <span class="hc-sep">personas.</span>
+      <span class="hc-num">1</span>
+      <span class="hc-sep">atardecer.</span>
+      <span class="hc-tagline">Ideas que cambian la forma de mirar.</span>
     </div>
+
+    <div class="hero-actions" id="heroActions">
+      <a href="#asistir" class="ha-primary" onclick="navScroll(event,'asistir')">
+        Anotarme en la waitlist
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#speaker" class="ha-ghost" onclick="navScroll(event,'speaker')">Postular una idea</a>
+    </div>
+
   </div>
 
-  <div class="hero-bottom-bar reveal-hero delay-4">
-    <span>Ideas worth spreading</span>
-    <div class="hbb-line"></div>
-    <span>TED · Licencia Independiente</span>
+  <div class="hero-scroll-hint" id="heroScroll" aria-hidden="true">
+    <div class="hsh-line"></div>
+    <span>Scroll</span>
+  </div>
+
+  <div class="hero-ticker" aria-hidden="true">
+    <div class="ticker-inner" id="tickerInner">
+      <span>Ideas worth spreading</span>
+      <span class="ticker-dot">·</span>
+      <span>Licencia independiente de TED</span>
+      <span class="ticker-dot">·</span>
+      <span>Reserva Natural Península Hiroki</span>
+      <span class="ticker-dot">·</span>
+      <span>Confluencia ríos Neuquén y Limay</span>
+      <span class="ticker-dot">·</span>
+      <span>Ideas worth spreading</span>
+      <span class="ticker-dot">·</span>
+      <span>Licencia independiente de TED</span>
+      <span class="ticker-dot">·</span>
+      <span>Reserva Natural Península Hiroki</span>
+      <span class="ticker-dot">·</span>
+      <span>Confluencia ríos Neuquén y Limay</span>
+      <span class="ticker-dot">·</span>
+    </div>
   </div>
 </section>
 
-<!-- ASISTIR -->
-<section id="asistir" class="section part-section has-video">
-  <video class="section-video" autoplay muted loop playsinline>
-    <source src="https://videos.pexels.com/video-files/11060088/11060088-hd_1920_1080_30fps.mp4" type="video/mp4">
-  </video>
-  <div class="section-overlay"></div>
-  <div class="role-watermark" aria-hidden="true"><svg><use href="#icon-asistir"/></svg></div>
+<!-- FOMO: EL MOMENTO -->
+<section id="momento" class="section-dark">
   <div class="container">
-    <div class="section-label">01 — Audiencia</div>
-    <div class="part-layout">
-      <div class="part-info">
-        <h2 class="reveal-up delay-1">Vivirlo en<br>primera persona.</h2>
-        <p class="reveal-up delay-1">Una sala seleccionada. Charlas breves, ideas con peso. Una producción pensada para que cada momento importe.</p>
-        <div class="part-details reveal-up delay-2">
-          <div class="pd-item">
-            <div class="pd-icon">—</div>
-            <div class="pd-text">Charlas breves: entre 8 y 18 minutos por speaker</div>
+    <div class="momento-grid">
+      <div class="momento-left reveal-fade">
+        <div class="sec-label">El evento</div>
+        <h2 class="momento-headline">Un momento que no se repite.</h2>
+      </div>
+      <div class="momento-right reveal-fade delay-1">
+        <p>La Reserva Natural Península Hiroki está en la confluencia de los ríos Neuquén y Limay. Un atardecer en la Patagonia. Cien personas elegidas. Charlas breves con ideas que pesan.</p>
+        <p>No es un congreso. No es un workshop. Es un momento que se convirtió en charlas que cualquier persona en el mundo puede ver.</p>
+        <div class="momento-stats">
+          <div class="ms-item">
+            <div class="ms-num">100</div>
+            <div class="ms-label">personas seleccionadas</div>
           </div>
-          <div class="pd-item">
-            <div class="pd-icon">—</div>
-            <div class="pd-text">Oradores locales, regionales e internacionales con algo genuino para decir</div>
+          <div class="ms-div"></div>
+          <div class="ms-item">
+            <div class="ms-num">1</div>
+            <div class="ms-label">atardecer en la Patagonia</div>
           </div>
-          <div class="pd-item">
-            <div class="pd-icon">—</div>
-            <div class="pd-text">Conversaciones reales con personas que te van a interesar</div>
-          </div>
-          <div class="pd-item">
-            <div class="pd-icon">—</div>
-            <div class="pd-text">Producción cuidada, escenario, experiencia de principio a fin</div>
-          </div>
-          <div class="pd-item">
-            <div class="pd-icon">—</div>
-            <div class="pd-text">Acceso libre y gratuito a todas las charlas después del evento</div>
+          <div class="ms-div"></div>
+          <div class="ms-item">
+            <div class="ms-num">2</div>
+            <div class="ms-label">ríos que se encuentran</div>
           </div>
         </div>
-        <div class="free-badge reveal-up delay-3">
-          <span class="free-badge-dot"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTDOWN / ESCASEZ -->
+<section id="escasez" class="section-red">
+  <div class="container">
+    <div class="escasez-inner reveal-fade">
+      <p class="escasez-eyebrow">Fecha por confirmar · 2026</p>
+      <h2 class="escasez-headline">Los cupos son limitados.<br>La lista se mueve.</h2>
+      <p class="escasez-body">No hay fecha confirmada todavía. Hay una lista de personas que ya se anotaron. Cuando confirmemos el evento, los primeros en enterarse son los que están en la waitlist.</p>
+      <a href="#asistir" class="btn-white" onclick="navScroll(event,'asistir')">
+        Anotarme ahora
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN: QUÉ ES TEDX -->
+<section id="que-es" class="section-dark">
+  <div class="container">
+    <div class="quees-layout">
+      <div class="quees-left reveal-fade">
+        <div class="sec-label">El contexto</div>
+        <h2>Cuarenta años de ideas.<br>En tu ciudad.</h2>
+        <p>TED lleva más de cuarenta años reuniendo ideas que valen la pena. TEDx lleva esas conversaciones a cualquier ciudad del mundo, con licencia independiente de TED.</p>
+        <p>Una charla grabada en Neuquén puede ser vista en cualquier parte del planeta.</p>
+      </div>
+      <div class="quees-right reveal-fade delay-2">
+        <div class="quees-stats">
+          <div class="qs-item">
+            <div class="qs-num" data-target="18000" data-suffix="+">0</div>
+            <div class="qs-label">Charlas publicadas en el ecosistema TEDx</div>
+          </div>
+          <div class="qs-item">
+            <div class="qs-num qs-static">1B+</div>
+            <div class="qs-label">Visualizaciones globales</div>
+          </div>
+          <div class="qs-item">
+            <div class="qs-num" data-target="3500" data-suffix="+">0</div>
+            <div class="qs-label">Eventos TEDx por año</div>
+          </div>
+          <div class="qs-item">
+            <div class="qs-num" data-target="170" data-suffix="+">0</div>
+            <div class="qs-label">Países con TEDx activos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTICIPACIÓN: ASISTIR -->
+<section id="asistir" class="section-part">
+  <div class="container">
+    <div class="part-num-label">01</div>
+    <div class="part-layout">
+      <div class="part-info reveal-fade">
+        <div class="sec-label">Audiencia</div>
+        <h2>Vivirlo en primera persona.</h2>
+        <p>Una sala seleccionada. Charlas breves, ideas con peso. Una producción pensada para que cada momento importe.</p>
+
+        <ul class="part-list">
+          <li>Charlas entre 8 y 18 minutos por speaker</li>
+          <li>Oradores locales, regionales e internacionales con algo genuino para decir</li>
+          <li>Conversaciones reales con personas que te van a interesar</li>
+          <li>Producción cuidada, escenario, experiencia de principio a fin</li>
+          <li>Acceso libre y gratuito a todas las charlas después del evento</li>
+        </ul>
+
+        <div class="part-badge">
+          <div class="pb-dot"></div>
           El evento y las entradas son 100% gratuitos.
         </div>
-        <p class="part-note reveal-up delay-3">Cada persona en la sala forma parte de lo que pasa esa noche.</p>
       </div>
-      <div class="part-form-col">
-        <div class="expand-card reveal-up delay-2" id="form-asistir">
-          <div class="expand-trigger" onclick="toggleExpand('form-asistir')">
-            <div class="expand-icon-header">
-              <svg aria-hidden="true"><use href="#icon-asistir"/></svg>
+
+      <div class="part-form-col reveal-fade delay-1">
+        <div class="form-card" id="form-asistir">
+          <div class="fc-header" onclick="toggleForm('form-asistir')">
+            <div class="fc-header-info">
+              <div class="fc-role">Audiencia</div>
+              <div class="fc-title">Anotarme en la waitlist</div>
             </div>
-            <div class="expand-cta-body">
-              <div class="expand-cta-label">Audiencia</div>
-              <div class="expand-cta-title">Anotarme en la waitlist</div>
-              <div class="expand-cta-btn"><span>Aplicar</span><span class="expand-arrow">↓</span></div>
+            <div class="fc-toggle" aria-hidden="true">
+              <svg class="fc-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </div>
-          <div class="expand-body">
-            <div class="expand-inner">
-              <form onsubmit="handleInlineSubmit(event, 'form-asistir', 'Recibimos tu solicitud. Te contactamos cuando confirmemos la selección.')">
-                <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
-                <div class="form-group">
-                  <label class="form-label">Nombre completo</label>
-                  <input class="form-input" type="text" name="nombre" placeholder="Tu nombre" required>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Email</label>
-                  <input class="form-input" type="email" name="email" placeholder="tu@email.com" required>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Ciudad</label>
-                  <input class="form-input" type="text" name="ciudad" placeholder="Neuquén" required>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">¿Por qué querés asistir?</label>
-                  <textarea class="form-textarea" name="motivo" placeholder="Dos o tres líneas." required></textarea>
-                </div>
-                <button type="submit" class="form-submit">Anotarme</button>
-                <p class="form-note">Cupos limitados. Te avisamos cuando confirmemos la selección.</p>
-              </form>
-            </div>
+          <div class="fc-body">
+            <form class="fc-form" onsubmit="handleSubmit(event,'form-asistir','Recibimos tu solicitud. Te contactamos cuando confirmemos la selección.')">
+              <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
+              <div class="fg">
+                <label class="fl">Nombre completo</label>
+                <input class="fi" type="text" name="nombre" placeholder="Tu nombre" required>
+              </div>
+              <div class="fg">
+                <label class="fl">Email</label>
+                <input class="fi" type="email" name="email" placeholder="tu@email.com" required>
+              </div>
+              <div class="fg">
+                <label class="fl">Ciudad</label>
+                <input class="fi" type="text" name="ciudad" placeholder="Neuquén" required>
+              </div>
+              <div class="fg">
+                <label class="fl">¿Por qué querés asistir?</label>
+                <textarea class="fta" name="motivo" placeholder="Dos o tres líneas." required></textarea>
+              </div>
+              <button type="submit" class="fsub">Anotarme</button>
+              <p class="fnote">Cupos limitados. Te avisamos cuando confirmemos la selección.</p>
+            </form>
           </div>
         </div>
       </div>
@@ -251,203 +292,170 @@
   </div>
 </section>
 
-<!-- SPEAKER -->
-<section id="speaker" class="section part-section has-video">
-  <video class="section-video" autoplay muted loop playsinline>
-    <source src="https://videos.pexels.com/video-files/8244203/8244203-uhd_2560_1440_25fps.mp4" type="video/mp4">
-  </video>
-  <div class="section-overlay"></div>
-  <div class="role-watermark" aria-hidden="true"><svg><use href="#icon-speaker"/></svg></div>
+<!-- PARTICIPACIÓN: SPEAKER -->
+<section id="speaker" class="section-part section-part-alt">
   <div class="container">
-    <div class="section-label">02 — Ideas</div>
-    <div class="part-layout part-reverse">
-      <div class="part-form-col">
-        <div class="expand-card reveal-up delay-2" id="form-speaker">
-          <div class="expand-trigger" onclick="toggleExpand('form-speaker')">
-            <div class="expand-icon-header">
-              <svg aria-hidden="true"><use href="#icon-speaker"/></svg>
+    <div class="part-num-label">02</div>
+    <div class="part-layout part-layout-rev">
+      <div class="part-form-col reveal-fade delay-1">
+        <div class="form-card" id="form-speaker">
+          <div class="fc-header" onclick="toggleForm('form-speaker')">
+            <div class="fc-header-info">
+              <div class="fc-role">Speaker</div>
+              <div class="fc-title">Postular mi idea</div>
             </div>
-            <div class="expand-cta-body">
-              <div class="expand-cta-label">Speaker</div>
-              <div class="expand-cta-title">Postular mi idea</div>
-              <div class="expand-cta-btn"><span>Postular</span><span class="expand-arrow">↓</span></div>
+            <div class="fc-toggle" aria-hidden="true">
+              <svg class="fc-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </div>
-          <div class="expand-body">
-            <div class="expand-inner">
-              <form onsubmit="handleInlineSubmit(event, 'form-speaker', 'Postulación recibida. Revisamos cada una con atención y respondemos pronto.')">
-                <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
-                <div class="form-group">
-                  <label class="form-label">Nombre completo</label>
-                  <input class="form-input" type="text" name="nombre" placeholder="Tu nombre" required>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Email</label>
-                  <input class="form-input" type="email" name="email" placeholder="tu@email.com" required>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Tu idea en una oración</label>
-                  <input class="form-input" type="text" name="idea" placeholder="La idea que querés compartir" required>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Área</label>
-                  <select class="form-select" name="area" required>
-                    <option value="" disabled selected>— Seleccioná —</option>
-                    <option>Ciencia y tecnología</option>
-                    <option>Arte y cultura</option>
-                    <option>Educación</option>
-                    <option>Emprendimiento</option>
-                    <option>Salud y bienestar</option>
-                    <option>Medio ambiente</option>
-                    <option>Comunidad y sociedad</option>
-                    <option>Otro</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">¿Quién sos? (breve)</label>
-                  <textarea class="form-textarea" name="bio" placeholder="Tres líneas, como máximo." required></textarea>
-                </div>
-                <button type="submit" class="form-submit">Enviar postulación</button>
-                <p class="form-note">Revisamos cada postulación de forma personal.</p>
-              </form>
-            </div>
+          <div class="fc-body">
+            <form class="fc-form" onsubmit="handleSubmit(event,'form-speaker','Postulación recibida. Revisamos cada una con atención y respondemos pronto.')">
+              <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
+              <div class="fg">
+                <label class="fl">Nombre completo</label>
+                <input class="fi" type="text" name="nombre" placeholder="Tu nombre" required>
+              </div>
+              <div class="fg">
+                <label class="fl">Email</label>
+                <input class="fi" type="email" name="email" placeholder="tu@email.com" required>
+              </div>
+              <div class="fg">
+                <label class="fl">Tu idea en una oración</label>
+                <input class="fi" type="text" name="idea" placeholder="La idea que querés compartir" required>
+              </div>
+              <div class="fg">
+                <label class="fl">Área</label>
+                <select class="fse" name="area" required>
+                  <option value="" disabled selected>Seleccioná</option>
+                  <option>Ciencia y tecnología</option>
+                  <option>Arte y cultura</option>
+                  <option>Educación</option>
+                  <option>Emprendimiento</option>
+                  <option>Salud y bienestar</option>
+                  <option>Medio ambiente</option>
+                  <option>Comunidad y sociedad</option>
+                  <option>Otro</option>
+                </select>
+              </div>
+              <div class="fg">
+                <label class="fl">¿Quién sos? (breve)</label>
+                <textarea class="fta" name="bio" placeholder="Tres líneas, como máximo." required></textarea>
+              </div>
+              <button type="submit" class="fsub">Enviar postulación</button>
+              <p class="fnote">Revisamos cada postulación de forma personal.</p>
+            </form>
           </div>
         </div>
       </div>
-      <div class="part-info">
-        <h2 class="reveal-up delay-1">Voces locales que merecen ser escuchadas en todo el mundo.</h2>
-        <p class="reveal-up delay-1">Neuquén tiene ideas que el mundo todavía no escuchó. Las charlas TEDx son ideas específicas, bien contadas: dieciocho minutos en un escenario local que, cuando termina el evento, quedan publicadas en el ecosistema global de TED.</p>
 
-        <div class="global-reach-callout reveal-up delay-2">
-          <div class="grc-header">Después del evento</div>
-          <p class="grc-text">Tu charla queda publicada en el canal de TEDxPeninsulaHiroki — parte del ecosistema global de TED. Lo que decís en Neuquén puede ser escuchado en cualquier parte del mundo.</p>
-          <div class="grc-stats">
-            <div class="grc-stat">
-              <div class="grc-num">18.000+</div>
-              <div class="grc-label">charlas en el ecosistema TEDx</div>
-            </div>
-            <div class="grc-stat">
-              <div class="grc-num">1B+</div>
-              <div class="grc-label">visualizaciones globales</div>
-            </div>
-            <div class="grc-stat">
-              <div class="grc-num">170+</div>
-              <div class="grc-label">países con TEDx activos</div>
-            </div>
+      <div class="part-info reveal-fade">
+        <div class="sec-label">Ideas</div>
+        <h2>Voces locales que merecen ser escuchadas en todo el mundo.</h2>
+        <p>Neuquén tiene ideas que el mundo todavía no escuchó. Las charlas TEDx son ideas específicas, bien contadas: dieciocho minutos en un escenario local que, cuando termina el evento, quedan publicadas en el ecosistema global de TED.</p>
+
+        <div class="reach-block">
+          <div class="rb-label">Después del evento</div>
+          <p class="rb-text">Tu charla queda publicada en el canal de TEDxPeninsulaHiroki — parte del ecosistema global de TED. Lo que decís en Neuquén puede ser escuchado en cualquier parte del mundo.</p>
+          <div class="rb-stats">
+            <div class="rb-stat"><span class="rb-num">18.000+</span><span class="rb-lab">charlas en el ecosistema</span></div>
+            <div class="rb-stat"><span class="rb-num">1B+</span><span class="rb-lab">visualizaciones globales</span></div>
+            <div class="rb-stat"><span class="rb-num">170+</span><span class="rb-lab">países con TEDx</span></div>
           </div>
         </div>
 
-        <div class="part-details reveal-up delay-3">
-          <div class="pd-item">
-            <div class="pd-icon">—</div>
-            <div class="pd-text">Formato: entre 8 y 18 minutos, una idea central</div>
-          </div>
-          <div class="pd-item">
-            <div class="pd-icon">—</div>
-            <div class="pd-text">Primera vez en un escenario: el equipo acompaña cada etapa</div>
-          </div>
-          <div class="pd-item">
-            <div class="pd-icon">—</div>
-            <div class="pd-text">Preparación, ensayos y coaching antes del evento</div>
-          </div>
-        </div>
-        <div class="speaker-profiles reveal-up delay-4">
-          <span class="sp-tag">Científicos</span>
-          <span class="sp-tag">Artistas</span>
-          <span class="sp-tag">Emprendedores</span>
-          <span class="sp-tag">Investigadores</span>
-          <span class="sp-tag">Educadores</span>
-          <span class="sp-tag">Activistas</span>
-          <span class="sp-tag">Técnicos</span>
-          <span class="sp-tag">Creadores</span>
+        <ul class="part-list">
+          <li>Formato: entre 8 y 18 minutos, una idea central</li>
+          <li>Primera vez en un escenario: el equipo acompaña cada etapa</li>
+          <li>Preparación, ensayos y coaching antes del evento</li>
+        </ul>
+
+        <div class="speaker-tags">
+          <span>Científicos</span><span>Artistas</span><span>Emprendedores</span>
+          <span>Investigadores</span><span>Educadores</span><span>Activistas</span>
+          <span>Técnicos</span><span>Creadores</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- VOLUNTARIO -->
-<section id="voluntario" class="section part-section has-video">
-  <video class="section-video" autoplay muted loop playsinline>
-    <source src="https://videos.pexels.com/video-files/3245304/3245304-uhd_2560_1440_25fps.mp4" type="video/mp4">
-  </video>
-  <div class="section-overlay"></div>
-  <div class="role-watermark role-watermark-left" aria-hidden="true"><svg><use href="#icon-voluntario"/></svg></div>
+<!-- PARTICIPACIÓN: VOLUNTARIO -->
+<section id="voluntario" class="section-part">
   <div class="container">
-    <div class="section-label">03 — Equipo</div>
+    <div class="part-num-label">03</div>
     <div class="part-layout">
-      <div class="part-info">
-        <h2 class="reveal-up delay-1">Construir algo memorable, desde adentro.</h2>
-        <p class="reveal-up delay-1">Cada parte de la experiencia tiene a alguien detrás. La producción, el flujo de la noche, los detalles que hacen que todo se sienta bien — son el trabajo del equipo.</p>
-        <div class="voluntario-areas reveal-up delay-2">
-          <div class="va-item">
-            <div class="va-title">Curaduría editorial</div>
-            <div class="va-desc">Selección de ideas y speakers. Lectura, criterio, conversaciones.</div>
+      <div class="part-info reveal-fade">
+        <div class="sec-label">Equipo</div>
+        <h2>Construir algo memorable, desde adentro.</h2>
+        <p>Cada parte de la experiencia tiene a alguien detrás. La producción, el flujo de la noche, los detalles que hacen que todo se sienta bien — son el trabajo del equipo.</p>
+
+        <div class="areas-grid">
+          <div class="area-item">
+            <div class="area-title">Curaduría editorial</div>
+            <div class="area-desc">Selección de ideas y speakers. Lectura, criterio, conversaciones.</div>
           </div>
-          <div class="va-item">
-            <div class="va-title">Producción</div>
-            <div class="va-desc">Logística, escenario, coordinación técnica y operativa.</div>
+          <div class="area-item">
+            <div class="area-title">Producción</div>
+            <div class="area-desc">Logística, escenario, coordinación técnica y operativa.</div>
           </div>
-          <div class="va-item">
-            <div class="va-title">Comunicación</div>
-            <div class="va-desc">Redes, contenidos, prensa, storytelling del proceso.</div>
+          <div class="area-item">
+            <div class="area-title">Comunicación</div>
+            <div class="area-desc">Redes, contenidos, prensa, storytelling del proceso.</div>
           </div>
-          <div class="va-item">
-            <div class="va-title">Experiencia</div>
-            <div class="va-desc">Atención al asistente, hospitalidad, flow de la noche.</div>
+          <div class="area-item">
+            <div class="area-title">Experiencia</div>
+            <div class="area-desc">Atención al asistente, hospitalidad, flow de la noche.</div>
           </div>
-          <div class="va-item">
-            <div class="va-title">Comunidad</div>
-            <div class="va-desc">Gestión de alianzas, partners y relaciones estratégicas.</div>
+          <div class="area-item">
+            <div class="area-title">Comunidad</div>
+            <div class="area-desc">Gestión de alianzas, partners y relaciones estratégicas.</div>
           </div>
         </div>
       </div>
-      <div class="part-form-col">
-        <div class="expand-card reveal-up delay-2" id="form-voluntario">
-          <div class="expand-trigger" onclick="toggleExpand('form-voluntario')">
-            <div class="expand-icon-header">
-              <svg aria-hidden="true"><use href="#icon-voluntario"/></svg>
+
+      <div class="part-form-col reveal-fade delay-1">
+        <div class="form-card" id="form-voluntario">
+          <div class="fc-header" onclick="toggleForm('form-voluntario')">
+            <div class="fc-header-info">
+              <div class="fc-role">Voluntario</div>
+              <div class="fc-title">Sumarme al equipo</div>
             </div>
-            <div class="expand-cta-body">
-              <div class="expand-cta-label">Voluntario</div>
-              <div class="expand-cta-title">Sumarme al equipo</div>
-              <div class="expand-cta-btn"><span>Postular</span><span class="expand-arrow">↓</span></div>
+            <div class="fc-toggle" aria-hidden="true">
+              <svg class="fc-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </div>
-          <div class="expand-body">
-            <div class="expand-inner">
-              <form onsubmit="handleInlineSubmit(event, 'form-voluntario', 'Postulación recibida. Armamos el equipo con cuidado y te avisamos pronto.')">
-                <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
-                <div class="form-group">
-                  <label class="form-label">Nombre completo</label>
-                  <input class="form-input" type="text" name="nombre" placeholder="Tu nombre" required>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Email</label>
-                  <input class="form-input" type="email" name="email" placeholder="tu@email.com" required>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Área de interés</label>
-                  <select class="form-select" name="area" required>
-                    <option value="" disabled selected>— Elegí un área —</option>
-                    <option>Curaduría editorial</option>
-                    <option>Producción</option>
-                    <option>Comunicación</option>
-                    <option>Experiencia del asistente</option>
-                    <option>Comunidad y partnerships</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">¿Por qué querés ser parte?</label>
-                  <textarea class="form-textarea" name="motivo" placeholder="Dos o tres líneas." required></textarea>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Disponibilidad</label>
-                  <input class="form-input" type="text" name="disponibilidad" placeholder="Ej: fines de semana, tardes entre semana...">
-                </div>
-                <button type="submit" class="form-submit">Enviar postulación</button>
-              </form>
-            </div>
+          <div class="fc-body">
+            <form class="fc-form" onsubmit="handleSubmit(event,'form-voluntario','Postulación recibida. Armamos el equipo con cuidado y te avisamos pronto.')">
+              <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
+              <div class="fg">
+                <label class="fl">Nombre completo</label>
+                <input class="fi" type="text" name="nombre" placeholder="Tu nombre" required>
+              </div>
+              <div class="fg">
+                <label class="fl">Email</label>
+                <input class="fi" type="email" name="email" placeholder="tu@email.com" required>
+              </div>
+              <div class="fg">
+                <label class="fl">Área de interés</label>
+                <select class="fse" name="area" required>
+                  <option value="" disabled selected>Elegí un área</option>
+                  <option>Curaduría editorial</option>
+                  <option>Producción</option>
+                  <option>Comunicación</option>
+                  <option>Experiencia del asistente</option>
+                  <option>Comunidad y partnerships</option>
+                </select>
+              </div>
+              <div class="fg">
+                <label class="fl">¿Por qué querés ser parte?</label>
+                <textarea class="fta" name="motivo" placeholder="Dos o tres líneas." required></textarea>
+              </div>
+              <div class="fg">
+                <label class="fl">Disponibilidad</label>
+                <input class="fi" type="text" name="disponibilidad" placeholder="Ej: fines de semana, tardes entre semana...">
+              </div>
+              <button type="submit" class="fsub">Enviar postulación</button>
+            </form>
           </div>
         </div>
       </div>
@@ -455,242 +463,171 @@
   </div>
 </section>
 
-<!-- PARTNER -->
-<section id="partner" class="section part-section has-video">
-  <video class="section-video" autoplay muted loop playsinline>
-    <source src="https://videos.pexels.com/video-files/6749382/6749382-hd_1920_1080_24fps.mp4" type="video/mp4">
-  </video>
-  <div class="section-overlay"></div>
-  <div class="role-watermark" aria-hidden="true"><svg><use href="#icon-partner"/></svg></div>
+<!-- PARTICIPACIÓN: PARTNER -->
+<section id="partner" class="section-part section-part-alt">
   <div class="container">
-    <div class="section-label">04 — Partners</div>
-    <div class="part-layout part-reverse">
-      <div class="part-form-col">
-        <div class="expand-card reveal-up delay-2" id="form-partner">
-          <div class="expand-trigger" onclick="toggleExpand('form-partner')">
-            <div class="expand-icon-header">
-              <svg aria-hidden="true"><use href="#icon-partner"/></svg>
+    <div class="part-num-label">04</div>
+    <div class="part-layout part-layout-rev">
+      <div class="part-form-col reveal-fade delay-1">
+        <div class="form-card" id="form-partner">
+          <div class="fc-header" onclick="toggleForm('form-partner')">
+            <div class="fc-header-info">
+              <div class="fc-role">Partner</div>
+              <div class="fc-title">Quiero ser partner</div>
             </div>
-            <div class="expand-cta-body">
-              <div class="expand-cta-label">Partner</div>
-              <div class="expand-cta-title">Quiero ser partner</div>
-              <div class="expand-cta-btn"><span>Contactar</span><span class="expand-arrow">↓</span></div>
+            <div class="fc-toggle" aria-hidden="true">
+              <svg class="fc-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </div>
-          <div class="expand-body">
-            <div class="expand-inner">
-              <form onsubmit="handleInlineSubmit(event, 'form-partner', 'Gracias por el interés. Te contactamos en los próximos días.')">
-                <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
-                <div class="form-group">
-                  <label class="form-label">Nombre</label>
-                  <input class="form-input" type="text" name="nombre" placeholder="Tu nombre" required>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Empresa u organización</label>
-                  <input class="form-input" type="text" name="empresa" placeholder="Nombre de la organización" required>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Email de contacto</label>
-                  <input class="form-input" type="email" name="email" placeholder="tu@empresa.com" required>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Tipo de alianza</label>
-                  <select class="form-select" name="tipo" required>
-                    <option value="" disabled selected>— Seleccioná —</option>
-                    <option>Partner principal</option>
-                    <option>Partner de comunidad</option>
-                    <option>Partner de media</option>
-                    <option>Sponsor de producción</option>
-                    <option>Quiero explorar opciones</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">¿Qué buscás?</label>
-                  <textarea class="form-textarea" name="mensaje" placeholder="Contanos brevemente qué tipo de alianza te interesa."></textarea>
-                </div>
-                <button type="submit" class="form-submit">Enviar consulta</button>
-              </form>
-            </div>
+          <div class="fc-body">
+            <form class="fc-form" onsubmit="handleSubmit(event,'form-partner','Gracias por el interés. Te contactamos en los próximos días.')">
+              <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
+              <div class="fg">
+                <label class="fl">Nombre</label>
+                <input class="fi" type="text" name="nombre" placeholder="Tu nombre" required>
+              </div>
+              <div class="fg">
+                <label class="fl">Empresa u organización</label>
+                <input class="fi" type="text" name="empresa" placeholder="Nombre de la organización" required>
+              </div>
+              <div class="fg">
+                <label class="fl">Email de contacto</label>
+                <input class="fi" type="email" name="email" placeholder="tu@empresa.com" required>
+              </div>
+              <div class="fg">
+                <label class="fl">Tipo de alianza</label>
+                <select class="fse" name="tipo" required>
+                  <option value="" disabled selected>Seleccioná</option>
+                  <option>Partner principal</option>
+                  <option>Partner de comunidad</option>
+                  <option>Partner de media</option>
+                  <option>Sponsor de producción</option>
+                  <option>Quiero explorar opciones</option>
+                </select>
+              </div>
+              <div class="fg">
+                <label class="fl">¿Qué buscás?</label>
+                <textarea class="fta" name="mensaje" placeholder="Contanos brevemente qué tipo de alianza te interesa."></textarea>
+              </div>
+              <button type="submit" class="fsub">Enviar consulta</button>
+            </form>
           </div>
         </div>
       </div>
-      <div class="part-info">
-        <h2 class="reveal-up delay-1">Las marcas que acompañan las ideas también construyen territorio.</h2>
-        <p class="reveal-up delay-1">Ser partner de TEDxPeninsulaHiroki es asociarse a TED — la plataforma de ideas más grande del mundo — en un evento local, humano y curado en Neuquén Capital.</p>
-        <div class="part-details reveal-up delay-2">
-          <div class="pd-item">
-            <div class="pd-icon">—</div>
-            <div class="pd-text">Presencia en el evento y en todas las comunicaciones</div>
-          </div>
-          <div class="pd-item">
-            <div class="pd-icon">—</div>
-            <div class="pd-text">Acceso a una audiencia seleccionada y comprometida</div>
-          </div>
-          <div class="pd-item">
-            <div class="pd-icon">—</div>
-            <div class="pd-text">Asociación al ecosistema global de TED y TEDx</div>
-          </div>
-          <div class="pd-item">
-            <div class="pd-icon">—</div>
-            <div class="pd-text">Las charlas quedan publicadas con crédito a partners</div>
-          </div>
-        </div>
-        <div class="partner-types reveal-up delay-3">
+
+      <div class="part-info reveal-fade">
+        <div class="sec-label">Partners</div>
+        <h2>Las marcas que acompañan las ideas también construyen territorio.</h2>
+        <p>Ser partner de TEDxPeninsulaHiroki es asociarse a TED, la plataforma de ideas más grande del mundo, en un evento local, humano y curado en Neuquén Capital.</p>
+
+        <ul class="part-list">
+          <li>Presencia en el evento y en todas las comunicaciones</li>
+          <li>Acceso a una audiencia seleccionada y comprometida</li>
+          <li>Asociación al ecosistema global de TED y TEDx</li>
+          <li>Las charlas quedan publicadas con crédito a partners</li>
+        </ul>
+
+        <div class="partner-types">
           <div class="pt-item">Partner Principal</div>
           <div class="pt-item">Partner Comunidad</div>
           <div class="pt-item">Media Partner</div>
           <div class="pt-item">Sponsor Producción</div>
         </div>
-        <p class="part-note reveal-up delay-4">El territorio también forma parte de la conversación.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TERRITORIO -->
-<section id="territorio" class="section has-video">
-  <video class="section-video" autoplay muted loop playsinline>
-    <source src="https://videos.pexels.com/video-files/3214448/3214448-uhd_2560_1440_25fps.mp4" type="video/mp4">
-  </video>
-  <div class="section-overlay"></div>
-  <div class="container">
-    <div class="section-label">El lugar</div>
-    <div class="territorio-layout">
-      <div class="territorio-left reveal-up">
-        <h2>Neuquén tiene algo para decir.</h2>
-      </div>
-      <div class="territorio-right reveal-up delay-2">
-        <p>La Patagonia no es solo paisaje. Es territorio de energía, innovación, investigación y comunidad. La Reserva Natural Península Hiroki — en la confluencia de los ríos Neuquén y Limay — es el lugar donde nace este evento. Un atardecer. Cien personas. Una idea que permanece.</p>
-        <p>TEDxPeninsulaHiroki nace acá porque las ideas que se generan en los márgenes del mapa suelen cambiar el centro. Eso es lo que queremos mostrar.</p>
-      </div>
-    </div>
-    <div class="territorio-stats reveal-up delay-3">
-      <div class="ts-item">
-        <div class="ts-num">100</div>
-        <div class="ts-label">personas seleccionadas</div>
-      </div>
-      <div class="ts-sep"></div>
-      <div class="ts-item">
-        <div class="ts-num">1</div>
-        <div class="ts-label">atardecer en la Patagonia</div>
-      </div>
-      <div class="ts-sep"></div>
-      <div class="ts-item">
-        <div class="ts-num">2</div>
-        <div class="ts-label">ríos que se encuentran</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- QUÉ ES TEDX -->
-<section id="que-es" class="section has-video">
-  <video class="section-video" autoplay muted loop playsinline>
-    <source src="https://videos.pexels.com/video-files/12920663/12920663-hd_1920_1080_30fps.mp4" type="video/mp4">
-  </video>
-  <div class="section-overlay"></div>
-  <div class="container">
-    <div class="section-label">El ecosistema</div>
-    <div class="awareness-layout">
-      <div class="awareness-left reveal-up">
-        <h2>Cuarenta años de ideas.<br>En tu ciudad.</h2>
-      </div>
-      <div class="awareness-right reveal-up delay-2">
-        <p>TED lleva más de cuarenta años reuniendo ideas que valen la pena. TEDx lleva esas conversaciones a cualquier ciudad del mundo, con licencia independiente de TED.</p>
-        <p>Una charla grabada en Neuquén puede ser vista en cualquier parte del planeta.</p>
-      </div>
-    </div>
-    <div class="global-stats">
-      <div class="stat-item reveal-up delay-1">
-        <div class="stat-value" data-target="18000" data-suffix="+">0</div>
-        <div class="stat-label">Charlas publicadas</div>
-      </div>
-      <div class="stat-item reveal-up delay-2">
-        <div class="stat-value stat-static">1B+</div>
-        <div class="stat-label">Visualizaciones globales</div>
-      </div>
-      <div class="stat-item reveal-up delay-3">
-        <div class="stat-value" data-target="3500" data-suffix="+">0</div>
-        <div class="stat-label">Eventos TEDx por año</div>
-      </div>
-      <div class="stat-item reveal-up delay-4">
-        <div class="stat-value" data-target="170" data-suffix="+">0</div>
-        <div class="stat-label">Países activos</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- FAQ -->
-<section id="faq" class="section faq-section">
+<section id="faq" class="section-surface">
   <div class="container">
-    <div class="section-label">Preguntas frecuentes</div>
     <div class="faq-layout">
-      <div class="faq-heading reveal-up">
-        <h2>Lo que<br>más nos preguntan.</h2>
+      <div class="faq-left reveal-fade">
+        <div class="sec-label">Preguntas</div>
+        <h2 class="faq-heading">Lo que<br>más nos<br>preguntan.</h2>
       </div>
-      <div class="faq-list reveal-up delay-2">
+      <div class="faq-right reveal-fade delay-1">
+        <div class="faq-list">
 
-        <div class="faq-item">
-          <button class="faq-trigger" aria-expanded="false">
-            ¿El evento es gratuito?
-            <span class="faq-icon" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-body" role="region">
-            <p>Sí. Tanto la asistencia como las entradas son 100% gratuitas. El evento es posible gracias a partners y sponsors que comparten la visión.</p>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              ¿El evento es gratuito?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <p>Sí. Tanto la asistencia como las entradas son 100% gratuitas. El evento es posible gracias a partners y sponsors que comparten la visión.</p>
+            </div>
           </div>
-        </div>
 
-        <div class="faq-item">
-          <button class="faq-trigger" aria-expanded="false">
-            ¿Necesito experiencia en TED para postularme como speaker?
-            <span class="faq-icon" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-body" role="region">
-            <p>No hace falta. Buscamos ideas potentes, no oradores perfectos. El equipo acompaña cada etapa: preparación, ensayos y coaching antes del evento.</p>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              ¿Necesito experiencia en TED para postularme como speaker?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <p>No hace falta. Buscamos ideas potentes, no oradores perfectos. El equipo acompaña cada etapa: preparación, ensayos y coaching antes del evento.</p>
+            </div>
           </div>
-        </div>
 
-        <div class="faq-item">
-          <button class="faq-trigger" aria-expanded="false">
-            ¿Cuántas personas van al evento?
-            <span class="faq-icon" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-body" role="region">
-            <p>Es un evento íntimo, hasta 100 personas. La selección de asistentes es curada para que cada persona en la sala tenga algo genuino que aportar.</p>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              ¿Cuántas personas van al evento?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <p>Es un evento íntimo, hasta 100 personas. La selección de asistentes es curada para que cada persona en la sala tenga algo genuino que aportar.</p>
+            </div>
           </div>
-        </div>
 
-        <div class="faq-item">
-          <button class="faq-trigger" aria-expanded="false">
-            ¿Dónde va a ser?
-            <span class="faq-icon" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-body" role="region">
-            <p>En Neuquén Capital, en la zona de la Reserva Natural Península Hiroki. El venue exacto se confirma a los seleccionados.</p>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              ¿Dónde va a ser?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <p>En Neuquén Capital, en la zona de la Reserva Natural Península Hiroki. El venue exacto se confirma a los seleccionados.</p>
+            </div>
           </div>
-        </div>
 
-        <div class="faq-item">
-          <button class="faq-trigger" aria-expanded="false">
-            ¿Qué pasa si aplico y no quedé seleccionado?
-            <span class="faq-icon" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-body" role="region">
-            <p>Te avisamos por email. Las postulaciones quedan en consideración para ediciones futuras.</p>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              ¿Cuándo es el evento?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <p>La fecha exacta todavía no está confirmada. Quienes están en la waitlist son los primeros en enterarse. Anotarte ya es la mejor forma de no perdértelo.</p>
+            </div>
           </div>
-        </div>
 
-        <div class="faq-item">
-          <button class="faq-trigger" aria-expanded="false">
-            ¿Puedo ir con niños?
-            <span class="faq-icon" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-body" role="region">
-            <p>El evento está pensado para adultos. No hay espacio específico para niños en esta edición.</p>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              ¿Qué pasa si aplico y no quedé seleccionado?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <p>Te avisamos por email. Las postulaciones quedan en consideración para ediciones futuras.</p>
+            </div>
           </div>
-        </div>
 
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section id="cta-final" class="section-cta-final">
+  <div class="container">
+    <div class="ctaf-inner reveal-fade">
+      <p class="ctaf-sub">Neuquén Capital · Patagonia · 2026</p>
+      <h2 class="ctaf-headline">No te lo pierdas.</h2>
+      <p class="ctaf-body">Cien personas. Un atardecer. Ideas que permanecen.<br>La lista está abierta.</p>
+      <div class="ctaf-actions">
+        <a href="#asistir" class="btn-red-lg" onclick="navScroll(event,'asistir')">
+          Anotarme en la waitlist
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3.5 9h11M10 4.5l4.5 4.5L10 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#speaker" class="btn-outline-lg" onclick="navScroll(event,'speaker')">Postular una idea</a>
       </div>
     </div>
   </div>
@@ -698,32 +635,32 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-logo">
-          <span class="ted">TEDx</span><span class="name">PeninsulaHiroki</span>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="fb-logo">
+            <span class="fb-ted">TEDx</span><span class="fb-name">PeninsulaHiroki</span>
+          </div>
+          <p class="fb-loc">Neuquén Capital · Patagonia · 2026</p>
+          <p class="fb-tag">La Patagonia tiene algo para decir.</p>
         </div>
-        <p>Neuquén Capital &nbsp;·&nbsp; 2026</p>
-        <p class="footer-tagline">La Patagonia tiene algo para decir.</p>
+        <nav class="footer-nav">
+          <a href="#asistir">Asistir</a>
+          <a href="#speaker">Ser speaker</a>
+          <a href="#voluntario">Voluntario</a>
+          <a href="#partner">Partner</a>
+          <a href="#que-es">Qué es TEDx</a>
+          <a href="contact.html">Contacto</a>
+        </nav>
+        <div class="footer-cta">
+          <a href="#asistir" class="btn-red-sm" onclick="navScroll(event,'asistir')">Waitlist</a>
+        </div>
       </div>
-      <nav class="footer-nav-wrap">
-        <ul class="footer-nav">
-          <li><a href="#asistir"><svg class="footer-role-icon" aria-hidden="true"><use href="#icon-asistir"/></svg>Asistir</a></li>
-          <li><a href="#speaker"><svg class="footer-role-icon" aria-hidden="true"><use href="#icon-speaker"/></svg>Ser speaker</a></li>
-          <li><a href="#voluntario"><svg class="footer-role-icon" aria-hidden="true"><use href="#icon-voluntario"/></svg>Voluntario</a></li>
-          <li><a href="#partner"><svg class="footer-role-icon" aria-hidden="true"><use href="#icon-partner"/></svg>Partner</a></li>
-          <li><a href="#que-es">Qué es TEDx</a></li>
-          <li><a href="contact.html">Contacto</a></li>
-        </ul>
-      </nav>
-      <div class="footer-cta-wrap">
-        <button class="btn-primary" onclick="smoothScroll('asistir')">Waitlist</button>
+      <div class="footer-bottom">
+        <p>Este evento TEDx es organizado de forma independiente bajo licencia de TED.</p>
+        <p>TEDxPeninsulaHiroki &copy; 2026</p>
       </div>
-    </div>
-    <div class="footer-bottom">
-      <p>Este evento TEDx es organizado de forma independiente bajo licencia de TED.</p>
-      <p>TEDxPeninsulaHiroki &copy; 2026</p>
     </div>
   </div>
 </footer>
