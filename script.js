@@ -47,6 +47,10 @@ function smoothScroll(id) {
 
 function navScroll(e, id) {
   e.preventDefault();
+  const card = document.getElementById(id);
+  if (card && card.classList.contains('form-card') && !card.classList.contains('open')) {
+    card.classList.add('open');
+  }
   smoothScroll(id);
 }
 
@@ -55,6 +59,10 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     const id = link.getAttribute('href').slice(1);
     if (!id) return;
     e.preventDefault();
+    const target = document.getElementById(id);
+    if (target && target.classList.contains('form-card') && !target.classList.contains('open')) {
+      target.classList.add('open');
+    }
     smoothScroll(id);
   });
 });
