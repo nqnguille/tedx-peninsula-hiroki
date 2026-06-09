@@ -298,67 +298,24 @@
     /* TEMA PROFUNDO */
     #tema {
       background: #111;
-      padding: 120px 0;
+      padding: 96px 0;
     }
-    .tema-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
+    .tema-simple {
+      max-width: 680px;
     }
-    @media (max-width: 768px) {
-      .tema-grid { grid-template-columns: 1fr; gap: 48px; }
-    }
-    .tema-left {}
-    .tema-left h2 {
+    .tema-simple h2 {
       font-family: 'DM Serif Display', Georgia, serif;
       font-size: clamp(2rem, 3.5vw, 2.8rem);
       color: #fff;
-      line-height: 1.15;
-      margin: 0 0 24px;
+      line-height: 1.12;
+      margin: 0 0 28px;
     }
-    .tema-left p {
+    .tema-simple p {
       font-family: 'DM Sans', sans-serif;
       font-size: 1rem;
       line-height: 1.8;
       color: rgba(255,255,255,0.6);
       margin: 0 0 16px;
-    }
-    .tema-right {}
-    .subtopico-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-    .subtopico-item {
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding: 28px 0;
-    }
-    .subtopico-item:last-child {
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    .subtopico-num {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      color: #EB0028;
-      margin-bottom: 8px;
-    }
-    .subtopico-title {
-      font-family: 'DM Serif Display', Georgia, serif;
-      font-size: 1.2rem;
-      color: #fff;
-      margin-bottom: 8px;
-    }
-    .subtopico-desc {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.88rem;
-      line-height: 1.7;
-      color: rgba(255,255,255,0.45);
     }
 
     /* TERRITORIO */
@@ -816,89 +773,14 @@
   </div>
 </section>
 
-<!-- FOMO: EL MOMENTO -->
-<section id="momento" class="section-dark">
-  <div class="container">
-    <div class="momento-grid">
-      <div class="momento-left reveal-fade">
-        <div class="sec-label">El evento</div>
-        <h2 class="momento-headline">Un momento que no se repite.</h2>
-      </div>
-      <div class="momento-right reveal-fade delay-1">
-        <p>La Reserva Natural Península Hiroki está donde el río Neuquén y el Limay se encuentran. Un atardecer patagónico. Personas seleccionadas por su curiosidad y su capacidad de aportar. Charlas breves con ideas que pesan.</p>
-        <p>No es un congreso. No es un workshop. No es networking. Es un momento que se convierte en charlas que cualquier persona en el mundo puede ver, para siempre.</p>
-        <div class="momento-stats">
-          <div class="ms-item">
-            <div class="ms-num">100</div>
-            <div class="ms-label">personas seleccionadas</div>
-          </div>
-          <div class="ms-div"></div>
-          <div class="ms-item">
-            <div class="ms-num">1</div>
-            <div class="ms-label">atardecer en la Patagonia</div>
-          </div>
-          <div class="ms-div"></div>
-          <div class="ms-item">
-            <div class="ms-num">2</div>
-            <div class="ms-label">ríos que se encuentran</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- TEMA EN PROFUNDIDAD -->
 <section id="tema">
   <div class="container">
-    <div class="tema-grid reveal-fade">
-      <div class="tema-left">
-        <div class="sec-label">El tema · 2026</div>
-        <h2>Por qué "Cultivar<br>Conciencia" ahora,<br>y por qué acá.</h2>
-        <p>
-          La conciencia es el tema que TED lleva décadas explorando sin agotarlo. Desde neurocientistas que estudian cómo el cerebro construye la realidad hasta filósofos que preguntan qué significa ser uno mismo: la pregunta sigue abierta.
-        </p>
-        <p>
-          En 2026, esa pregunta tiene una urgencia nueva. La inteligencia artificial puede imitar el pensamiento. Los algoritmos moldean lo que elegimos ver. Las comunidades se forman en burbujas. ¿Qué queda del juicio propio? ¿Qué significa "estar despierto" en este contexto?
-        </p>
-        <p>
-          La Patagonia tiene algo propio para decir. Acá, la relación entre el ser humano y la naturaleza todavía no está resuelta. Hay preguntas sobre el territorio, los recursos, la identidad de una región que el mundo proyecta pero que sus habitantes conocen de otra manera. Esa tensión es fértil. De ahí salen ideas que no aparecen en ninguna otra parte.
-        </p>
-      </div>
-      <div class="tema-right">
-        <ul class="subtopico-list">
-          <li class="subtopico-item">
-            <div class="subtopico-num">01</div>
-            <div class="subtopico-title">Atención en un mundo de estímulos</div>
-            <div class="subtopico-desc">Qué le pasa al pensamiento profundo cuando todo compite por los primeros tres segundos. Cómo se recupera la capacidad de sostener una idea.</div>
-          </li>
-          <li class="subtopico-item">
-            <div class="subtopico-num">02</div>
-            <div class="subtopico-title">Naturaleza como maestra</div>
-            <div class="subtopico-desc">Lo que los ecosistemas patagónicos enseñan sobre sistemas complejos, interdependencia y resiliencia. Biología aplicada a cómo organizamos comunidades.</div>
-          </li>
-          <li class="subtopico-item">
-            <div class="subtopico-num">03</div>
-            <div class="subtopico-title">Identidad y territorio</div>
-            <div class="subtopico-desc">Cómo el lugar donde vivimos da forma a quiénes somos. La Patagonia como experiencia de límite, vastedad y pertenencia.</div>
-          </li>
-          <li class="subtopico-item">
-            <div class="subtopico-num">04</div>
-            <div class="subtopico-title">Salud y cuerpo con conciencia</div>
-            <div class="subtopico-desc">Nuevas formas de entender el bienestar: desde la medicina integrativa hasta las plantas como herramienta terapéutica respaldada por ciencia.</div>
-          </li>
-          <li class="subtopico-item">
-            <div class="subtopico-num">05</div>
-            <div class="subtopico-title">El yo en la era de la IA</div>
-            <div class="subtopico-desc">Cuando las máquinas pueden razonar, ¿qué queda de propiamente humano? Qué conservar, qué ceder, cómo relacionarse con inteligencias que no son conscientes.</div>
-          </li>
-          <li class="subtopico-item">
-            <div class="subtopico-num">06</div>
-            <div class="subtopico-title">Comunidad como práctica</div>
-            <div class="subtopico-desc">Cómo se construye pertenencia real en una época de conexiones virtuales. Organizaciones que funcionan, vínculos que sostienen, culturas que duran.</div>
-          </li>
-        </ul>
-      </div>
+    <div class="tema-simple reveal-fade">
+      <div class="sec-label">El tema · 2026</div>
+      <h2>Por qué "Cultivando<br>Conciencia" ahora.</h2>
+      <p>La conciencia es el tema que TED lleva décadas explorando sin agotarlo. En 2026, esa pregunta tiene urgencia nueva: la inteligencia artificial puede imitar el pensamiento, los algoritmos moldean lo que elegimos ver. ¿Qué queda del juicio propio? ¿Qué significa "estar despierto" en este contexto?</p>
+      <p>La Patagonia tiene algo propio para decir. Acá, la relación entre el ser humano y la naturaleza todavía no está resuelta. Esa tensión es fértil. De ahí salen ideas que no aparecen en ninguna otra parte.</p>
     </div>
   </div>
 </section>
@@ -957,97 +839,6 @@
     </div>
   </div>
 </section>
-
-<!-- CITAS DE ESPÍRITU -->
-<section id="espiritu">
-  <div class="container">
-    <div class="sec-label" style="margin-bottom:48px">El espíritu del movimiento</div>
-    <div class="espiritu-grid">
-      <div class="espiritu-card reveal-fade">
-        <p class="ec-quote">"Las ideas cambian perspectivas. Las perspectivas cambian vidas. Las vidas cambiadas cambian comunidades. Las comunidades cambiadas cambian el mundo."</p>
-        <div class="ec-attr">TED — Misión institucional</div>
-      </div>
-      <div class="espiritu-card reveal-fade delay-1">
-        <p class="ec-quote">"Los políticos van y vienen. Las ideas son para siempre. Y son de todos."</p>
-        <div class="ec-attr">Chris Anderson — Líder de TED</div>
-      </div>
-      <div class="espiritu-card reveal-fade delay-2">
-        <p class="ec-quote">"El mejor trabajo que hacemos no es lo que hacemos nosotros. Es lo que empoderamos a otros a hacer."</p>
-        <div class="ec-attr">TED — Principio de generosidad</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- COUNTDOWN / ESCASEZ -->
-<section id="escasez" class="section-red">
-  <div class="container">
-    <div class="escasez-inner reveal-fade">
-      <p class="escasez-eyebrow">12 de septiembre de 2026 · Neuquén Capital</p>
-      <h2 class="escasez-headline">Los cupos son limitados.<br>La lista se mueve.</h2>
-      <p class="escasez-body">Cien lugares para una experiencia que no va a repetirse. Cuando abramos la selección, los primeros en enterarse son los que ya están en la waitlist.</p>
-      <a href="#asistir" class="btn-white" onclick="navScroll(event,'asistir')">
-        Anotarme ahora
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- SECCIÓN: QUÉ ES TEDX -->
-<section id="que-es" class="section-dark">
-  <div class="container">
-    <div class="quees-layout">
-      <div class="quees-left reveal-fade">
-        <div class="sec-label">El movimiento</div>
-        <h2>Cuarenta años de ideas.<br>Ahora en Neuquén.</h2>
-        <p>TED lleva más de cuatro décadas reuniendo las ideas más potentes del mundo. No noticias. No análisis. Ideas: algo que te cambia la perspectiva, que te hace pensar distinto, que te da algo que podés aplicar.</p>
-        <p>TEDx lleva esas conversaciones a cualquier ciudad. Con licencia independiente de TED, organizada por voluntarios locales, con speakers locales. Una charla grabada en Neuquén puede ser vista en cualquier parte del planeta.</p>
-
-        <div class="quees-manifesto">
-          <div class="qm-item">
-            <div class="qm-num">01</div>
-            <div class="qm-text"><strong>Ideas locales, alcance global.</strong> Lo que decís en un escenario de Neuquén queda publicado en el ecosistema mundial de TED. Sin filtros, sin intermediarios, para siempre.</div>
-          </div>
-          <div class="qm-item">
-            <div class="qm-num">02</div>
-            <div class="qm-text"><strong>Diversidad de disciplinas.</strong> TED fue fundado en la intersección de tecnología, entretenimiento y diseño. Hoy incluye ciencia, arte, filosofía, activismo, medicina, economía. El único criterio es que la idea valga la pena.</div>
-          </div>
-          <div class="qm-item">
-            <div class="qm-num">03</div>
-            <div class="qm-text"><strong>Rigor sin pedantería.</strong> Las charlas TED son verificadas, precisas, respaldadas. Pero están contadas para cualquier persona, no para especialistas. El experto es el orador. La audiencia es el mundo.</div>
-          </div>
-          <div class="qm-item">
-            <div class="qm-num">04</div>
-            <div class="qm-text"><strong>Formato que obliga a la claridad.</strong> Entre ocho y dieciocho minutos. Una idea central. Sin paneles, sin presentaciones corporativas, sin jerga. Si no podés explicarlo claro, todavía no lo entendés del todo.</div>
-          </div>
-        </div>
-      </div>
-      <div class="quees-right reveal-fade delay-2">
-        <div class="quees-stats">
-          <div class="qs-item">
-            <div class="qs-num" data-target="18000" data-suffix="+">0</div>
-            <div class="qs-label">Charlas en el ecosistema TEDx</div>
-          </div>
-          <div class="qs-item">
-            <div class="qs-num qs-static">1B+</div>
-            <div class="qs-label">Visualizaciones globales de charlas TEDx</div>
-          </div>
-          <div class="qs-item">
-            <div class="qs-num" data-target="3000" data-suffix="+">0</div>
-            <div class="qs-label">Eventos TEDx por año en el mundo</div>
-          </div>
-          <div class="qs-item">
-            <div class="qs-num" data-target="170" data-suffix="+">0</div>
-            <div class="qs-label">Países con TEDx activos</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
 
 <!-- FAQ -->
 <section id="faq" class="section-surface">
@@ -1127,6 +918,106 @@
             </button>
             <div class="faq-a">
               <p>Sí. Todas las charlas quedan publicadas de forma gratuita en el canal de TEDxPeninsulaHiroki, parte del ecosistema global de TED. Cualquier persona en cualquier parte del mundo puede verlas.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              ¿Qué es TEDx exactamente? ¿Es lo mismo que TED?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <p>TEDx es un programa de eventos locales organizados de forma independiente bajo licencia de TED. Cada evento es producido por voluntarios de la comunidad, con el mismo estándar de ideas y charlas que el TED global. Las charlas se publican en el ecosistema de TED y pueden volverse virales globalmente — como pasó con cientos de charlas TEDx que hoy tienen millones de vistas.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              ¿Quién organiza TEDxPeninsulaHiroki?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <p>Es un evento organizado por un equipo de voluntarios de Neuquén, con licencia oficial de TED. No es un evento corporativo ni gubernamental. Es posible gracias a personas que creen que la Patagonia tiene ideas que el mundo necesita escuchar.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              ¿Cómo me anoto para asistir?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <p>Completando el formulario de esta página. La selección de asistentes es intencional: buscamos que cada persona en la sala tenga algo genuino que aportar — desde su profesión, experiencia o perspectiva. Quienes están en la lista reciben la información cuando abramos la convocatoria oficial.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              ¿Tengo que ser de Neuquén para asistir?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <p>No. Hay personas que viajan desde otras ciudades del país y del exterior para asistir a eventos TEDx. Si la idea te llega y podés estar el 12 de septiembre de 2026 en Neuquén, podés postularte.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              ¿Cuánto dura el evento y hay receso?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <p>Un TEDx típico dura entre 3 y 5 horas, con pausas entre bloques de charlas. TEDxPeninsulaHiroki es un evento de atardecer: comenzamos cuando el sol baja sobre los ríos y terminamos cuando las ideas todavía están encendidas. El programa exacto se comunica a los confirmados.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              ¿Cómo se seleccionan los speakers?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <p>El equipo de curaduría lee cada postulación de forma personal. Buscamos una sola cosa: una idea concreta, específica y bien fundamentada. No importa si sos conocido o nunca hablaste en público. Si la idea es fuerte, la conversación empieza.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              ¿Qué formato tienen las charlas TEDx?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <p>Entre 8 y 18 minutos, una sola idea central. Sin PowerPoints genéricos, sin discursos corporativos. El equipo trabaja con cada speaker durante semanas antes del evento: estructura, narrativa, ritmo, ensayos. El resultado es una charla que dura para siempre.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              ¿Hay transmisión en vivo para quienes no pueden asistir?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <p>El evento es presencial e íntimo por diseño. No hay transmisión en vivo — parte de lo que hace especial a TEDxPeninsulaHiroki es que las ideas se viven en el lugar. Las charlas se publican después del evento en el canal oficial.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              ¿Cómo puede mi empresa apoyar el evento?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <p>Diseñamos cada alianza a medida. No hay paquetes cerrados. Si tu organización cree que las ideas importan, completá el formulario de Partner y hablamos. Las charlas quedan publicadas con crédito a los partners para siempre.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              ¿Puedo compartir el evento en mis redes?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <p>Por favor, hacelo. TEDxPeninsulaHiroki crece por las personas que creen en él. Compartí la página, etiquetanos, contale a quien creas que debería estar ahí. Cada persona que llega por recomendación hace el evento mejor.</p>
             </div>
           </div>
 
