@@ -208,10 +208,14 @@ async function handleSubmit(e, cardId, successMsg) {
 /* ============================================================
    HERO CINEMATIC SEQUENCE — 3 frames + intro negro
    ============================================================
-   FASE 0 (p 0→0.16):  Negro total → bare aparece (fade in)
-   FASE 1 (p 0.16→0.4): Bare visible, watermark 2026
-   FASE 2 (p 0.4→0.64): Bare → Empty (sillas se materializan)
-   FASE 3 (p 0.64→1.0): Empty → Full (gente aparece), luego CTAs
+   FASE 0 (p 0→0.16):   Negro total → bare aparece (fade in)
+   FASE 1 (p 0.16→0.45): Bare visible
+     - pt1 watermark "2026": presente muy sutil (0.16→0.45)
+     - pt2 "Cultivando Conciencia": aparece (0.20→0.44), se va antes de las sillas
+   FASE 2 (p 0.45→0.65): Bare → Empty (sillas se materializan)
+   FASE 3 (p 0.65→1.0):  Empty → Full (gente aparece)
+     - pt3 "100 personas. 1 atardecer.": (0.68→0.88)
+     - CTAs: aparecen desde p 0.90
 
    Scroll total = 500vh → section.offsetHeight - window.innerHeight
    progress = scrolled / total → 0..1
@@ -267,19 +271,29 @@ async function handleSubmit(e, cardId, successMsg) {
   }
 
   /* ── Viñetas cinematográficas ── */
-  function vignettes() {
+  function vignettes(p) {
     var cw = window.innerWidth, ch = window.innerHeight;
+
+    /* Viñeta superior */
     var gTop = ctx.createLinearGradient(0, 0, 0, ch * 0.28);
     gTop.addColorStop(0, 'rgba(0,0,0,0.75)');
     gTop.addColorStop(1, 'rgba(0,0,0,0)');
     ctx.fillStyle = gTop;
     ctx.fillRect(0, 0, cw, ch * 0.28);
 
+    /* Viñeta inferior */
     var gBot = ctx.createLinearGradient(0, ch * 0.6, 0, ch);
     gBot.addColorStop(0, 'rgba(0,0,0,0)');
     gBot.addColorStop(1, 'rgba(0,0,0,0.88)');
     ctx.fillStyle = gBot;
     ctx.fillRect(0, ch * 0.6, cw, ch * 0.4);
+
+    /* Overlay central de legibilidad: activo cuando "Cultivando Conciencia" está visible (p 0.18→0.46) */
+    var textOverlayAlpha = windowOpacity(p, 0.18, 0.46, 0.06) * 0.35;
+    if (textOverlayAlpha > 0) {
+      ctx.fillStyle = 'rgba(0,0,0,' + textOverlayAlpha.toFixed(3) + ')';
+      ctx.fillRect(0, 0, cw, ch);
+    }
   }
 
   /* ── Interpolación suave ── */
@@ -333,22 +347,22 @@ async function handleSubmit(e, cardId, successMsg) {
       coverDraw(imgs[0]);
       ctx.globalAlpha = 1;
 
-    } else if (p < 0.4) {
-      /* Fase 1: bare visible */
+    } else if (p < 0.45) {
+      /* Fase 1: bare visible — "Cultivando Conciencia" aparece aquí */
       coverDraw(imgs[0]);
 
-    } else if (p < 0.64) {
-      /* Fase 2: bare → empty */
-      var tEmpty = smoothstep(0.4, 0.64, p);
+    } else if (p < 0.65) {
+      /* Fase 2: bare → empty (sillas se materializan) */
+      var tEmpty = smoothstep(0.45, 0.65, p);
       crossfade(imgs[0], imgs[1], tEmpty);
 
     } else {
-      /* Fase 3: empty → full */
-      var tFull = smoothstep(0.64, 1.0, p);
+      /* Fase 3: empty → full (personas llenan el auditorio) */
+      var tFull = smoothstep(0.65, 1.0, p);
       crossfade(imgs[1], imgs[2], tFull);
     }
 
-    vignettes();
+    vignettes(p);
 
     /* ── Intro: desaparece al scrollear ── */
     if (intro) {
@@ -361,12 +375,17 @@ async function handleSubmit(e, cardId, successMsg) {
     var pt3 = document.getElementById('phase-text-3');
     var pt4 = document.getElementById('hero-ctas');
 
-    if (pt1) pt1.style.opacity = windowOpacity(p, 0.16, 0.5, 0.1).toFixed(3);
-    if (pt2) pt2.style.opacity = windowOpacity(p, 0.44, 0.78, 0.1).toFixed(3);
-    if (pt3) pt3.style.opacity = windowOpacity(p, 0.75, 0.95, 0.08).toFixed(3);
+    /* pt1 — watermark "2026": sutil durante toda la fase bare, desaparece antes del crossfade */
+    if (pt1) pt1.style.opacity = windowOpacity(p, 0.16, 0.43, 0.08).toFixed(3);
+
+    /* pt2 — "Cultivando Conciencia": aparece sobre el bare, se va ANTES de que arranquen las sillas */
+    if (pt2) pt2.style.opacity = windowOpacity(p, 0.20, 0.44, 0.08).toFixed(3);
+
+    /* pt3 — "100 personas. 1 atardecer.": aparece durante el auditorio lleno */
+    if (pt3) pt3.style.opacity = windowOpacity(p, 0.68, 0.88, 0.08).toFixed(3);
 
     if (pt4) {
-      var ctaOpacity = smoothstep(0.93, 1.0, p);
+      var ctaOpacity = smoothstep(0.90, 1.0, p);
       pt4.style.opacity = ctaOpacity.toFixed(3);
       if (ctaOpacity > 0.5) {
         pt4.classList.add('active');
