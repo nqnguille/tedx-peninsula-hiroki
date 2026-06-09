@@ -66,13 +66,15 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      left: 0;
-      right: 0;
+      /* Centrado horizontal con max-width igual al container del sitio */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 1296px; /* 1200px + 2*48px padding */
       z-index: 10;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      /* Padding respeta el padding del hero original */
       padding: 72px 48px 80px;
       pointer-events: none;
       will-change: opacity;

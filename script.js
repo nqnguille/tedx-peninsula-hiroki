@@ -200,131 +200,158 @@ async function handleSubmit(e, cardId, successMsg) {
 
 /* ── Hero bg image: fade in on load (legacy, kept for contact.html) ── */
 (function() {
-  const heroBg = document.querySelector('.hero-bg-image');
+  var heroBg = document.querySelector('.hero-bg-image');
   if (!heroBg) return;
-  const img = new Image();
-  const src = heroBg.style.backgroundImage.replace(/url\(['"]?(.+?)['"]?\)/i, '$1');
-  img.onload = () => { heroBg.style.transition = 'opacity 1.2s ease'; };
+  var img = new Image();
+  var src = heroBg.style.backgroundImage.replace(/url\(['"]?(.+?)['"]?\)/i, '$1');
+  img.onload = function() { heroBg.style.transition = 'opacity 1.2s ease'; };
   img.src = src;
 })();
 
-/* ── Hero scroll-driven canvas crossfade ── */
-(function() {
-  /*
-   * Cómo funciona el cálculo del progreso:
-   *
-   * #hero-scroll tiene height: 300vh.
-   * Cuando el usuario empieza a scrollear:
-   *   - rect.top baja de 0 a -(300vh - 100vh) = -200vh
-   *   - scrolled = -rect.top → va de 0 a 200vh
-   *   - total = heroSection.offsetHeight - window.innerHeight = 200vh
-   *   - progress = scrolled / total → de 0 a 1
-   *
-   * Cuando progress = 1, el usuario llegó al final de la sección sticky
-   * y el resto de la página continúa en el flujo normal.
-   */
+/* ============================================================
+   HERO SCROLL-DRIVEN — Opción A: crossfade entre dos renders
+   ============================================================
+   Dos imágenes reales: auditorio vacío y auditorio lleno.
+   Canvas 2D mezcla los píxeles según el progreso del scroll:
+     progress 0 → solo se ve hero-render-empty.png (sala vacía)
+     progress 1 → solo se ve hero-render.png (sala llena)
 
-  const heroSection = document.getElementById('hero-scroll');
-  const canvas      = document.getElementById('hero-canvas');
-  const heroText    = document.getElementById('hero-text');
+   El crossfade usa globalAlpha sobre la capa superior (llena).
+   Viñetas cinematic (gradientes en canvas) refuerzan el mood.
+   Texto del hero se desvanece entre el 55% y el 82% del scroll.
+
+   Estructura:
+     #hero-scroll   = 300vh → total de scroll = 200vh
+     progress 0→1   = recorrido completo del scroll
+   ============================================================ */
+(function() {
+  var heroSection = document.getElementById('hero-scroll');
+  var canvas      = document.getElementById('hero-canvas');
+  var heroText    = document.getElementById('hero-text');
 
   if (!heroSection || !canvas) return;
 
-  const ctx      = canvas.getContext('2d');
-  const emptyImg = new Image();
-  const fullImg  = new Image();
-  let imgW = 0, imgH = 0;
-  let lastProgress = 0;
+  var ctx         = canvas.getContext('2d');
+  var emptyImg    = new Image();
+  var fullImg     = new Image();
+  var imgW        = 0;
+  var imgH        = 0;
+  var lastProgress = 0;
+  var imgsReady    = 0;
+  var initialized  = false;
+  var rafPending   = false;
 
   /*
    * Cover geometry: calcula dónde y con qué tamaño dibujar la imagen
-   * para que llene el canvas completo manteniendo el aspect ratio
+   * para llenar el canvas manteniendo el aspect ratio
    * (equivalente a CSS object-fit: cover).
    */
   function getCoverGeometry(srcW, srcH, dstW, dstH) {
-    const srcAR = srcW / srcH;
-    const dstAR = dstW / dstH;
-    let drawW, drawH, offsetX, offsetY;
-
+    var srcAR = srcW / srcH;
+    var dstAR = dstW / dstH;
+    var drawW, drawH, offsetX, offsetY;
     if (srcAR > dstAR) {
-      /* Imagen más ancha → anclar por altura */
+      /* imagen más ancha: anclar por altura */
       drawH   = dstH;
       drawW   = dstH * srcAR;
       offsetX = (dstW - drawW) / 2;
       offsetY = 0;
     } else {
-      /* Imagen más alta → anclar por ancho */
+      /* imagen más alta: anclar por ancho */
       drawW   = dstW;
       drawH   = dstW / srcAR;
       offsetX = 0;
       offsetY = (dstH - drawH) / 2;
     }
+    return { drawW: drawW, drawH: drawH, offsetX: offsetX, offsetY: offsetY };
+  }
 
-    return { drawW, drawH, offsetX, offsetY };
+  /*
+   * Easing suave para el crossfade: hace que el llenado sea más natural.
+   * Arranca lento (pocas personas primero), acelera al medio, vuelve a
+   * desacelerar cuando la sala ya está casi llena.
+   */
+  function easeInOut(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
   }
 
   function drawFrame(progress) {
-    if (imgW === 0 || imgH === 0) return;
+    if (!initialized || imgW === 0 || imgH === 0) return;
 
-    /* Usamos dimensiones lógicas (CSS pixels) porque el ctx tiene scale(dpr,dpr) */
-    const cw = window.innerWidth;
-    const ch = window.innerHeight;
-    const { drawW, drawH, offsetX, offsetY } = getCoverGeometry(imgW, imgH, cw, ch);
+    var dpr     = window.devicePixelRatio || 1;
+    var cw      = window.innerWidth;
+    var ch      = window.innerHeight;
+    var geo     = getCoverGeometry(imgW, imgH, cw, ch);
+    var drawW   = geo.drawW, drawH   = geo.drawH;
+    var offsetX = geo.offsetX, offsetY = geo.offsetY;
 
-    /* Limpiar frame anterior (en coordenadas lógicas por el scale del ctx) */
-    ctx.clearRect(0, 0, cw, ch);
+    ctx.save();
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    /* Capa base: auditorio vacío (opacidad 1 siempre) */
+    /* 1. Imagen base: auditorio vacío (siempre visible a opacidad 1) */
     ctx.globalAlpha = 1;
     ctx.drawImage(emptyImg, offsetX, offsetY, drawW, drawH);
 
-    /* Capa superior: auditorio lleno, alpha = progress */
-    if (progress > 0) {
-      ctx.globalAlpha = progress;
+    /* 2. Imagen superior: auditorio lleno, alpha = progress con easing */
+    var easedProgress = easeInOut(progress);
+    if (easedProgress > 0) {
+      ctx.globalAlpha = easedProgress;
       ctx.drawImage(fullImg, offsetX, offsetY, drawW, drawH);
-      ctx.globalAlpha = 1;
     }
+
+    /* 3. Viñeta superior: oscurece el techo/cielo para profundidad */
+    ctx.globalAlpha = 1;
+    var gradTop = ctx.createLinearGradient(0, 0, 0, ch * 0.30);
+    gradTop.addColorStop(0, 'rgba(10,10,10,0.78)');
+    gradTop.addColorStop(1, 'rgba(10,10,10,0.00)');
+    ctx.fillStyle = gradTop;
+    ctx.fillRect(0, 0, cw, ch * 0.30);
+
+    /* 4. Viñeta inferior: zona del texto del hero */
+    var gradBot = ctx.createLinearGradient(0, ch * 0.55, 0, ch);
+    gradBot.addColorStop(0, 'rgba(10,10,10,0.00)');
+    gradBot.addColorStop(1, 'rgba(10,10,10,0.92)');
+    ctx.fillStyle = gradBot;
+    ctx.fillRect(0, ch * 0.55, cw, ch * 0.45);
+
+    ctx.restore();
   }
 
   function resizeCanvas() {
-    const dpr = window.devicePixelRatio || 1;
-    /* Asignamos el tamaño del buffer interno en píxeles físicos */
+    var dpr = window.devicePixelRatio || 1;
     canvas.width  = Math.round(window.innerWidth  * dpr);
     canvas.height = Math.round(window.innerHeight * dpr);
-    /*
-     * Nota: asignar .width/.height resetea el contexto 2D automáticamente,
-     * incluyendo cualquier transform previo. Por eso aplicamos scale aquí
-     * cada vez que redimensionamos, antes de drawFrame.
-     */
-    ctx.scale(dpr, dpr);
+    canvas.style.width  = window.innerWidth  + 'px';
+    canvas.style.height = window.innerHeight + 'px';
     if (initialized) drawFrame(lastProgress);
   }
 
   function onScroll() {
-    const rect     = heroSection.getBoundingClientRect();
-    const scrolled = Math.max(0, -rect.top);
-    const total    = heroSection.offsetHeight - window.innerHeight;
-    const progress = total > 0 ? Math.min(1, scrolled / total) : 0;
-
+    var rect     = heroSection.getBoundingClientRect();
+    var scrolled = Math.max(0, -rect.top);
+    var total    = heroSection.offsetHeight - window.innerHeight;
+    var progress = total > 0 ? Math.min(1, scrolled / total) : 0;
     lastProgress = progress;
-    drawFrame(progress);
 
-    /* Fade out del texto:
-       - progress 0 → 0.6: texto de opacity 1 a 0
-       - progress > 0.6: texto invisible */
-    if (heroText) {
-      const textOpacity = Math.max(0, 1 - progress / 0.6);
-      heroText.style.opacity = textOpacity;
+    if (!rafPending) {
+      rafPending = true;
+      requestAnimationFrame(function() {
+        rafPending = false;
+        drawFrame(lastProgress);
+
+        /* Fade out del texto: desaparece entre 55% y 82% del scroll */
+        if (heroText) {
+          var fadeStart = 0.55, fadeEnd = 0.82;
+          var tP = Math.max(0, Math.min(1, (lastProgress - fadeStart) / (fadeEnd - fadeStart)));
+          heroText.style.opacity = (1 - tP).toFixed(3);
+        }
+      });
     }
   }
 
-  let initialized = false;
-
-  function checkReady() {
-    /* Solo inicializar una vez cuando ambas imágenes están listas */
-    if (initialized) return;
-    if (!emptyImg.complete || !emptyImg.naturalWidth) return;
-    if (!fullImg.complete  || !fullImg.naturalWidth)  return;
+  function onImageLoad() {
+    imgsReady++;
+    if (imgsReady < 2) return;
 
     initialized = true;
     imgW = fullImg.naturalWidth;
@@ -333,29 +360,42 @@ async function handleSubmit(e, cardId, successMsg) {
     resizeCanvas();
     drawFrame(0);
 
-    /* Trigger reveal de tipografía */
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        const poster = document.getElementById('heroPoster');
+    /* Trigger reveal de tipografía del hero */
+    requestAnimationFrame(function() {
+      setTimeout(function() {
+        var poster = document.getElementById('heroPoster');
         if (poster) poster.classList.add('revealed');
       }, 80);
     });
   }
 
-  emptyImg.onload  = checkReady;
-  emptyImg.onerror = () => console.warn('[hero] No se pudo cargar hero-render-empty.png');
-  fullImg.onload   = checkReady;
-  fullImg.onerror  = () => console.warn('[hero] No se pudo cargar hero-render.png');
+  emptyImg.onload  = onImageLoad;
+  fullImg.onload   = onImageLoad;
+
+  emptyImg.onerror = function() {
+    /*
+     * Fallback: si el render vacío no carga, mostramos el lleno directamente.
+     * Esto evita pantalla negra en caso de que el asset falte.
+     */
+    console.warn('[TEDx hero] hero-render-empty.png no disponible, usando fallback');
+    emptyImg = fullImg; /* misma imagen, sin efecto visible pero sin pantalla negra */
+    onImageLoad();
+  };
+
+  fullImg.onerror = function() {
+    console.warn('[TEDx hero] No se pudo cargar hero-render.png');
+  };
 
   emptyImg.src = 'assets/hero-render-empty.png';
   fullImg.src  = 'assets/hero-render.png';
 
-  /* Manejar imágenes ya cacheadas */
-  setTimeout(checkReady, 0);
+  /* Manejar imágenes ya cacheadas al cargar el script */
+  if (emptyImg.complete && emptyImg.naturalWidth) onImageLoad();
+  if (fullImg.complete  && fullImg.naturalWidth)  onImageLoad();
 
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', () => {
+  window.addEventListener('resize', function() {
     resizeCanvas();
-    onScroll();
+    drawFrame(lastProgress);
   }, { passive: true });
 })();
