@@ -291,9 +291,9 @@
       margin: 0 0 48px;
     }
     .mt-body-cols {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px 56px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
     .mt-body {
       font-size: 1rem;
@@ -302,15 +302,11 @@
       margin: 0;
     }
     .mt-body--closing {
-      grid-column: 1 / -1;
       padding-top: 32px;
+      margin-top: 32px;
       border-top: 1px solid rgba(255,255,255,0.07);
       color: rgba(255,255,255,0.38);
       font-size: 0.95rem;
-    }
-    @media (max-width: 640px) {
-      .mt-body-cols { grid-template-columns: 1fr; gap: 24px; }
-      .mt-body--closing { grid-column: auto; }
     }
 
     /* TERRITORIO */
