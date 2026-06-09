@@ -656,12 +656,7 @@ a {
    ============================================================ */
 #roles-grid {
   background: var(--black);
-  padding: 96px 0;
-  border-top: 1px solid var(--border);
-}
-
-.roles-intro {
-  margin-bottom: 48px;
+  padding: 0;
 }
 
 .roles-cards {
@@ -669,17 +664,16 @@ a {
   grid-template-columns: repeat(4, 1fr);
   gap: 1px;
   background: var(--border);
-  border: 1px solid var(--border);
+  border-top: 1px solid var(--border);
 }
 
 .role-card {
   background: var(--black);
-  padding: 40px 32px 36px;
+  padding: clamp(40px, 6vh, 64px) clamp(28px, 3vw, 48px) clamp(40px, 6vh, 56px);
   display: flex;
   flex-direction: column;
   gap: 0;
   transition: background 0.25s;
-  position: relative;
 }
 
 .role-card:hover {
@@ -708,7 +702,7 @@ a {
 
 .rc-headline {
   font-family: 'DM Serif Display', Georgia, serif;
-  font-size: clamp(16px, 1.4vw, 20px);
+  font-size: clamp(16px, 1.5vw, 22px);
   font-weight: 400;
   line-height: 1.25;
   color: var(--white);
@@ -725,24 +719,24 @@ a {
   margin-bottom: 28px;
 }
 
-.rc-cta {
+.rc-cta-form {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  background: var(--red);
+  color: var(--white);
   font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--red);
-  border-bottom: 1px solid rgba(235,0,40,0.25);
-  padding-bottom: 2px;
-  transition: color 0.2s, border-color 0.2s;
+  padding: 12px 20px;
   align-self: flex-start;
+  transition: background 0.2s, transform 0.15s;
 }
 
-.rc-cta:hover {
-  color: var(--white);
-  border-color: rgba(255,255,255,0.3);
+.rc-cta-form:hover {
+  background: var(--red-dark);
+  transform: translateY(-1px);
 }
 
 @media (max-width: 1024px) {
@@ -754,10 +748,6 @@ a {
 @media (max-width: 600px) {
   .roles-cards {
     grid-template-columns: 1fr;
-  }
-
-  #roles-grid {
-    padding: 64px 0;
   }
 
   .rc-num {
