@@ -1747,7 +1747,7 @@ footer {
 }
 
 .sl-logo {
-  width: min(440px, 68vw);
+  width: min(1100px, 82vw);
   display: block;
   clip-path: inset(0 100% 0 0);
   animation: slReveal 1.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
