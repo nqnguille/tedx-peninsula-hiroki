@@ -1604,13 +1604,20 @@ a {
    CTA FINAL
    ============================================================ */
 .section-cta-final {
-  background: var(--surface);
+  background: #080808;
   border-top: 1px solid var(--border);
-  padding: 160px 0;
+  padding: 0;
+}
+
+.ctaf-header {
+  padding: 100px 0 80px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
 }
 
 .ctaf-inner {
-  max-width: 720px;
+  max-width: 640px;
+  margin: 0 auto;
 }
 
 .ctaf-sub {
@@ -1624,27 +1631,23 @@ a {
 
 .ctaf-headline {
   font-family: 'DM Serif Display', serif;
-  font-size: clamp(56px, 9vw, 112px);
+  font-size: clamp(52px, 8vw, 100px);
   font-weight: 400;
   line-height: 0.95;
   letter-spacing: -0.025em;
   color: var(--white);
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .ctaf-body {
-  font-size: 18px;
+  font-size: 17px;
   line-height: 1.7;
   color: var(--warm);
   font-weight: 300;
-  margin-bottom: 48px;
 }
 
-.ctaf-actions {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  flex-wrap: wrap;
+.ctaf-roles-grid {
+  border-top: none;
 }
 
 /* ============================================================
@@ -1653,46 +1656,12 @@ a {
 footer {
   background: var(--black);
   border-top: 1px solid var(--border);
+  padding: 40px 0 32px;
 }
 
 .footer-inner {
   max-width: var(--max-w);
   margin: 0 auto;
-}
-
-.footer-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 40px;
-  padding: 60px 0 48px;
-  border-bottom: 1px solid var(--border);
-  flex-wrap: wrap;
-}
-
-.fb-logo {
-  display: flex;
-  align-items: center;
-  margin-bottom: 12px;
-  line-height: 1;
-}
-
-/* Legacy — kept for contact.html compatibility */
-.fb-ted {
-  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--red);
-  letter-spacing: -0.02em;
-}
-
-.fb-name {
-  font-size: 13px;
-  font-weight: 300;
-  color: rgba(255,255,255,0.3);
-  letter-spacing: 0.01em;
-  margin-left: 1px;
-  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 /* Texto oficial requerido por TED */
@@ -1704,46 +1673,12 @@ footer {
   letter-spacing: 0.01em;
 }
 
-.fb-loc {
-  font-size: 12px;
-  color: var(--subtle);
-  line-height: 1.5;
-  font-weight: 400;
-  margin-bottom: 4px;
-}
-
-.fb-tag {
-  font-size: 12px;
-  color: var(--subtle);
-  font-style: italic;
-  font-weight: 300;
-}
-
-.footer-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding-top: 4px;
-}
-
-.footer-nav a {
-  font-size: 13px;
-  color: var(--muted);
-  transition: color 0.2s;
-  font-weight: 300;
-}
-
-.footer-nav a:hover { color: var(--white); }
-
-.footer-cta { padding-top: 4px; }
-
 .footer-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
-  padding: 24px 0;
 }
 
 .footer-bottom p {
@@ -1751,6 +1686,13 @@ footer {
   color: var(--subtle);
   font-weight: 300;
 }
+
+/* Legacy — kept for contact.html */
+.fb-ted { font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 700; color: var(--red); }
+.fb-name { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.3); }
+.footer-nav { display: flex; flex-direction: column; gap: 10px; }
+.footer-nav a { font-size: 13px; color: var(--muted); transition: color 0.2s; }
+.footer-nav a:hover { color: var(--white); }
 
 /* ============================================================
    FORM SUCCESS INLINE
@@ -1870,16 +1812,9 @@ footer {
     padding-left: 0;
   }
 
-  /* CTA final */
-  .ctaf-actions {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .btn-outline-lg {
-    width: 100%;
-    justify-content: center;
+  /* CTA final — header centered on mobile */
+  .ctaf-header {
+    padding: 72px 0 56px;
   }
 
   /* FAQ */

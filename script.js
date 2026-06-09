@@ -2,6 +2,13 @@
    TEDxPeninsulaHiroki 2026 — Script
    ============================================================ */
 
+/* ── Video territorio: primer play desde 0:20, loop nativo desde 0 ── */
+(function() {
+  var vid = document.getElementById('hiroki-video');
+  if (!vid) return;
+  vid.addEventListener('loadedmetadata', function() { vid.currentTime = 20; });
+})();
+
 /* ── Nav: scroll ── */
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
