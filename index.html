@@ -22,6 +22,85 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
+    /* ── HERO SCROLL-DRIVEN CANVAS ── */
+
+    /*
+     * Arquitectura de la sección:
+     *
+     * #hero-scroll        → 300vh, position:relative (da el espacio de scroll)
+     *   #hero-sticky-wrap → position:sticky; top:0; height:100vh
+     *                       (se queda fijo en el viewport mientras se scrollea)
+     *     #hero-canvas    → position:absolute; inset:0 (fondo animado)
+     *     #hero-text      → position:absolute; inset:0 (overlay de texto)
+     *     .hero-ticker    → position:absolute; bottom:0
+     *     .hero-scroll-hint → position:absolute; bottom/right
+     */
+
+    /* Sección contenedora: 300vh da el recorrido de scroll */
+    #hero-scroll {
+      position: relative;
+      height: 300vh;
+      background: #0a0a0a;
+    }
+
+    /* El wrapper sticky: se ancla en top:0 y tiene exactamente 100vh */
+    #hero-sticky-wrap {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    /* Canvas: ocupa todo el wrapper, JS escala y dibuja */
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Texto: superpuesto al canvas, desvanece con el scroll */
+    #hero-text {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      /* Padding respeta el padding del hero original */
+      padding: 72px 48px 80px;
+      pointer-events: none;
+      will-change: opacity;
+    }
+
+    /* Los CTAs y links siguen siendo clickeables */
+    #hero-text .hero-actions a,
+    #hero-text .hero-meta a {
+      pointer-events: auto;
+    }
+
+    /* Scroll hint: esquina inferior derecha del wrapper */
+    #hero-sticky-wrap .hero-scroll-hint {
+      position: absolute;
+      right: 48px;
+      bottom: 80px;
+      z-index: 11;
+    }
+
+    /* Ticker: base del wrapper */
+    #hero-sticky-wrap .hero-ticker {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 12;
+    }
+
     /* ── SECCIONES NUEVAS ── */
 
     /* MANIFIESTO */
@@ -396,86 +475,104 @@
   </div>
 </header>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-bg-image" style="background-image: url('assets/hero-render.png')"></div>
-  <div class="hero-veil"></div>
+<!-- HERO: SCROLL-DRIVEN CANVAS CROSSFADE -->
+<!--
+  Arquitectura:
+  #hero-scroll (300vh, position:relative)
+    └── #hero-sticky-wrap (position:sticky; top:0; height:100vh)
+          ├── #hero-canvas (position:absolute; inset:0 — dentro del wrap sticky)
+          ├── #hero-text   (position:absolute; inset:0 — texto encima del canvas)
+          │     └── ...tipografía, CTA, scroll hint
+          └── .hero-ticker (position:absolute; bottom:0 — ticker en la base)
+-->
+<section id="hero-scroll">
 
-  <div class="hero-content">
+  <div id="hero-sticky-wrap">
 
-    <div class="hero-meta" id="heroMeta">
-      <span class="hero-ted-badge">
-        <svg viewBox="0 0 180 24" height="18" aria-label="TEDxPeninsulaHiroki" focusable="false">
-          <text y="19" font-family="'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="700" font-size="20" letter-spacing="-0.02" fill="#EB0028">TEDx</text>
-          <text x="66" y="19" font-family="'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="300" font-size="11" letter-spacing="0.02" fill="rgba(255,255,255,0.4)">PeninsulaHiroki</text>
-        </svg>
-      </span>
-      <span class="hero-meta-sep"></span>
-      <span>Neuquén Capital · Patagonia</span>
-      <span class="hero-meta-sep"></span>
-      <span>12 · 09 · 2026</span>
-    </div>
+    <!-- Canvas: ocupa todo el wrap, JS dibuja el crossfade -->
+    <canvas id="hero-canvas" role="img" aria-label="Auditorio TEDxPeninsulaHiroki iluminándose"></canvas>
 
-    <div class="hero-poster">
-      <div class="hero-line hero-line-1" id="heroLine1">
-        <span class="hl-word">Cultivando</span>
+    <!-- Overlay de texto: fade out mientras el auditorio se llena -->
+    <div id="hero-text">
+
+      <div class="hero-meta" id="heroMeta">
+        <span class="hero-ted-badge">
+          <svg viewBox="0 0 180 24" height="18" aria-label="TEDxPeninsulaHiroki" focusable="false">
+            <text y="19" font-family="'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="700" font-size="20" letter-spacing="-0.02" fill="#EB0028">TEDx</text>
+            <text x="66" y="19" font-family="'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="300" font-size="11" letter-spacing="0.02" fill="rgba(255,255,255,0.4)">PeninsulaHiroki</text>
+          </svg>
+        </span>
+        <span class="hero-meta-sep"></span>
+        <span>Neuquén Capital · Patagonia</span>
+        <span class="hero-meta-sep"></span>
+        <span>12 · 09 · 2026</span>
       </div>
-      <div class="hero-line hero-line-2" id="heroLine2">
-        <span class="hl-word hl-word-outline">Conciencia</span>
+
+      <div class="hero-poster" id="heroPoster">
+        <div class="hero-line hero-line-1" id="heroLine1">
+          <span class="hl-word">Cultivando</span>
+        </div>
+        <div class="hero-line hero-line-2" id="heroLine2">
+          <span class="hl-word hl-word-outline">Conciencia</span>
+        </div>
+      </div>
+
+      <div class="hero-claim" id="heroClaim">
+        <span class="hc-num">100</span>
+        <span class="hc-sep">personas.</span>
+        <span class="hc-num">1</span>
+        <span class="hc-sep">atardecer.</span>
+        <span class="hc-tagline">Ideas que cambian la forma de mirar.</span>
+      </div>
+
+      <div class="hero-actions" id="heroActions">
+        <a href="#asistir" class="ha-primary" onclick="navScroll(event,'asistir')">
+          Anotarme en la waitlist
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#speaker" class="ha-ghost" onclick="navScroll(event,'speaker')">Postular una idea</a>
+      </div>
+
+    </div><!-- /#hero-text -->
+
+    <!-- Scroll hint: esquina inferior derecha del wrap sticky -->
+    <div class="hero-scroll-hint" id="heroScroll" aria-hidden="true">
+      <div class="hsh-line"></div>
+      <span>Scroll</span>
+    </div>
+
+    <!-- Ticker: base del wrap sticky -->
+    <div class="hero-ticker" id="heroTicker" aria-hidden="true">
+      <div class="ticker-inner" id="tickerInner">
+        <span>Ideas que cambian todo</span>
+        <span class="ticker-dot">·</span>
+        <span>12 de septiembre de 2026</span>
+        <span class="ticker-dot">·</span>
+        <span>Reserva Natural Península Hiroki</span>
+        <span class="ticker-dot">·</span>
+        <span>Confluencia ríos Neuquén y Limay</span>
+        <span class="ticker-dot">·</span>
+        <span>Neuquén Capital · Patagonia</span>
+        <span class="ticker-dot">·</span>
+        <span>Licencia independiente de TED</span>
+        <span class="ticker-dot">·</span>
+        <span>Ideas que cambian todo</span>
+        <span class="ticker-dot">·</span>
+        <span>12 de septiembre de 2026</span>
+        <span class="ticker-dot">·</span>
+        <span>Reserva Natural Península Hiroki</span>
+        <span class="ticker-dot">·</span>
+        <span>Confluencia ríos Neuquén y Limay</span>
+        <span class="ticker-dot">·</span>
+        <span>Neuquén Capital · Patagonia</span>
+        <span class="ticker-dot">·</span>
+        <span>Licencia independiente de TED</span>
+        <span class="ticker-dot">·</span>
       </div>
     </div>
 
-    <div class="hero-claim" id="heroClaim">
-      <span class="hc-num">100</span>
-      <span class="hc-sep">personas.</span>
-      <span class="hc-num">1</span>
-      <span class="hc-sep">atardecer.</span>
-      <span class="hc-tagline">Ideas que cambian la forma de mirar.</span>
-    </div>
+  </div><!-- /#hero-sticky-wrap -->
 
-    <div class="hero-actions" id="heroActions">
-      <a href="#asistir" class="ha-primary" onclick="navScroll(event,'asistir')">
-        Anotarme en la waitlist
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-      <a href="#speaker" class="ha-ghost" onclick="navScroll(event,'speaker')">Postular una idea</a>
-    </div>
-
-  </div>
-
-  <div class="hero-scroll-hint" id="heroScroll" aria-hidden="true">
-    <div class="hsh-line"></div>
-    <span>Scroll</span>
-  </div>
-
-  <div class="hero-ticker" aria-hidden="true">
-    <div class="ticker-inner" id="tickerInner">
-      <span>Ideas que cambian todo</span>
-      <span class="ticker-dot">·</span>
-      <span>12 de septiembre de 2026</span>
-      <span class="ticker-dot">·</span>
-      <span>Reserva Natural Península Hiroki</span>
-      <span class="ticker-dot">·</span>
-      <span>Confluencia ríos Neuquén y Limay</span>
-      <span class="ticker-dot">·</span>
-      <span>Neuquén Capital · Patagonia</span>
-      <span class="ticker-dot">·</span>
-      <span>Licencia independiente de TED</span>
-      <span class="ticker-dot">·</span>
-      <span>Ideas que cambian todo</span>
-      <span class="ticker-dot">·</span>
-      <span>12 de septiembre de 2026</span>
-      <span class="ticker-dot">·</span>
-      <span>Reserva Natural Península Hiroki</span>
-      <span class="ticker-dot">·</span>
-      <span>Confluencia ríos Neuquén y Limay</span>
-      <span class="ticker-dot">·</span>
-      <span>Neuquén Capital · Patagonia</span>
-      <span class="ticker-dot">·</span>
-      <span>Licencia independiente de TED</span>
-      <span class="ticker-dot">·</span>
-    </div>
-  </div>
 </section>
 
 <!-- ROLES: GRILLA DE IDENTIFICACIÓN -->

@@ -52,11 +52,15 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   });
 });
 
-/* ── Hero poster reveal ── */
+/* ── Hero poster reveal ──
+   En el nuevo hero scroll-driven, el reveal se dispara desde el
+   callback checkReady() del canvas, después de cargar ambas imágenes.
+   Este bloque solo actúa si existe el hero legacy (ej: contact.html). */
 (function() {
   const poster = document.querySelector('.hero-poster');
   if (!poster) return;
-  // trigger after a brief paint delay
+  /* Si el hero scroll ya está presente, el canvas se encarga */
+  if (document.getElementById('hero-scroll')) return;
   requestAnimationFrame(() => {
     setTimeout(() => poster.classList.add('revealed'), 80);
   });
@@ -194,7 +198,7 @@ async function handleSubmit(e, cardId, successMsg) {
   }
 }
 
-/* ── Hero bg image: fade in on load ── */
+/* ── Hero bg image: fade in on load (legacy, kept for contact.html) ── */
 (function() {
   const heroBg = document.querySelector('.hero-bg-image');
   if (!heroBg) return;
@@ -202,4 +206,156 @@ async function handleSubmit(e, cardId, successMsg) {
   const src = heroBg.style.backgroundImage.replace(/url\(['"]?(.+?)['"]?\)/i, '$1');
   img.onload = () => { heroBg.style.transition = 'opacity 1.2s ease'; };
   img.src = src;
+})();
+
+/* ── Hero scroll-driven canvas crossfade ── */
+(function() {
+  /*
+   * Cómo funciona el cálculo del progreso:
+   *
+   * #hero-scroll tiene height: 300vh.
+   * Cuando el usuario empieza a scrollear:
+   *   - rect.top baja de 0 a -(300vh - 100vh) = -200vh
+   *   - scrolled = -rect.top → va de 0 a 200vh
+   *   - total = heroSection.offsetHeight - window.innerHeight = 200vh
+   *   - progress = scrolled / total → de 0 a 1
+   *
+   * Cuando progress = 1, el usuario llegó al final de la sección sticky
+   * y el resto de la página continúa en el flujo normal.
+   */
+
+  const heroSection = document.getElementById('hero-scroll');
+  const canvas      = document.getElementById('hero-canvas');
+  const heroText    = document.getElementById('hero-text');
+
+  if (!heroSection || !canvas) return;
+
+  const ctx      = canvas.getContext('2d');
+  const emptyImg = new Image();
+  const fullImg  = new Image();
+  let imgW = 0, imgH = 0;
+  let lastProgress = 0;
+
+  /*
+   * Cover geometry: calcula dónde y con qué tamaño dibujar la imagen
+   * para que llene el canvas completo manteniendo el aspect ratio
+   * (equivalente a CSS object-fit: cover).
+   */
+  function getCoverGeometry(srcW, srcH, dstW, dstH) {
+    const srcAR = srcW / srcH;
+    const dstAR = dstW / dstH;
+    let drawW, drawH, offsetX, offsetY;
+
+    if (srcAR > dstAR) {
+      /* Imagen más ancha → anclar por altura */
+      drawH   = dstH;
+      drawW   = dstH * srcAR;
+      offsetX = (dstW - drawW) / 2;
+      offsetY = 0;
+    } else {
+      /* Imagen más alta → anclar por ancho */
+      drawW   = dstW;
+      drawH   = dstW / srcAR;
+      offsetX = 0;
+      offsetY = (dstH - drawH) / 2;
+    }
+
+    return { drawW, drawH, offsetX, offsetY };
+  }
+
+  function drawFrame(progress) {
+    if (imgW === 0 || imgH === 0) return;
+
+    /* Usamos dimensiones lógicas (CSS pixels) porque el ctx tiene scale(dpr,dpr) */
+    const cw = window.innerWidth;
+    const ch = window.innerHeight;
+    const { drawW, drawH, offsetX, offsetY } = getCoverGeometry(imgW, imgH, cw, ch);
+
+    /* Limpiar frame anterior (en coordenadas lógicas por el scale del ctx) */
+    ctx.clearRect(0, 0, cw, ch);
+
+    /* Capa base: auditorio vacío (opacidad 1 siempre) */
+    ctx.globalAlpha = 1;
+    ctx.drawImage(emptyImg, offsetX, offsetY, drawW, drawH);
+
+    /* Capa superior: auditorio lleno, alpha = progress */
+    if (progress > 0) {
+      ctx.globalAlpha = progress;
+      ctx.drawImage(fullImg, offsetX, offsetY, drawW, drawH);
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  function resizeCanvas() {
+    const dpr = window.devicePixelRatio || 1;
+    /* Asignamos el tamaño del buffer interno en píxeles físicos */
+    canvas.width  = Math.round(window.innerWidth  * dpr);
+    canvas.height = Math.round(window.innerHeight * dpr);
+    /*
+     * Nota: asignar .width/.height resetea el contexto 2D automáticamente,
+     * incluyendo cualquier transform previo. Por eso aplicamos scale aquí
+     * cada vez que redimensionamos, antes de drawFrame.
+     */
+    ctx.scale(dpr, dpr);
+    if (initialized) drawFrame(lastProgress);
+  }
+
+  function onScroll() {
+    const rect     = heroSection.getBoundingClientRect();
+    const scrolled = Math.max(0, -rect.top);
+    const total    = heroSection.offsetHeight - window.innerHeight;
+    const progress = total > 0 ? Math.min(1, scrolled / total) : 0;
+
+    lastProgress = progress;
+    drawFrame(progress);
+
+    /* Fade out del texto:
+       - progress 0 → 0.6: texto de opacity 1 a 0
+       - progress > 0.6: texto invisible */
+    if (heroText) {
+      const textOpacity = Math.max(0, 1 - progress / 0.6);
+      heroText.style.opacity = textOpacity;
+    }
+  }
+
+  let initialized = false;
+
+  function checkReady() {
+    /* Solo inicializar una vez cuando ambas imágenes están listas */
+    if (initialized) return;
+    if (!emptyImg.complete || !emptyImg.naturalWidth) return;
+    if (!fullImg.complete  || !fullImg.naturalWidth)  return;
+
+    initialized = true;
+    imgW = fullImg.naturalWidth;
+    imgH = fullImg.naturalHeight;
+
+    resizeCanvas();
+    drawFrame(0);
+
+    /* Trigger reveal de tipografía */
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        const poster = document.getElementById('heroPoster');
+        if (poster) poster.classList.add('revealed');
+      }, 80);
+    });
+  }
+
+  emptyImg.onload  = checkReady;
+  emptyImg.onerror = () => console.warn('[hero] No se pudo cargar hero-render-empty.png');
+  fullImg.onload   = checkReady;
+  fullImg.onerror  = () => console.warn('[hero] No se pudo cargar hero-render.png');
+
+  emptyImg.src = 'assets/hero-render-empty.png';
+  fullImg.src  = 'assets/hero-render.png';
+
+  /* Manejar imágenes ya cacheadas */
+  setTimeout(checkReady, 0);
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    onScroll();
+  }, { passive: true });
 })();

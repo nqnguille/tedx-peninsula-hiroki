@@ -612,6 +612,29 @@ a {
 }
 
 /* ============================================================
+   HERO SCROLL-DRIVEN — estilos del wrapper sticky y canvas
+   ============================================================ */
+
+/*
+ * Todo el layout detallado vive en el <style> del head del index.html
+ * para tener acceso directo durante la carga. Aquí solo overrides mobile.
+ */
+
+@media (max-width: 768px) {
+  #hero-text {
+    padding: 72px 24px 64px;
+    left: 0;
+    transform: none;
+    width: 100%;
+  }
+
+  #hero-sticky-wrap .hero-scroll-hint {
+    right: 24px;
+    bottom: 56px;
+  }
+}
+
+/* ============================================================
    ROLES GRID — SECCIÓN DE IDENTIFICACIÓN
    ============================================================ */
 #roles-grid {
