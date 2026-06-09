@@ -803,6 +803,9 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
   background: var(--red);
   color: var(--white);
   font-size: 12px;

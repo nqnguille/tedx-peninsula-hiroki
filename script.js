@@ -142,6 +142,15 @@ function toggleForm(id) {
   card.classList.toggle('open');
 }
 
+function toggleCard(id) { toggleForm(id); }
+
+function openForm(id) {
+  const card = document.getElementById(id);
+  if (!card) return;
+  if (!card.classList.contains('open')) card.classList.add('open');
+  card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 /* ── Inline form submit → Cloudflare Worker ── */
 const WORKER_URL = 'https://tedx-forms.nqnguille.workers.dev';
 
