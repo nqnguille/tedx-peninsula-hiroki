@@ -1115,8 +1115,7 @@ a {
 /* ── FORM CARD ── */
 .form-card {
   border: 1px solid var(--border-mid);
-  position: sticky;
-  top: 92px;
+  position: relative;
   transition: border-color 0.3s;
 }
 
