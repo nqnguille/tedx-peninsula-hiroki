@@ -250,7 +250,7 @@ async function handleSubmit(e, cardId, successMsg) {
 
   if (!section || !canvas) return;
 
-  var ctx        = canvas.getContext('2d');
+  var ctx        = canvas.getContext('2d', { willReadFrequently: true });
   var imgs       = [new Image(), new Image(), new Image()];
   var srcs       = [
     'assets/hero-render-bare.png',
@@ -395,7 +395,6 @@ async function handleSubmit(e, cardId, successMsg) {
     /* ── Textos de fase ── */
     var pt1 = document.getElementById('phase-text-1');
     var pt2 = document.getElementById('phase-text-2');
-    var pt3 = document.getElementById('phase-text-3');
     var pt4 = document.getElementById('hero-ctas');
 
     /* pt1 — watermark "2026": sutil durante la fase bare */
@@ -441,7 +440,7 @@ async function handleSubmit(e, cardId, successMsg) {
     if (loaded < 3) return;
     ready = true;
     resizeCanvas();
-    drawFrame(0);
+    drawFrame(lastP);
   }
 
   srcs.forEach(function(src, i) {
