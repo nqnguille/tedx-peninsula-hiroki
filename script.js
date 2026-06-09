@@ -9,22 +9,37 @@
 
   document.documentElement.style.overflow = 'hidden';
 
+  var canExit = false;
+  // Habilitamos salida cuando termina la animación del logo + hero canvas listo
   var heroReady = new Promise(function(resolve) {
     document.addEventListener('hero-canvas-ready', resolve, { once: true });
-    setTimeout(resolve, 3000); // fallback por si el canvas no existe
+    setTimeout(resolve, 4000);
   });
+  var minTime = new Promise(function(resolve) { setTimeout(resolve, 2600); });
 
-  var minTime = new Promise(function(resolve) {
-    setTimeout(resolve, 2500);
-  });
+  Promise.all([heroReady, minTime]).then(function() { canExit = true; });
 
-  Promise.all([heroReady, minTime]).then(function() {
+  function exitLoader() {
+    if (!canExit || loader.classList.contains('sl-exit')) return;
     document.documentElement.style.overflow = '';
     loader.classList.add('sl-exit');
     loader.addEventListener('transitionend', function() {
       loader.style.display = 'none';
     }, { once: true });
-  });
+  }
+
+  // Scroll (wheel) sobre el loader activa la salida
+  loader.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    exitLoader();
+  }, { passive: false });
+
+  // Tap / click
+  loader.addEventListener('click', exitLoader);
+  loader.addEventListener('touchstart', function() { exitLoader(); }, { passive: true });
+
+  // Fallback: salida automática si el usuario no interactúa en 7s
+  setTimeout(exitLoader, 7000);
 })();
 
 /* ── Video territorio: primer play desde 0:20, loop nativo desde 0 ── */
@@ -182,6 +197,22 @@ function openForm(id) {
   if (!card) return;
   if (!card.classList.contains('open')) card.classList.add('open');
   card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ── Role card inline form toggle ── */
+function toggleRoleForm(btn) {
+  const card = btn.closest('.role-card');
+  if (!card) return;
+  const wasOpen = card.classList.contains('form-open');
+  document.querySelectorAll('.role-card.form-open').forEach(function(c) {
+    c.classList.remove('form-open');
+  });
+  if (!wasOpen) {
+    card.classList.add('form-open');
+    setTimeout(function() {
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 60);
+  }
 }
 
 /* ── Inline form submit → Cloudflare Worker ── */

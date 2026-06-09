@@ -664,12 +664,11 @@
 
 <!-- SITE LOADER -->
 <div id="site-loader" aria-hidden="true" role="presentation">
-  <div class="sl-inner">
-    <div class="sl-logo-wrap">
-      <img src="assets/brand/logo-white.png" class="sl-logo" alt="" draggable="false">
-      <div class="sl-scan" aria-hidden="true"></div>
-    </div>
-    <div class="sl-bar"><div class="sl-fill"></div></div>
+  <img src="assets/brand/logo-white.png" class="sl-logo" alt="" draggable="false">
+  <div class="sl-scroll-hint" id="sl-scroll-hint" aria-hidden="true">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path d="M10 3v14M3.5 10.5l6.5 6.5 6.5-6.5" stroke="rgba(255,255,255,0.45)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   </div>
 </div>
 
@@ -704,13 +703,13 @@
         <img src="assets/brand/logo-white.png" alt="TEDxPeninsulaHiroki" height="26" style="display:block;">
       </a>
       <ul class="nav-links">
-        <li><a href="#form-audiencia">Asistir</a></li>
-        <li><a href="#form-speaker">Speaker</a></li>
-        <li><a href="#form-voluntario">Voluntario</a></li>
-        <li><a href="#form-partner">Partner</a></li>
+        <li><a href="#role-audiencia">Asistir</a></li>
+        <li><a href="#role-speaker">Speaker</a></li>
+        <li><a href="#role-voluntario">Voluntario</a></li>
+        <li><a href="#role-partner">Partner</a></li>
       </ul>
       <div class="nav-right">
-        <a href="#form-audiencia" class="nav-cta" onclick="navScroll(event,'form-audiencia')">Anotarme</a>
+        <a href="#role-audiencia" class="nav-cta" onclick="navScroll(event,'role-audiencia')">Anotarme</a>
         <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -718,11 +717,11 @@
     </div>
   </nav>
   <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-    <a href="#form-audiencia" onclick="closeMenu()">Asistir</a>
-    <a href="#form-speaker" onclick="closeMenu()">Speaker</a>
-    <a href="#form-voluntario" onclick="closeMenu()">Voluntario</a>
-    <a href="#form-partner" onclick="closeMenu()">Partner</a>
-    <a href="#form-audiencia" class="mobile-cta" onclick="closeMenu()">Anotarme en la waitlist</a>
+    <a href="#role-audiencia" onclick="closeMenu()">Asistir</a>
+    <a href="#role-speaker" onclick="closeMenu()">Speaker</a>
+    <a href="#role-voluntario" onclick="closeMenu()">Voluntario</a>
+    <a href="#role-partner" onclick="closeMenu()">Partner</a>
+    <a href="#role-audiencia" class="mobile-cta" onclick="closeMenu()">Anotarme en la waitlist</a>
   </div>
 </header>
 
@@ -923,108 +922,100 @@
 <section id="roles-grid">
   <div class="roles-cards">
 
-    <div class="role-card reveal-fade">
+    <!-- AUDIENCIA -->
+    <div class="role-card reveal-fade" id="role-audiencia">
       <div class="rc-glow" aria-hidden="true"></div>
-      <div class="rc-corners" aria-hidden="true">
-        <div class="rc-corner rc-corner-tl"></div>
-        <div class="rc-corner rc-corner-tr"></div>
-        <div class="rc-corner rc-corner-bl"></div>
-        <div class="rc-corner rc-corner-br"></div>
-      </div>
+      <div class="rc-corners" aria-hidden="true"><div class="rc-corner rc-corner-tl"></div><div class="rc-corner rc-corner-tr"></div><div class="rc-corner rc-corner-bl"></div><div class="rc-corner rc-corner-br"></div></div>
       <div class="rc-label">Audiencia</div>
       <h3 class="rc-headline">Sos de las personas que escucha una charla y no puede parar de pensar.</h3>
       <p class="rc-sub">Hay ideas que cambian algo en vos. Este atardecer puede ser una de esas noches.</p>
-      <button onclick="openForm('form-audiencia')" class="rc-cta-form">Quiero estar ahí <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <div class="rc-bg-icon" aria-hidden="true">
-        <svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="120" cy="120" r="16" stroke="white" stroke-width="2"/>
-          <circle cx="120" cy="120" r="44" stroke="white" stroke-width="1.5"/>
-          <circle cx="120" cy="120" r="74" stroke="white" stroke-width="1"/>
-          <circle cx="120" cy="120" r="104" stroke="white" stroke-width="0.75"/>
-          <circle cx="120" cy="120" r="136" stroke="white" stroke-width="0.5"/>
-        </svg>
+      <button onclick="toggleRoleForm(this)" class="rc-cta-form">Quiero estar ahí <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="rc-form-panel">
+        <form onsubmit="handleSubmit(event,'audiencia','Te sumás a la lista. Te avisamos cuando abramos la convocatoria oficial.')">
+          <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
+          <div class="fg"><label class="fl">Nombre</label><input class="fi" type="text" name="nombre" placeholder="Tu nombre completo" required></div>
+          <div class="fg"><label class="fl">Email</label><input class="fi" type="email" name="email" placeholder="tu@email.com" required></div>
+          <div class="fg"><label class="fl">Profesión u ocupación</label><input class="fi" type="text" name="profesion" placeholder="¿A qué te dedicás?"></div>
+          <div class="fg"><label class="fl">¿Por qué querés estar?</label><textarea class="fta" name="mensaje" placeholder="Contanos brevemente qué te atrae de este evento."></textarea></div>
+          <button type="submit" class="fsub">Anotarme en la lista</button>
+          <p class="fnote">No compartimos tu información con terceros.</p>
+        </form>
       </div>
+      <div class="rc-bg-icon" aria-hidden="true"><svg width="240" height="240" viewBox="0 0 240 240" fill="none"><circle cx="120" cy="120" r="16" stroke="white" stroke-width="2"/><circle cx="120" cy="120" r="44" stroke="white" stroke-width="1.5"/><circle cx="120" cy="120" r="74" stroke="white" stroke-width="1"/><circle cx="120" cy="120" r="104" stroke="white" stroke-width="0.75"/><circle cx="120" cy="120" r="136" stroke="white" stroke-width="0.5"/></svg></div>
     </div>
 
-    <div class="role-card reveal-fade delay-1">
+    <!-- VOLUNTARIO -->
+    <div class="role-card reveal-fade delay-1" id="role-voluntario">
       <div class="rc-glow" aria-hidden="true"></div>
-      <div class="rc-corners" aria-hidden="true">
-        <div class="rc-corner rc-corner-tl"></div>
-        <div class="rc-corner rc-corner-tr"></div>
-        <div class="rc-corner rc-corner-bl"></div>
-        <div class="rc-corner rc-corner-br"></div>
-      </div>
+      <div class="rc-corners" aria-hidden="true"><div class="rc-corner rc-corner-tl"></div><div class="rc-corner rc-corner-tr"></div><div class="rc-corner rc-corner-bl"></div><div class="rc-corner rc-corner-br"></div></div>
       <div class="rc-label">Voluntario</div>
       <h3 class="rc-headline">Te importa cómo se hacen las cosas, no solo qué se hace.</h3>
       <p class="rc-sub">Para quienes disfrutan más del hacer que del ver.</p>
-      <button onclick="openForm('form-voluntario')" class="rc-cta-form">Me sumo al equipo <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <div class="rc-bg-icon" aria-hidden="true">
-        <svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="120" cy="58" r="13" stroke="white" stroke-width="2"/>
-          <circle cx="48" cy="178" r="13" stroke="white" stroke-width="2"/>
-          <circle cx="192" cy="178" r="13" stroke="white" stroke-width="2"/>
-          <line x1="120" y1="71" x2="56" y2="166" stroke="white" stroke-width="1.5"/>
-          <line x1="120" y1="71" x2="184" y2="166" stroke="white" stroke-width="1.5"/>
-          <line x1="61" y1="178" x2="179" y2="178" stroke="white" stroke-width="1.5"/>
-          <circle cx="120" cy="124" r="6" stroke="white" stroke-width="1.5"/>
-          <line x1="120" y1="71" x2="120" y2="118" stroke="white" stroke-width="1" stroke-dasharray="3 3"/>
-        </svg>
+      <button onclick="toggleRoleForm(this)" class="rc-cta-form">Me sumo al equipo <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="rc-form-panel">
+        <form onsubmit="handleSubmit(event,'voluntario','Recibimos tu postulación. El equipo se va a contactar con vos.')">
+          <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
+          <div class="fg"><label class="fl">Nombre</label><input class="fi" type="text" name="nombre" placeholder="Tu nombre completo" required></div>
+          <div class="fg"><label class="fl">Email</label><input class="fi" type="email" name="email" placeholder="tu@email.com" required></div>
+          <div class="fg"><label class="fl">Disponibilidad</label><select class="fse" name="disponibilidad" required><option value="" disabled selected>Seleccioná</option><option value="fines-de-semana">Fines de semana</option><option value="entre-semana">Entre semana</option><option value="ambos">Ambos</option></select></div>
+          <div class="fg"><label class="fl">Habilidades o experiencia relevante</label><textarea class="fta" name="habilidades" placeholder="Diseño, producción, comunicación, logística..."></textarea></div>
+          <button type="submit" class="fsub">Postularme como voluntario</button>
+          <p class="fnote">No compartimos tu información con terceros.</p>
+        </form>
       </div>
+      <div class="rc-bg-icon" aria-hidden="true"><svg width="240" height="240" viewBox="0 0 240 240" fill="none"><circle cx="120" cy="58" r="13" stroke="white" stroke-width="2"/><circle cx="48" cy="178" r="13" stroke="white" stroke-width="2"/><circle cx="192" cy="178" r="13" stroke="white" stroke-width="2"/><line x1="120" y1="71" x2="56" y2="166" stroke="white" stroke-width="1.5"/><line x1="120" y1="71" x2="184" y2="166" stroke="white" stroke-width="1.5"/><line x1="61" y1="178" x2="179" y2="178" stroke="white" stroke-width="1.5"/><circle cx="120" cy="124" r="6" stroke="white" stroke-width="1.5"/><line x1="120" y1="71" x2="120" y2="118" stroke="white" stroke-width="1" stroke-dasharray="3 3"/></svg></div>
     </div>
 
-    <div class="role-card reveal-fade delay-1">
+    <!-- SPEAKER -->
+    <div class="role-card reveal-fade delay-1" id="role-speaker">
       <div class="rc-glow" aria-hidden="true"></div>
-      <div class="rc-corners" aria-hidden="true">
-        <div class="rc-corner rc-corner-tl"></div>
-        <div class="rc-corner rc-corner-tr"></div>
-        <div class="rc-corner rc-corner-bl"></div>
-        <div class="rc-corner rc-corner-br"></div>
-      </div>
+      <div class="rc-corners" aria-hidden="true"><div class="rc-corner rc-corner-tl"></div><div class="rc-corner rc-corner-tr"></div><div class="rc-corner rc-corner-bl"></div><div class="rc-corner rc-corner-br"></div></div>
       <div class="rc-label">Speaker</div>
       <h3 class="rc-headline">Tenés una idea que se te repite. Una que le contás a todos.</h3>
       <p class="rc-sub">No buscamos expertos perfectos. Buscamos ideas que merezcan ser escuchadas.</p>
-      <button onclick="openForm('form-speaker')" class="rc-cta-form">Postulo mi idea <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <div class="rc-bg-icon" aria-hidden="true">
-        <svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="105" y="36" width="30" height="80" rx="15" stroke="white" stroke-width="2"/>
-          <path d="M72 120 Q72 172 120 172 Q168 172 168 120" stroke="white" stroke-width="2" fill="none"/>
-          <line x1="120" y1="172" x2="120" y2="204" stroke="white" stroke-width="2"/>
-          <line x1="90" y1="204" x2="150" y2="204" stroke="white" stroke-width="2"/>
-          <line x1="88" y1="70" x2="75" y2="70" stroke="white" stroke-width="1.5"/>
-          <line x1="152" y1="70" x2="165" y2="70" stroke="white" stroke-width="1.5"/>
-          <line x1="82" y1="90" x2="68" y2="90" stroke="white" stroke-width="1" opacity="0.6"/>
-          <line x1="158" y1="90" x2="172" y2="90" stroke="white" stroke-width="1" opacity="0.6"/>
-        </svg>
+      <button onclick="toggleRoleForm(this)" class="rc-cta-form">Postulo mi idea <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="rc-form-panel">
+        <form onsubmit="handleSubmit(event,'speaker','Tu postulación llegó. El equipo de curaduría lee cada idea de forma personal.')">
+          <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
+          <div class="fg"><label class="fl">Nombre</label><input class="fi" type="text" name="nombre" placeholder="Tu nombre completo" required></div>
+          <div class="fg"><label class="fl">Email</label><input class="fi" type="email" name="email" placeholder="tu@email.com" required></div>
+          <div class="fg"><label class="fl">Tu idea en una oración</label><input class="fi" type="text" name="idea_titulo" placeholder="Una oración concreta, no un tema genérico." required></div>
+          <div class="fg"><label class="fl">Desarrollá tu idea</label><textarea class="fta" name="idea_desarrollo" placeholder="¿Qué querés que la audiencia se lleve?" required style="min-height:100px;"></textarea></div>
+          <div class="fg"><label class="fl">¿Hablaste en público antes?</label><select class="fse" name="experiencia_publica"><option value="" disabled selected>Seleccioná</option><option value="si">Sí, varias veces</option><option value="algunas-veces">Algunas veces</option><option value="no">No, sería mi primera vez</option></select></div>
+          <button type="submit" class="fsub">Enviar postulación</button>
+          <p class="fnote">No buscamos oradores perfectos. Buscamos ideas que merezcan ser escuchadas.</p>
+        </form>
       </div>
+      <div class="rc-bg-icon" aria-hidden="true"><svg width="240" height="240" viewBox="0 0 240 240" fill="none"><rect x="105" y="36" width="30" height="80" rx="15" stroke="white" stroke-width="2"/><path d="M72 120 Q72 172 120 172 Q168 172 168 120" stroke="white" stroke-width="2" fill="none"/><line x1="120" y1="172" x2="120" y2="204" stroke="white" stroke-width="2"/><line x1="90" y1="204" x2="150" y2="204" stroke="white" stroke-width="2"/></svg></div>
     </div>
 
-    <div class="role-card reveal-fade delay-2">
+    <!-- PARTNER -->
+    <div class="role-card reveal-fade delay-2" id="role-partner">
       <div class="rc-glow" aria-hidden="true"></div>
-      <div class="rc-corners" aria-hidden="true">
-        <div class="rc-corner rc-corner-tl"></div>
-        <div class="rc-corner rc-corner-tr"></div>
-        <div class="rc-corner rc-corner-bl"></div>
-        <div class="rc-corner rc-corner-br"></div>
-      </div>
+      <div class="rc-corners" aria-hidden="true"><div class="rc-corner rc-corner-tl"></div><div class="rc-corner rc-corner-tr"></div><div class="rc-corner rc-corner-bl"></div><div class="rc-corner rc-corner-br"></div></div>
       <div class="rc-label">Partner</div>
       <h3 class="rc-headline">Tu organización cree que las ideas importan más que los logos.</h3>
       <p class="rc-sub">Cada alianza se diseña a medida. Sin paquetes cerrados.</p>
-      <button onclick="openForm('form-partner')" class="rc-cta-form">Hablemos <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <div class="rc-bg-icon" aria-hidden="true">
-        <svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="28" y="72" width="54" height="140" stroke="white" stroke-width="2" fill="none"/>
-          <rect x="158" y="72" width="54" height="140" stroke="white" stroke-width="2" fill="none"/>
-          <rect x="18" y="48" width="204" height="30" stroke="white" stroke-width="2" fill="none"/>
-          <line x1="82" y1="140" x2="158" y2="140" stroke="white" stroke-width="1.5" stroke-dasharray="5 4"/>
-        </svg>
+      <button onclick="toggleRoleForm(this)" class="rc-cta-form">Hablemos <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="rc-form-panel">
+        <form onsubmit="handleSubmit(event,'partner','Tu mensaje llegó. Diseñamos cada alianza a medida — te contactamos pronto.')">
+          <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
+          <div class="fg"><label class="fl">Nombre</label><input class="fi" type="text" name="nombre" placeholder="Tu nombre completo" required></div>
+          <div class="fg"><label class="fl">Organización</label><input class="fi" type="text" name="organizacion" placeholder="Nombre de la empresa u organización" required></div>
+          <div class="fg"><label class="fl">Email</label><input class="fi" type="email" name="email" placeholder="tu@email.com" required></div>
+          <div class="fg"><label class="fl">Mensaje</label><textarea class="fta" name="mensaje" placeholder="¿Qué tipo de alianza tenés en mente?" required></textarea></div>
+          <button type="submit" class="fsub">Enviar mensaje</button>
+          <p class="fnote">Sin paquetes cerrados. Cada alianza se diseña a medida.</p>
+        </form>
       </div>
+      <div class="rc-bg-icon" aria-hidden="true"><svg width="240" height="240" viewBox="0 0 240 240" fill="none"><rect x="28" y="72" width="54" height="140" stroke="white" stroke-width="2" fill="none"/><rect x="158" y="72" width="54" height="140" stroke="white" stroke-width="2" fill="none"/><rect x="18" y="48" width="204" height="30" stroke="white" stroke-width="2" fill="none"/><line x1="82" y1="140" x2="158" y2="140" stroke="white" stroke-width="1.5" stroke-dasharray="5 4"/></svg></div>
     </div>
 
   </div>
 </section>
 
-<!-- FORMULARIOS DE PARTICIPACIÓN -->
-<section id="forms-section" style="max-width:720px;margin:0 auto;padding:0 24px 80px;">
+<!-- FORMS SECTION PLACEHOLDER (forms now live inside role-cards) -->
+<section id="forms-section" style="display:none">
 
   <!-- Audiencia -->
   <div class="form-card" id="form-audiencia">
