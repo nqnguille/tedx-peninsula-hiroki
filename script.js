@@ -2,6 +2,31 @@
    TEDxPeninsulaHiroki 2026 — Script
    ============================================================ */
 
+/* ── Site Loader ── */
+(function() {
+  var loader = document.getElementById('site-loader');
+  if (!loader) return;
+
+  document.documentElement.style.overflow = 'hidden';
+
+  var heroReady = new Promise(function(resolve) {
+    document.addEventListener('hero-canvas-ready', resolve, { once: true });
+    setTimeout(resolve, 3000); // fallback por si el canvas no existe
+  });
+
+  var minTime = new Promise(function(resolve) {
+    setTimeout(resolve, 2500);
+  });
+
+  Promise.all([heroReady, minTime]).then(function() {
+    document.documentElement.style.overflow = '';
+    loader.classList.add('sl-exit');
+    loader.addEventListener('transitionend', function() {
+      loader.style.display = 'none';
+    }, { once: true });
+  });
+})();
+
 /* ── Video territorio: primer play desde 0:20, loop nativo desde 0 ── */
 (function() {
   var vid = document.getElementById('hiroki-video');
@@ -441,6 +466,7 @@ async function handleSubmit(e, cardId, successMsg) {
     ready = true;
     resizeCanvas();
     drawFrame(lastP);
+    document.dispatchEvent(new CustomEvent('hero-canvas-ready'));
   }
 
   srcs.forEach(function(src, i) {
