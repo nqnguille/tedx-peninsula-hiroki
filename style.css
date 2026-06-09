@@ -683,7 +683,7 @@ a {
 }
 
 /* ============================================================
-   ROLES GRID — SECCIÓN DE IDENTIFICACIÓN
+   ROLES GRID — SECCIÓN DE IDENTIFICACIÓN (Dark Grid pattern)
    ============================================================ */
 #roles-grid {
   background: var(--black);
@@ -699,20 +699,59 @@ a {
 }
 
 .role-card {
-  background: var(--black);
+  background: linear-gradient(160deg, #111111 0%, #0A0A0A 100%);
   padding: clamp(40px, 6vh, 64px) clamp(28px, 3vw, 48px) clamp(40px, 6vh, 56px);
   display: flex;
   flex-direction: column;
   gap: 0;
-  transition: background 0.25s;
   position: relative;
   overflow: hidden;
+  transition: background 0.35s ease;
 }
 
 .role-card:hover {
-  background: var(--surface);
+  background: linear-gradient(160deg, #1a1a1a 0%, #111111 100%);
 }
 
+/* Gradient inner glow — activates on hover */
+.rc-glow {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  transition: background 0.35s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.role-card:hover .rc-glow {
+  background: linear-gradient(135deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0) 65%);
+}
+
+/* Corner bracket squares — appear on hover (Dark Grid pattern) */
+.rc-corners {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.rc-corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.rc-corner-tl { top: 0; left: 0; }
+.rc-corner-tr { top: 0; right: 0; }
+.rc-corner-bl { bottom: 0; left: 0; }
+.rc-corner-br { bottom: 0; right: 0; }
+
+.role-card:hover .rc-corner { opacity: 1; }
+
+/* Content stack above glow */
 .rc-num-sm {
   font-size: 10px;
   font-weight: 600;
@@ -720,7 +759,9 @@ a {
   color: rgba(255,255,255,0.25);
   text-transform: uppercase;
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
 }
 
 .rc-label {
@@ -731,25 +772,31 @@ a {
   letter-spacing: -0.02em;
   line-height: 1;
   margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .rc-headline {
   font-family: 'DM Serif Display', Georgia, serif;
-  font-size: clamp(16px, 1.5vw, 22px);
+  font-size: clamp(16px, 1.5vw, 21px);
   font-weight: 400;
-  line-height: 1.25;
+  line-height: 1.28;
   color: var(--white);
   letter-spacing: -0.01em;
   margin-bottom: 14px;
   flex: 1;
+  position: relative;
+  z-index: 1;
 }
 
 .rc-sub {
   font-size: 13px;
   line-height: 1.65;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255,255,255,0.38);
   font-weight: 300;
   margin-bottom: 28px;
+  position: relative;
+  z-index: 1;
 }
 
 .rc-cta-form {
@@ -766,7 +813,7 @@ a {
   align-self: flex-start;
   transition: background 0.2s, transform 0.15s;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .rc-cta-form:hover {
@@ -778,10 +825,11 @@ a {
   position: absolute;
   bottom: -16px;
   right: -16px;
-  width: 220px;
-  height: 220px;
+  width: 240px;
+  height: 240px;
   opacity: 0.055;
   pointer-events: none;
+  z-index: 0;
 }
 
 @media (max-width: 1024px) {
