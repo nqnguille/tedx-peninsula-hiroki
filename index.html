@@ -46,6 +46,7 @@
       position: absolute;
       inset: 0;
       height: 100vh;
+      background: #000;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -147,7 +148,16 @@
       letter-spacing: -0.03em;
       color: #fff;
       text-align: center;
-      text-shadow: 0 2px 32px rgba(0,0,0,0.55);
+      text-shadow: 0 2px 32px rgba(0,0,0,0.55), 0 0 80px rgba(255,255,255,0.04);
+      animation: conscienciaFloat 6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+      will-change: transform;
+    }
+
+    @keyframes conscienciaFloat {
+      0%   { transform: translateY(0)     scale(1);      text-shadow: 0 2px 32px rgba(0,0,0,0.55), 0 0 80px rgba(255,255,255,0.04); }
+      25%  { transform: translateY(-16px) scale(1.014);  text-shadow: 0 18px 48px rgba(0,0,0,0.45), 0 0 120px rgba(255,255,255,0.08); }
+      55%  { transform: translateY(-10px) scale(1.008);  text-shadow: 0 12px 40px rgba(0,0,0,0.5),  0 0 100px rgba(255,255,255,0.06); }
+      100% { transform: translateY(0)     scale(1);      text-shadow: 0 2px 32px rgba(0,0,0,0.55),  0 0 80px rgba(255,255,255,0.04); }
     }
 
     @media (max-width: 480px) {
@@ -794,7 +804,7 @@
           La Patagonia no tiene la respuesta. Tiene algo mejor: las preguntas abiertas. Acá, la relación entre el ser humano y el entorno todavía no está resuelta. Esa incomodidad produce un tipo de pensamiento que no aparece en otro lado — más honesto, más dispuesto a cuestionar lo que en otras partes ya se da por resuelto.
         </p>
         <p class="mt-body mt-body--closing">
-          Por eso el evento sucede en la confluencia del Neuquén y el Limay — donde dos ríos distintos se juntan para formar algo más grande que cualquiera de los dos. Un atardecer. Cien personas. Ideas que merecen ser escuchadas más allá de la sala. Lo que se diga ahí puede llegar a cualquier parte del mundo.
+          Por eso el evento sucede en la confluencia del Neuquén y el Limay — el lugar exacto donde esta ciudad tiene su nombre y su historia. No es un escenario elegido por la postal: es el suelo donde nos formamos. Un atardecer. Cien neuquinos. Ideas que nacieron acá, en el sur, lejos de los centros y cerca de la pregunta honesta. Lo que se diga ahí puede llegar a cualquier parte del mundo. Y viene de acá.
         </p>
       </div>
 
@@ -915,8 +925,8 @@
 
 <!-- PARTICIPÁ -->
 <div id="roles-connector">
-  <p class="rcon-label">Participá</p>
-  <h2 class="rcon-headline">Elegí tu forma<br>de ser parte.</h2>
+  <p class="rcon-label">Sumáte</p>
+  <h2 class="rcon-headline">Este evento lo hacemos<br>entre todos.</h2>
 </div>
 
 <section id="roles-grid">
