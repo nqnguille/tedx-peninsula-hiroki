@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tedxpeninsulaHiroki.com/sitemap.xml
+Sitemap: https://tedx-peninsula-hiroki.pages.dev/sitemap.xml
