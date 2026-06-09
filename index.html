@@ -27,7 +27,7 @@
     /*
      * Arquitectura:
      *
-     * #hero-sequence (500vh, position:relative, background:#000)
+     * #hero-sequence (350vh, position:relative, background:#000)
      *   #hero-intro   → position:absolute; 100vh centrado; z-index:20
      *   #hero-sticky  → position:sticky; top:0; height:100vh
      *     #hero-canvas  → position:absolute; inset:0
@@ -37,7 +37,7 @@
 
     #hero-sequence {
       position: relative;
-      height: 500vh;
+      height: 350vh;
       background: #000;
     }
 
@@ -93,7 +93,7 @@
       50%       { transform: translateY(8px); opacity: 0.5; }
     }
 
-    /* Sticky: se ancla en top:0 durante los 500vh */
+    /* Sticky: se ancla en top:0 durante los 350vh */
     #hero-sticky {
       position: sticky;
       top: 0;
@@ -634,7 +634,6 @@
           ├── #hero-overlay-text (position:absolute; inset:0 — textos de fase)
           │     ├── #phase-text-1  (año watermark)
           │     ├── #phase-text-2  (Cultivando Conciencia)
-          │     ├── #phase-text-3  (100 personas. 1 atardecer.)
           │     └── #hero-ctas     (CTAs finales)
           └── #hero-ticker-seq  (position:absolute; bottom:0)
 -->
@@ -666,10 +665,7 @@
         <h1>Cultivando<br>Conciencia</h1>
       </div>
 
-      <!-- Fase 3: Stat line (gente aparece) -->
-      <div id="phase-text-3" class="phase-text" aria-hidden="true">
-        <p class="stat-line">100 personas. 1 atardecer.</p>
-      </div>
+
 
       <!-- Fase 4: CTAs finales — liberación de la secuencia -->
       <div id="hero-ctas" class="phase-text">

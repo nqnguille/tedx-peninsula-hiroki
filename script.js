@@ -208,16 +208,15 @@ async function handleSubmit(e, cardId, successMsg) {
 /* ============================================================
    HERO CINEMATIC SEQUENCE — 3 frames + intro negro
    ============================================================
-   FASE 0 (p 0→0.16):   Negro total → bare aparece (fade in)
-   FASE 1 (p 0.16→0.45): Bare visible
-     - pt1 watermark "2026": presente muy sutil (0.16→0.45)
-     - pt2 "Cultivando Conciencia": aparece (0.20→0.44), se va antes de las sillas
-   FASE 2 (p 0.45→0.65): Bare → Empty (sillas se materializan)
-   FASE 3 (p 0.65→1.0):  Empty → Full (gente aparece)
-     - pt3 "100 personas. 1 atardecer.": (0.68→0.88)
-     - CTAs: aparecen desde p 0.90
+   FASE 0 (p 0→0.14):   Negro total → bare aparece (fade in)
+   FASE 1 (p 0.14→0.42): Bare visible
+     - pt1 watermark "2026": sutil (0.14→0.40)
+     - pt2 "Cultivando Conciencia": aparece (0.18→0.40), se va antes de las sillas
+   FASE 2 (p 0.42→0.62): Bare → Empty (sillas se materializan)
+   FASE 3 (p 0.62→1.0):  Empty → Full (gente aparece)
+     - CTAs: aparecen desde p 0.80
 
-   Scroll total = 500vh → section.offsetHeight - window.innerHeight
+   Scroll total = 350vh → section.offsetHeight - window.innerHeight
    progress = scrolled / total → 0..1
    ============================================================ */
 (function() {
@@ -288,8 +287,8 @@ async function handleSubmit(e, cardId, successMsg) {
     ctx.fillStyle = gBot;
     ctx.fillRect(0, ch * 0.6, cw, ch * 0.4);
 
-    /* Overlay central de legibilidad: activo cuando "Cultivando Conciencia" está visible (p 0.18→0.46) */
-    var textOverlayAlpha = windowOpacity(p, 0.18, 0.46, 0.06) * 0.35;
+    /* Overlay central de legibilidad: activo cuando "Cultivando Conciencia" está visible (p 0.18→0.42) */
+    var textOverlayAlpha = windowOpacity(p, 0.18, 0.42, 0.06) * 0.35;
     if (textOverlayAlpha > 0) {
       ctx.fillStyle = 'rgba(0,0,0,' + textOverlayAlpha.toFixed(3) + ')';
       ctx.fillRect(0, 0, cw, ch);
@@ -340,25 +339,25 @@ async function handleSubmit(e, cardId, successMsg) {
 
     ctx.globalAlpha = 1;
 
-    if (p < 0.16) {
+    if (p < 0.14) {
       /* Fase 0: bare aparece desde negro */
-      var tBare = smoothstep(0, 0.16, p);
+      var tBare = smoothstep(0, 0.14, p);
       ctx.globalAlpha = tBare;
       coverDraw(imgs[0]);
       ctx.globalAlpha = 1;
 
-    } else if (p < 0.45) {
+    } else if (p < 0.42) {
       /* Fase 1: bare visible — "Cultivando Conciencia" aparece aquí */
       coverDraw(imgs[0]);
 
-    } else if (p < 0.65) {
+    } else if (p < 0.62) {
       /* Fase 2: bare → empty (sillas se materializan) */
-      var tEmpty = smoothstep(0.45, 0.65, p);
+      var tEmpty = smoothstep(0.42, 0.62, p);
       crossfade(imgs[0], imgs[1], tEmpty);
 
     } else {
       /* Fase 3: empty → full (personas llenan el auditorio) */
-      var tFull = smoothstep(0.65, 1.0, p);
+      var tFull = smoothstep(0.62, 1.0, p);
       crossfade(imgs[1], imgs[2], tFull);
     }
 
@@ -375,17 +374,14 @@ async function handleSubmit(e, cardId, successMsg) {
     var pt3 = document.getElementById('phase-text-3');
     var pt4 = document.getElementById('hero-ctas');
 
-    /* pt1 — watermark "2026": sutil durante toda la fase bare, desaparece antes del crossfade */
-    if (pt1) pt1.style.opacity = windowOpacity(p, 0.16, 0.43, 0.08).toFixed(3);
+    /* pt1 — watermark "2026": sutil durante la fase bare */
+    if (pt1) pt1.style.opacity = windowOpacity(p, 0.14, 0.40, 0.08).toFixed(3);
 
     /* pt2 — "Cultivando Conciencia": aparece sobre el bare, se va ANTES de que arranquen las sillas */
-    if (pt2) pt2.style.opacity = windowOpacity(p, 0.20, 0.44, 0.08).toFixed(3);
-
-    /* pt3 — "100 personas. 1 atardecer.": aparece durante el auditorio lleno */
-    if (pt3) pt3.style.opacity = windowOpacity(p, 0.68, 0.88, 0.08).toFixed(3);
+    if (pt2) pt2.style.opacity = windowOpacity(p, 0.18, 0.40, 0.08).toFixed(3);
 
     if (pt4) {
-      var ctaOpacity = smoothstep(0.90, 1.0, p);
+      var ctaOpacity = smoothstep(0.80, 1.0, p);
       pt4.style.opacity = ctaOpacity.toFixed(3);
       if (ctaOpacity > 0.5) {
         pt4.classList.add('active');
