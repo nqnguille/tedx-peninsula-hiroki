@@ -53,14 +53,11 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 });
 
 /* ── Hero poster reveal ──
-   En el nuevo hero scroll-driven, el reveal se dispara desde el
-   callback checkReady() del canvas, después de cargar ambas imágenes.
-   Este bloque solo actúa si existe el hero legacy (ej: contact.html). */
+   Solo actúa si existe el hero legacy (ej: contact.html). */
 (function() {
   const poster = document.querySelector('.hero-poster');
   if (!poster) return;
-  /* Si el hero scroll ya está presente, el canvas se encarga */
-  if (document.getElementById('hero-scroll')) return;
+  if (document.getElementById('hero-sequence')) return;
   requestAnimationFrame(() => {
     setTimeout(() => poster.classList.add('revealed'), 80);
   });
@@ -209,193 +206,222 @@ async function handleSubmit(e, cardId, successMsg) {
 })();
 
 /* ============================================================
-   HERO SCROLL-DRIVEN — Opción A: crossfade entre dos renders
+   HERO CINEMATIC SEQUENCE — 3 frames + intro negro
    ============================================================
-   Dos imágenes reales: auditorio vacío y auditorio lleno.
-   Canvas 2D mezcla los píxeles según el progreso del scroll:
-     progress 0 → solo se ve hero-render-empty.png (sala vacía)
-     progress 1 → solo se ve hero-render.png (sala llena)
+   FASE 0 (p 0→0.16):  Negro total → bare aparece (fade in)
+   FASE 1 (p 0.16→0.4): Bare visible, watermark 2026
+   FASE 2 (p 0.4→0.64): Bare → Empty (sillas se materializan)
+   FASE 3 (p 0.64→1.0): Empty → Full (gente aparece), luego CTAs
 
-   El crossfade usa globalAlpha sobre la capa superior (llena).
-   Viñetas cinematic (gradientes en canvas) refuerzan el mood.
-   Texto del hero se desvanece entre el 55% y el 82% del scroll.
-
-   Estructura:
-     #hero-scroll   = 300vh → total de scroll = 200vh
-     progress 0→1   = recorrido completo del scroll
+   Scroll total = 500vh → section.offsetHeight - window.innerHeight
+   progress = scrolled / total → 0..1
    ============================================================ */
 (function() {
-  var heroSection = document.getElementById('hero-scroll');
-  var canvas      = document.getElementById('hero-canvas');
-  var heroText    = document.getElementById('hero-text');
+  var section  = document.getElementById('hero-sequence');
+  var canvas   = document.getElementById('hero-canvas');
+  var intro    = document.getElementById('hero-intro');
 
-  if (!heroSection || !canvas) return;
+  if (!section || !canvas) return;
 
-  var ctx         = canvas.getContext('2d');
-  var emptyImg    = new Image();
-  var fullImg     = new Image();
-  var imgW        = 0;
-  var imgH        = 0;
-  var lastProgress = 0;
-  var imgsReady    = 0;
-  var initialized  = false;
-  var rafPending   = false;
+  var ctx        = canvas.getContext('2d');
+  var imgs       = [new Image(), new Image(), new Image()];
+  var srcs       = [
+    'assets/hero-render-bare.png',
+    'assets/hero-render-empty.png',
+    'assets/hero-render.png'
+  ];
+  var loaded     = 0;
+  var ready      = false;
+  var lastP      = 0;
+  var rafPending = false;
 
-  /*
-   * Cover geometry: calcula dónde y con qué tamaño dibujar la imagen
-   * para llenar el canvas manteniendo el aspect ratio
-   * (equivalente a CSS object-fit: cover).
-   */
-  function getCoverGeometry(srcW, srcH, dstW, dstH) {
-    var srcAR = srcW / srcH;
-    var dstAR = dstW / dstH;
-    var drawW, drawH, offsetX, offsetY;
-    if (srcAR > dstAR) {
-      /* imagen más ancha: anclar por altura */
-      drawH   = dstH;
-      drawW   = dstH * srcAR;
-      offsetX = (dstW - drawW) / 2;
-      offsetY = 0;
+  /* ── Geometría object-fit: cover ── */
+  function coverGeo(srcW, srcH, dstW, dstH) {
+    var sAR = srcW / srcH;
+    var dAR = dstW / dstH;
+    var dW, dH, ox, oy;
+    if (sAR > dAR) {
+      dH = dstH; dW = dstH * sAR;
+      ox = (dstW - dW) / 2; oy = 0;
     } else {
-      /* imagen más alta: anclar por ancho */
-      drawW   = dstW;
-      drawH   = dstW / srcAR;
-      offsetX = 0;
-      offsetY = (dstH - drawH) / 2;
+      dW = dstW; dH = dstW / sAR;
+      ox = 0; oy = (dstH - dH) / 2;
     }
-    return { drawW: drawW, drawH: drawH, offsetX: offsetX, offsetY: offsetY };
+    return { dW: dW, dH: dH, ox: ox, oy: oy };
   }
 
-  /*
-   * Easing suave para el crossfade: hace que el llenado sea más natural.
-   * Arranca lento (pocas personas primero), acelera al medio, vuelve a
-   * desacelerar cuando la sala ya está casi llena.
-   */
-  function easeInOut(t) {
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  /* ── Dibuja una imagen en cover ── */
+  function coverDraw(img) {
+    if (!img.naturalWidth) return;
+    var cw = window.innerWidth, ch = window.innerHeight;
+    var g = coverGeo(img.naturalWidth, img.naturalHeight, cw, ch);
+    ctx.drawImage(img, g.ox, g.oy, g.dW, g.dH);
   }
 
-  function drawFrame(progress) {
-    if (!initialized || imgW === 0 || imgH === 0) return;
-
-    var dpr     = window.devicePixelRatio || 1;
-    var cw      = window.innerWidth;
-    var ch      = window.innerHeight;
-    var geo     = getCoverGeometry(imgW, imgH, cw, ch);
-    var drawW   = geo.drawW, drawH   = geo.drawH;
-    var offsetX = geo.offsetX, offsetY = geo.offsetY;
-
-    ctx.save();
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-    /* 1. Imagen base: auditorio vacío (siempre visible a opacidad 1) */
+  /* ── Crossfade A→B con t=0..1 ── */
+  function crossfade(imgA, imgB, t) {
+    coverDraw(imgA);
+    ctx.globalAlpha = Math.max(0, Math.min(1, t));
+    coverDraw(imgB);
     ctx.globalAlpha = 1;
-    ctx.drawImage(emptyImg, offsetX, offsetY, drawW, drawH);
-
-    /* 2. Imagen superior: auditorio lleno, alpha = progress con easing */
-    var easedProgress = easeInOut(progress);
-    if (easedProgress > 0) {
-      ctx.globalAlpha = easedProgress;
-      ctx.drawImage(fullImg, offsetX, offsetY, drawW, drawH);
-    }
-
-    /* 3. Viñeta superior: oscurece el techo/cielo para profundidad */
-    ctx.globalAlpha = 1;
-    var gradTop = ctx.createLinearGradient(0, 0, 0, ch * 0.30);
-    gradTop.addColorStop(0, 'rgba(10,10,10,0.78)');
-    gradTop.addColorStop(1, 'rgba(10,10,10,0.00)');
-    ctx.fillStyle = gradTop;
-    ctx.fillRect(0, 0, cw, ch * 0.30);
-
-    /* 4. Viñeta inferior: zona del texto del hero */
-    var gradBot = ctx.createLinearGradient(0, ch * 0.55, 0, ch);
-    gradBot.addColorStop(0, 'rgba(10,10,10,0.00)');
-    gradBot.addColorStop(1, 'rgba(10,10,10,0.92)');
-    ctx.fillStyle = gradBot;
-    ctx.fillRect(0, ch * 0.55, cw, ch * 0.45);
-
-    ctx.restore();
   }
 
+  /* ── Viñetas cinematográficas ── */
+  function vignettes() {
+    var cw = window.innerWidth, ch = window.innerHeight;
+    var gTop = ctx.createLinearGradient(0, 0, 0, ch * 0.28);
+    gTop.addColorStop(0, 'rgba(0,0,0,0.75)');
+    gTop.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = gTop;
+    ctx.fillRect(0, 0, cw, ch * 0.28);
+
+    var gBot = ctx.createLinearGradient(0, ch * 0.6, 0, ch);
+    gBot.addColorStop(0, 'rgba(0,0,0,0)');
+    gBot.addColorStop(1, 'rgba(0,0,0,0.88)');
+    ctx.fillStyle = gBot;
+    ctx.fillRect(0, ch * 0.6, cw, ch * 0.4);
+  }
+
+  /* ── Interpolación suave ── */
+  function smoothstep(edge0, edge1, x) {
+    var t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)));
+    return t * t * (3 - 2 * t);
+  }
+
+  /* ── Opacidad de texto: ventana [a,b] con rampas de w ── */
+  function windowOpacity(p, a, b, w) {
+    if (p < a || p > b) return 0;
+    var fadeIn  = smoothstep(a, a + w, p);
+    var fadeOut = 1 - smoothstep(b - w, b, p);
+    return Math.min(fadeIn, fadeOut);
+  }
+
+  /* ── Redimensionar canvas al viewport ── */
   function resizeCanvas() {
     var dpr = window.devicePixelRatio || 1;
-    canvas.width  = Math.round(window.innerWidth  * dpr);
-    canvas.height = Math.round(window.innerHeight * dpr);
-    canvas.style.width  = window.innerWidth  + 'px';
-    canvas.style.height = window.innerHeight + 'px';
-    if (initialized) drawFrame(lastProgress);
+    var W   = window.innerWidth;
+    var H   = window.innerHeight;
+    var targetW = Math.round(W * dpr);
+    var targetH = Math.round(H * dpr);
+    if (canvas.width !== targetW || canvas.height !== targetH) {
+      canvas.width  = targetW;
+      canvas.height = targetH;
+      canvas.style.width  = W + 'px';
+      canvas.style.height = H + 'px';
+      /* ctx.scale se resetea al cambiar width/height, hay que reaplicarlo */
+      ctx.scale(dpr, dpr);
+    }
   }
 
+  /* ── Frame principal ── */
+  function drawFrame(p) {
+    if (!ready) return;
+    resizeCanvas();
+    var cw = window.innerWidth, ch = window.innerHeight;
+    ctx.clearRect(0, 0, cw, ch);
+
+    /* Canvas negro como fondo base */
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, cw, ch);
+
+    ctx.globalAlpha = 1;
+
+    if (p < 0.16) {
+      /* Fase 0: bare aparece desde negro */
+      var tBare = smoothstep(0, 0.16, p);
+      ctx.globalAlpha = tBare;
+      coverDraw(imgs[0]);
+      ctx.globalAlpha = 1;
+
+    } else if (p < 0.4) {
+      /* Fase 1: bare visible */
+      coverDraw(imgs[0]);
+
+    } else if (p < 0.64) {
+      /* Fase 2: bare → empty */
+      var tEmpty = smoothstep(0.4, 0.64, p);
+      crossfade(imgs[0], imgs[1], tEmpty);
+
+    } else {
+      /* Fase 3: empty → full */
+      var tFull = smoothstep(0.64, 1.0, p);
+      crossfade(imgs[1], imgs[2], tFull);
+    }
+
+    vignettes();
+
+    /* ── Intro: desaparece al scrollear ── */
+    if (intro) {
+      intro.style.opacity = (1 - smoothstep(0, 0.12, p)).toFixed(3);
+    }
+
+    /* ── Textos de fase ── */
+    var pt1 = document.getElementById('phase-text-1');
+    var pt2 = document.getElementById('phase-text-2');
+    var pt3 = document.getElementById('phase-text-3');
+    var pt4 = document.getElementById('hero-ctas');
+
+    if (pt1) pt1.style.opacity = windowOpacity(p, 0.16, 0.5, 0.1).toFixed(3);
+    if (pt2) pt2.style.opacity = windowOpacity(p, 0.44, 0.78, 0.1).toFixed(3);
+    if (pt3) pt3.style.opacity = windowOpacity(p, 0.75, 0.95, 0.08).toFixed(3);
+
+    if (pt4) {
+      var ctaOpacity = smoothstep(0.93, 1.0, p);
+      pt4.style.opacity = ctaOpacity.toFixed(3);
+      if (ctaOpacity > 0.5) {
+        pt4.classList.add('active');
+      } else {
+        pt4.classList.remove('active');
+      }
+    }
+  }
+
+  /* ── Scroll handler ── */
   function onScroll() {
-    var rect     = heroSection.getBoundingClientRect();
+    var rect     = section.getBoundingClientRect();
     var scrolled = Math.max(0, -rect.top);
-    var total    = heroSection.offsetHeight - window.innerHeight;
-    var progress = total > 0 ? Math.min(1, scrolled / total) : 0;
-    lastProgress = progress;
+    var total    = section.offsetHeight - window.innerHeight;
+    lastP = total > 0 ? Math.min(1, scrolled / total) : 0;
 
     if (!rafPending) {
       rafPending = true;
       requestAnimationFrame(function() {
         rafPending = false;
-        drawFrame(lastProgress);
-
-        /* Fade out del texto: desaparece entre 55% y 82% del scroll */
-        if (heroText) {
-          var fadeStart = 0.55, fadeEnd = 0.82;
-          var tP = Math.max(0, Math.min(1, (lastProgress - fadeStart) / (fadeEnd - fadeStart)));
-          heroText.style.opacity = (1 - tP).toFixed(3);
-        }
+        drawFrame(lastP);
       });
     }
   }
 
-  function onImageLoad() {
-    imgsReady++;
-    if (imgsReady < 2) return;
+  /* ── Carga de imágenes ── */
+  var loadedSet = [false, false, false];
 
-    initialized = true;
-    imgW = fullImg.naturalWidth;
-    imgH = fullImg.naturalHeight;
-
+  function onLoad(idx) {
+    if (loadedSet[idx]) return;
+    loadedSet[idx] = true;
+    loaded++;
+    if (loaded < 3) return;
+    ready = true;
     resizeCanvas();
     drawFrame(0);
-
-    /* Trigger reveal de tipografía del hero */
-    requestAnimationFrame(function() {
-      setTimeout(function() {
-        var poster = document.getElementById('heroPoster');
-        if (poster) poster.classList.add('revealed');
-      }, 80);
-    });
   }
 
-  emptyImg.onload  = onImageLoad;
-  fullImg.onload   = onImageLoad;
-
-  emptyImg.onerror = function() {
-    /*
-     * Fallback: si el render vacío no carga, mostramos el lleno directamente.
-     * Esto evita pantalla negra en caso de que el asset falte.
-     */
-    console.warn('[TEDx hero] hero-render-empty.png no disponible, usando fallback');
-    emptyImg = fullImg; /* misma imagen, sin efecto visible pero sin pantalla negra */
-    onImageLoad();
-  };
-
-  fullImg.onerror = function() {
-    console.warn('[TEDx hero] No se pudo cargar hero-render.png');
-  };
-
-  emptyImg.src = 'assets/hero-render-empty.png';
-  fullImg.src  = 'assets/hero-render.png';
-
-  /* Manejar imágenes ya cacheadas al cargar el script */
-  if (emptyImg.complete && emptyImg.naturalWidth) onImageLoad();
-  if (fullImg.complete  && fullImg.naturalWidth)  onImageLoad();
+  srcs.forEach(function(src, i) {
+    imgs[i].onload = function() { onLoad(i); };
+    imgs[i].onerror = function() {
+      console.warn('[TEDx hero] No se pudo cargar: ' + src);
+      onLoad(i);
+    };
+    imgs[i].src = src;
+    /* Si ya está cacheada al momento de asignar src */
+    if (imgs[i].complete && imgs[i].naturalWidth) onLoad(i);
+  });
 
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', function() {
+    /* Forzar resize completo reseteando dimensiones */
+    canvas.width  = 0;
+    canvas.height = 0;
     resizeCanvas();
-    drawFrame(lastProgress);
+    drawFrame(lastP);
   }, { passive: true });
 })();

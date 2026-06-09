@@ -22,37 +22,86 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
-    /* ── HERO SCROLL-DRIVEN CANVAS ── */
+    /* ── HERO CINEMATIC SEQUENCE ── */
 
     /*
-     * Arquitectura de la sección:
+     * Arquitectura:
      *
-     * #hero-scroll        → 300vh, position:relative (da el espacio de scroll)
-     *   #hero-sticky-wrap → position:sticky; top:0; height:100vh
-     *                       (se queda fijo en el viewport mientras se scrollea)
-     *     #hero-canvas    → position:absolute; inset:0 (fondo animado)
-     *     #hero-text      → position:absolute; inset:0 (overlay de texto)
-     *     .hero-ticker    → position:absolute; bottom:0
-     *     .hero-scroll-hint → position:absolute; bottom/right
+     * #hero-sequence (500vh, position:relative, background:#000)
+     *   #hero-intro   → position:absolute; 100vh centrado; z-index:20
+     *   #hero-sticky  → position:sticky; top:0; height:100vh
+     *     #hero-canvas  → position:absolute; inset:0
+     *     #hero-overlay-text → position:absolute; inset:0
+     *       .phase-text (×4) → position:absolute; inset:0; opacity:0
      */
 
-    /* Sección contenedora: 300vh da el recorrido de scroll */
-    #hero-scroll {
+    #hero-sequence {
       position: relative;
-      height: 300vh;
-      background: #0a0a0a;
+      height: 500vh;
+      background: #000;
     }
 
-    /* El wrapper sticky: se ancla en top:0 y tiene exactamente 100vh */
-    #hero-sticky-wrap {
+    /* Intro: negro con logo centrado, ocupa el primer 100vh */
+    #hero-intro {
+      position: absolute;
+      inset: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    #hero-logo-intro {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+    }
+
+    #hero-logo-intro .ted {
+      font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: clamp(48px, 10vw, 96px);
+      font-weight: 700;
+      color: #EB0028;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    #hero-logo-intro .name-intro {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(20px, 4vw, 40px);
+      font-weight: 400;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.01em;
+      line-height: 1;
+    }
+
+    #hero-scroll-hint {
+      color: #EB0028;
+      font-size: 24px;
+      animation: bounce 2s ease-in-out infinite;
+      margin-top: 40px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      50%       { transform: translateY(8px); opacity: 0.5; }
+    }
+
+    /* Sticky: se ancla en top:0 durante los 500vh */
+    #hero-sticky {
       position: sticky;
       top: 0;
       height: 100vh;
-      width: 100%;
       overflow: hidden;
     }
 
-    /* Canvas: ocupa todo el wrapper, JS escala y dibuja */
+    /* Canvas: fondo animado, 100% del sticky */
     #hero-canvas {
       position: absolute;
       inset: 0;
@@ -61,46 +110,136 @@
       display: block;
     }
 
-    /* Texto: superpuesto al canvas, desvanece con el scroll */
-    #hero-text {
+    /* Overlay de textos por fase */
+    #hero-overlay-text {
       position: absolute;
-      top: 0;
-      bottom: 0;
-      /* Centrado horizontal con max-width igual al container del sitio */
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 1296px; /* 1200px + 2*48px padding */
+      inset: 0;
       z-index: 10;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 72px 48px 80px;
       pointer-events: none;
-      will-change: opacity;
     }
 
-    /* Los CTAs y links siguen siendo clickeables */
-    #hero-text .hero-actions a,
-    #hero-text .hero-meta a {
+    .phase-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Fase 1: watermark año */
+    .year-watermark {
+      font-size: clamp(120px, 22vw, 280px);
+      font-family: 'DM Serif Display', Georgia, serif;
+      color: rgba(255,255,255,0.055);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* Fase 2: titular */
+    #phase-text-2 h1 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(64px, 12vw, 160px);
+      font-weight: 400;
+      line-height: 0.94;
+      letter-spacing: -0.03em;
+      color: #fff;
+      text-align: center;
+    }
+
+    /* Fase 3: stat */
+    .stat-line {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(24px, 4vw, 52px);
+      font-weight: 400;
+      color: rgba(255,255,255,0.9);
+      letter-spacing: -0.01em;
+      text-align: center;
+    }
+
+    /* Fase 4: CTAs finales — copiados del hero original */
+    #hero-ctas {
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      pointer-events: none;
+    }
+
+    #hero-ctas.active {
       pointer-events: auto;
     }
 
-    /* Scroll hint: esquina inferior derecha del wrapper */
-    #hero-sticky-wrap .hero-scroll-hint {
-      position: absolute;
-      right: 48px;
-      bottom: 80px;
-      z-index: 11;
+    .hc-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      width: 100%;
+      max-width: 520px;
+      padding: 0 24px;
     }
 
-    /* Ticker: base del wrapper */
-    #hero-sticky-wrap .hero-ticker {
+    .hc-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .hc-meta-sep {
+      width: 1px;
+      height: 12px;
+      background: rgba(255,255,255,0.15);
+    }
+
+    .hc-headline {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(48px, 9vw, 120px);
+      font-weight: 400;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      color: #fff;
+      text-align: center;
+    }
+
+    .hc-headline .outline {
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(255,255,255,0.8);
+    }
+
+    .hc-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* Ticker sobre el canvas — base del sticky */
+    #hero-ticker-seq {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
       z-index: 12;
+      height: 36px;
+      overflow: hidden;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+    }
+
+    #hero-ticker-seq .ticker-inner {
+      animation: ticker 28s linear infinite;
     }
 
     /* ── SECCIONES NUEVAS ── */
@@ -477,75 +616,82 @@
   </div>
 </header>
 
-<!-- HERO: SCROLL-DRIVEN CANVAS CROSSFADE -->
+<!-- HERO: SECUENCIA CINEMATOGRÁFICA 3 FRAMES + INTRO NEGRO -->
 <!--
   Arquitectura:
-  #hero-scroll (300vh, position:relative)
-    └── #hero-sticky-wrap (position:sticky; top:0; height:100vh)
-          ├── #hero-canvas (position:absolute; inset:0 — dentro del wrap sticky)
-          ├── #hero-text   (position:absolute; inset:0 — texto encima del canvas)
-          │     └── ...tipografía, CTA, scroll hint
-          └── .hero-ticker (position:absolute; bottom:0 — ticker en la base)
+  #hero-sequence (500vh, position:relative, background:#000)
+    ├── #hero-intro       (position:absolute; 100vh; logo + scroll hint)
+    └── #hero-sticky      (position:sticky; top:0; height:100vh)
+          ├── #hero-canvas      (position:absolute; inset:0 — fondo animado)
+          ├── #hero-overlay-text (position:absolute; inset:0 — textos de fase)
+          │     ├── #phase-text-1  (año watermark)
+          │     ├── #phase-text-2  (Cultivando Conciencia)
+          │     ├── #phase-text-3  (100 personas. 1 atardecer.)
+          │     └── #hero-ctas     (CTAs finales)
+          └── #hero-ticker-seq  (position:absolute; bottom:0)
 -->
-<section id="hero-scroll">
+<section id="hero-sequence" aria-label="Intro cinematográfica TEDxPeninsulaHiroki">
 
-  <div id="hero-sticky-wrap">
-
-    <!-- Canvas: ocupa todo el wrap, JS dibuja el crossfade -->
-    <canvas id="hero-canvas" role="img" aria-label="Auditorio TEDxPeninsulaHiroki iluminándose"></canvas>
-
-    <!-- Overlay de texto: fade out mientras el auditorio se llena -->
-    <div id="hero-text">
-
-      <div class="hero-meta" id="heroMeta">
-        <span class="hero-ted-badge">
-          <svg viewBox="0 0 180 24" height="18" aria-label="TEDxPeninsulaHiroki" focusable="false">
-            <text y="19" font-family="'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="700" font-size="20" letter-spacing="-0.02" fill="#EB0028">TEDx</text>
-            <text x="66" y="19" font-family="'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="300" font-size="11" letter-spacing="0.02" fill="rgba(255,255,255,0.4)">PeninsulaHiroki</text>
-          </svg>
-        </span>
-        <span class="hero-meta-sep"></span>
-        <span>Neuquén Capital · Patagonia</span>
-        <span class="hero-meta-sep"></span>
-        <span>12 · 09 · 2026</span>
-      </div>
-
-      <div class="hero-poster" id="heroPoster">
-        <div class="hero-line hero-line-1" id="heroLine1">
-          <span class="hl-word">Cultivando</span>
-        </div>
-        <div class="hero-line hero-line-2" id="heroLine2">
-          <span class="hl-word hl-word-outline">Conciencia</span>
-        </div>
-      </div>
-
-      <div class="hero-claim" id="heroClaim">
-        <span class="hc-num">100</span>
-        <span class="hc-sep">personas.</span>
-        <span class="hc-num">1</span>
-        <span class="hc-sep">atardecer.</span>
-        <span class="hc-tagline">Ideas que cambian la forma de mirar.</span>
-      </div>
-
-      <div class="hero-actions" id="heroActions">
-        <a href="#asistir" class="ha-primary" onclick="navScroll(event,'asistir')">
-          Anotarme en la waitlist
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="#speaker" class="ha-ghost" onclick="navScroll(event,'speaker')">Postular una idea</a>
-      </div>
-
-    </div><!-- /#hero-text -->
-
-    <!-- Scroll hint: esquina inferior derecha del wrap sticky -->
-    <div class="hero-scroll-hint" id="heroScroll" aria-hidden="true">
-      <div class="hsh-line"></div>
-      <span>Scroll</span>
+  <!-- FASE 0: Intro negro con logo — visible antes de scrollear -->
+  <div id="hero-intro" aria-hidden="true">
+    <div id="hero-logo-intro">
+      <span class="ted">TEDx</span>
+      <span class="name-intro">PenínsulaHiroki</span>
     </div>
+    <div id="hero-scroll-hint">↓</div>
+  </div>
 
-    <!-- Ticker: base del wrap sticky -->
-    <div class="hero-ticker" id="heroTicker" aria-hidden="true">
-      <div class="ticker-inner" id="tickerInner">
+  <!-- STICKY: Canvas + overlays de fase -->
+  <div id="hero-sticky">
+
+    <canvas id="hero-canvas" role="img" aria-label="El auditorio TEDxPeninsulaHiroki cobrando vida"></canvas>
+
+    <div id="hero-overlay-text">
+
+      <!-- Fase 1: Watermark año (salón vacío bare) -->
+      <div id="phase-text-1" class="phase-text" aria-hidden="true">
+        <span class="year-watermark">2026</span>
+      </div>
+
+      <!-- Fase 2: Titular (sillas aparecen) -->
+      <div id="phase-text-2" class="phase-text" aria-hidden="true">
+        <h1>Cultivando<br>Conciencia</h1>
+      </div>
+
+      <!-- Fase 3: Stat line (gente aparece) -->
+      <div id="phase-text-3" class="phase-text" aria-hidden="true">
+        <p class="stat-line">100 personas. 1 atardecer.</p>
+      </div>
+
+      <!-- Fase 4: CTAs finales — liberación de la secuencia -->
+      <div id="hero-ctas" class="phase-text">
+        <div class="hc-inner">
+          <div class="hc-meta">
+            <span>TEDx<strong style="color:#EB0028">PenínsulaHiroki</strong></span>
+            <span class="hc-meta-sep"></span>
+            <span>Neuquén · Patagonia</span>
+            <span class="hc-meta-sep"></span>
+            <span>12 · 09 · 2026</span>
+          </div>
+          <div class="hc-headline">
+            <span>Cultivando</span><br>
+            <span class="outline">Conciencia</span>
+          </div>
+          <div class="hc-actions">
+            <a href="#asistir" class="ha-primary" onclick="navScroll(event,'asistir')">
+              Anotarme en la waitlist
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="#speaker" class="ha-ghost" onclick="navScroll(event,'speaker')">Postular una idea</a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /#hero-overlay-text -->
+
+    <!-- Ticker permanente en la base del sticky -->
+    <div id="hero-ticker-seq" aria-hidden="true">
+      <div class="ticker-inner">
         <span>Ideas que cambian todo</span>
         <span class="ticker-dot">·</span>
         <span>12 de septiembre de 2026</span>
@@ -573,7 +719,7 @@
       </div>
     </div>
 
-  </div><!-- /#hero-sticky-wrap -->
+  </div><!-- /#hero-sticky -->
 
 </section>
 
