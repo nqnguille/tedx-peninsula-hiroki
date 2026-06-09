@@ -194,8 +194,12 @@ async function handleSubmit(e, cardId, successMsg) {
   }
 }
 
-/* ── Video backgrounds: fade in on ready ── */
-document.querySelectorAll('.hero-video, .section-video').forEach(v => {
-  v.addEventListener('loadeddata', () => v.classList.add('loaded'));
-  if (v.readyState >= 3) v.classList.add('loaded');
-});
+/* ── Hero bg image: fade in on load ── */
+(function() {
+  const heroBg = document.querySelector('.hero-bg-image');
+  if (!heroBg) return;
+  const img = new Image();
+  const src = heroBg.style.backgroundImage.replace(/url\(['"]?(.+?)['"]?\)/i, '$1');
+  img.onload = () => { heroBg.style.transition = 'opacity 1.2s ease'; };
+  img.src = src;
+})();

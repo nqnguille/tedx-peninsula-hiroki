@@ -398,9 +398,7 @@
 
 <!-- HERO -->
 <section id="hero">
-  <video class="hero-video" autoplay muted loop playsinline>
-    <source src="https://videos.pexels.com/video-files/3214448/3214448-uhd_2560_1440_25fps.mp4" type="video/mp4">
-  </video>
+  <div class="hero-bg-image" style="background-image: url('assets/hero-render.png')"></div>
   <div class="hero-veil"></div>
 
   <div class="hero-content">
@@ -476,6 +474,50 @@
       <span class="ticker-dot">·</span>
       <span>Licencia independiente de TED</span>
       <span class="ticker-dot">·</span>
+    </div>
+  </div>
+</section>
+
+<!-- ROLES: GRILLA DE IDENTIFICACIÓN -->
+<section id="roles-grid">
+  <div class="container">
+    <div class="roles-intro reveal-fade">
+      <div class="sec-label">¿Cómo querés participar?</div>
+    </div>
+    <div class="roles-cards">
+
+      <div class="role-card reveal-fade">
+        <div class="rc-num">01</div>
+        <div class="rc-label">Audiencia</div>
+        <h3 class="rc-headline">Sos de las personas que escucha una charla y no puede parar de pensar.</h3>
+        <p class="rc-sub">Hay ideas que cambian algo en vos. Este atardecer puede ser una de esas noches.</p>
+        <a href="#asistir" class="rc-cta" onclick="navScroll(event,'asistir')">Soy esto <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+
+      <div class="role-card reveal-fade delay-1">
+        <div class="rc-num">02</div>
+        <div class="rc-label">Voluntario</div>
+        <h3 class="rc-headline">Te importa cómo se hacen las cosas, no solo qué se hace.</h3>
+        <p class="rc-sub">Buscamos cuatro personas que quieran construir algo desde adentro.</p>
+        <a href="#voluntario" class="rc-cta" onclick="navScroll(event,'voluntario')">Soy esto <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+
+      <div class="role-card reveal-fade delay-1">
+        <div class="rc-num">03</div>
+        <div class="rc-label">Speaker</div>
+        <h3 class="rc-headline">Tenés una idea que se te repite. Una que le contás a todos.</h3>
+        <p class="rc-sub">No buscamos expertos perfectos. Buscamos ideas que merezcan ser escuchadas.</p>
+        <a href="#speaker" class="rc-cta" onclick="navScroll(event,'speaker')">Soy esto <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+
+      <div class="role-card reveal-fade delay-2">
+        <div class="rc-num">04</div>
+        <div class="rc-label">Partner</div>
+        <h3 class="rc-headline">Tu organización cree que las ideas importan más que los logos.</h3>
+        <p class="rc-sub">Cada alianza se diseña a medida. Sin paquetes cerrados.</p>
+        <a href="#partner" class="rc-cta" onclick="navScroll(event,'partner')">Soy esto <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M8 3.5l3.5 3.5L8 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+
     </div>
   </div>
 </section>
@@ -751,8 +793,8 @@
     <div class="part-layout">
       <div class="part-info reveal-fade">
         <div class="sec-label">Audiencia</div>
-        <h2>Vivirlo en primera persona.</h2>
-        <p>Una experiencia curada de principio a fin. Charlas breves con ideas con peso. Conversaciones reales con personas que llegaron por la misma razón que vos: porque les importa pensar.</p>
+        <h2>Sos de las personas que escucha una charla y no puede parar de pensar.</h2>
+        <p>Hay ideas que cambian algo en vos. Este atardecer puede ser una de esas noches.</p>
         <p>La selección de asistentes es intencional. No es exclusiva por status. Es para que cada persona en la sala tenga algo genuino que aportar al momento. Científicos, artistas, emprendedores, educadores, activistas, curiosos.</p>
 
         <ul class="part-list">
@@ -866,12 +908,12 @@
       </div>
 
       <div class="part-info reveal-fade">
-        <div class="sec-label">La idea que tenés</div>
-        <h2>No necesitás ser famoso.<br>Necesitás tener algo que decir.</h2>
+        <div class="sec-label">Speaker</div>
+        <h2>Tenés una idea que se te repite. Una que le contás a todos.</h2>
+
+        <p>No buscamos expertos perfectos. Buscamos ideas que merezcan ser escuchadas.</p>
 
         <p>Las mejores charlas TEDx no vinieron de personas que ya eran conocidas. Vinieron de personas que tenían una idea específica, la conocían de verdad, y podían contarla de forma que cualquiera pudiera entender.</p>
-
-        <p>No buscamos motivadores ni expertos en hablar en público. Buscamos ideas que vengan de la experiencia real: de haber hecho algo, estudiado algo, vivido algo que cambia la forma de entender un problema.</p>
 
         <div class="speaker-idea-block">
           <div class="sib-label">Lo que buscamos</div>
@@ -913,10 +955,10 @@
     <div class="part-num-label">03</div>
     <div class="part-layout">
       <div class="part-info reveal-fade">
-        <div class="sec-label">Equipo</div>
-        <h2>Construir algo memorable, desde adentro.</h2>
+        <div class="sec-label">Voluntario</div>
+        <h2>Te importa cómo se hacen las cosas, no solo qué se hace.</h2>
+        <p>Buscamos cuatro personas que quieran construir algo desde adentro.</p>
         <p>TEDxPeninsulaHiroki es posible porque hay personas que deciden que vale la pena hacerlo. El equipo organiza, produce, cura, comunica y acompaña cada detalle de la experiencia.</p>
-        <p>Ser voluntario no es solo ayudar. Es ser parte de algo que queda: las charlas, el registro, la comunidad que se forma alrededor del evento.</p>
 
         <div class="areas-grid">
           <div class="area-item">
@@ -1045,10 +1087,10 @@
       </div>
 
       <div class="part-info reveal-fade">
-        <div class="sec-label">Partners</div>
-        <h2>Las organizaciones que acompañan ideas también construyen territorio.</h2>
+        <div class="sec-label">Partner</div>
+        <h2>Tu organización cree que las ideas importan más que los logos.</h2>
+        <p>Cada alianza se diseña a medida. Sin paquetes cerrados.</p>
         <p>Ser partner de TEDxPeninsulaHiroki es estar asociado al ecosistema global de TED en un evento local, humano y curado. Una audiencia seleccionada de cien personas que llegaron porque les importa pensar. Y charlas que quedan publicadas para siempre.</p>
-        <p>No es un sponsoreo tradicional. Es una alianza con una idea.</p>
 
         <ul class="part-list">
           <li>Presencia en el evento y en todas las comunicaciones</li>

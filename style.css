@@ -339,18 +339,24 @@ a {
   background: var(--black);
 }
 
-.hero-video {
+.hero-bg-image {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 1.8s ease;
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  opacity: 0.38;
   z-index: 0;
 }
 
-.hero-video.loaded { opacity: 0.28; }
+/* Mobile: centrar en la speaker (tercio derecho inferior del render 16:9) */
+@media (max-width: 768px) {
+  .hero-bg-image {
+    background-position: 60% top;
+  }
+}
 
 .hero-veil {
   position: absolute;
@@ -603,6 +609,121 @@ a {
   color: var(--red) !important;
   padding: 0 !important;
   opacity: 0.5;
+}
+
+/* ============================================================
+   ROLES GRID — SECCIÓN DE IDENTIFICACIÓN
+   ============================================================ */
+#roles-grid {
+  background: var(--black);
+  padding: 96px 0;
+  border-top: 1px solid var(--border);
+}
+
+.roles-intro {
+  margin-bottom: 48px;
+}
+
+.roles-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.role-card {
+  background: var(--black);
+  padding: 40px 32px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  transition: background 0.25s;
+  position: relative;
+}
+
+.role-card:hover {
+  background: var(--surface);
+}
+
+.rc-num {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(64px, 7vw, 96px);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--red);
+  letter-spacing: -0.04em;
+  margin-bottom: 24px;
+  opacity: 0.9;
+}
+
+.rc-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 16px;
+}
+
+.rc-headline {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(16px, 1.4vw, 20px);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--white);
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+  flex: 1;
+}
+
+.rc-sub {
+  font-size: 13px;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.4);
+  font-weight: 300;
+  margin-bottom: 28px;
+}
+
+.rc-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--red);
+  border-bottom: 1px solid rgba(235,0,40,0.25);
+  padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+  align-self: flex-start;
+}
+
+.rc-cta:hover {
+  color: var(--white);
+  border-color: rgba(255,255,255,0.3);
+}
+
+@media (max-width: 1024px) {
+  .roles-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .roles-cards {
+    grid-template-columns: 1fr;
+  }
+
+  #roles-grid {
+    padding: 64px 0;
+  }
+
+  .rc-num {
+    font-size: 72px;
+    margin-bottom: 16px;
+  }
 }
 
 /* ============================================================
