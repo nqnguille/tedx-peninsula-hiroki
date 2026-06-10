@@ -931,6 +931,8 @@
           <div class="fg"><label class="fl">Nombre</label><input class="fi" type="text" name="nombre" placeholder="Tu nombre completo" required></div>
           <div class="fg"><label class="fl">Email</label><input class="fi" type="email" name="email" placeholder="tu@email.com" required></div>
           <div class="fg"><label class="fl">Profesión u ocupación</label><input class="fi" type="text" name="profesion" placeholder="¿A qué te dedicás?"></div>
+          <div class="fg"><label class="fl">Ciudad o provincia</label><input class="fi" type="text" name="ciudad" placeholder="Ej: Neuquén, Buenos Aires, Bariloche..."></div>
+          <div class="fg"><label class="fl">¿Cómo te enteraste?</label><select class="fse" name="como_te_enteraste"><option value="" disabled selected>Seleccioná</option><option value="instagram">Instagram</option><option value="recomendacion">Recomendación de alguien</option><option value="facebook">Facebook</option><option value="google">Google</option><option value="otro">Otro</option></select></div>
           <div class="fg"><label class="fl">¿Por qué querés estar?</label><textarea class="fta" name="mensaje" placeholder="Contanos brevemente qué te atrae de este evento."></textarea></div>
           <button type="submit" class="fsub">Anotarme en la lista</button>
           <p class="fnote">No compartimos tu información con terceros.</p>
@@ -952,8 +954,10 @@
           <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
           <div class="fg"><label class="fl">Nombre</label><input class="fi" type="text" name="nombre" placeholder="Tu nombre completo" required></div>
           <div class="fg"><label class="fl">Email</label><input class="fi" type="email" name="email" placeholder="tu@email.com" required></div>
+          <div class="fg"><label class="fl">WhatsApp</label><input class="fi" type="tel" name="whatsapp" placeholder="+54 299 000 0000"></div>
+          <div class="fg"><label class="fl">Área de preferencia</label><select class="fse" name="area" required><option value="" disabled selected>Seleccioná</option><option value="produccion">Producción y logística</option><option value="comunicacion">Comunicación y redes</option><option value="diseno">Diseño</option><option value="audiovisual">Audiovisual y fotografía</option><option value="coordinacion">Coordinación de personas</option><option value="otro">Otro</option></select></div>
           <div class="fg"><label class="fl">Disponibilidad</label><select class="fse" name="disponibilidad" required><option value="" disabled selected>Seleccioná</option><option value="fines-de-semana">Fines de semana</option><option value="entre-semana">Entre semana</option><option value="ambos">Ambos</option></select></div>
-          <div class="fg"><label class="fl">Habilidades o experiencia relevante</label><textarea class="fta" name="habilidades" placeholder="Diseño, producción, comunicación, logística..."></textarea></div>
+          <div class="fg"><label class="fl">Experiencia o habilidades relevantes</label><textarea class="fta" name="habilidades" placeholder="Diseño, producción, comunicación, logística..."></textarea></div>
           <button type="submit" class="fsub">Postularme como voluntario</button>
           <p class="fnote">No compartimos tu información con terceros.</p>
         </form>
@@ -974,9 +978,11 @@
           <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
           <div class="fg"><label class="fl">Nombre</label><input class="fi" type="text" name="nombre" placeholder="Tu nombre completo" required></div>
           <div class="fg"><label class="fl">Email</label><input class="fi" type="email" name="email" placeholder="tu@email.com" required></div>
+          <div class="fg"><label class="fl">Profesión u ocupación</label><input class="fi" type="text" name="profesion" placeholder="¿A qué te dedicás?" required></div>
           <div class="fg"><label class="fl">Tu idea en una oración</label><input class="fi" type="text" name="idea_titulo" placeholder="Una oración concreta, no un tema genérico." required></div>
           <div class="fg"><label class="fl">Desarrollá tu idea</label><textarea class="fta" name="idea_desarrollo" placeholder="¿Qué querés que la audiencia se lleve?" required style="min-height:100px;"></textarea></div>
           <div class="fg"><label class="fl">¿Hablaste en público antes?</label><select class="fse" name="experiencia_publica"><option value="" disabled selected>Seleccioná</option><option value="si">Sí, varias veces</option><option value="algunas-veces">Algunas veces</option><option value="no">No, sería mi primera vez</option></select></div>
+          <div class="fg"><label class="fl">Link opcional</label><input class="fi" type="url" name="link" placeholder="LinkedIn, web personal, video previo... (opcional)"></div>
           <button type="submit" class="fsub">Enviar postulación</button>
           <p class="fnote">No buscamos oradores perfectos. Buscamos ideas que merezcan ser escuchadas.</p>
         </form>
@@ -996,9 +1002,12 @@
         <form onsubmit="handleSubmit(event,'partner','Tu mensaje llegó. Diseñamos cada alianza a medida — te contactamos pronto.')">
           <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
           <div class="fg"><label class="fl">Nombre</label><input class="fi" type="text" name="nombre" placeholder="Tu nombre completo" required></div>
+          <div class="fg"><label class="fl">Cargo o rol</label><input class="fi" type="text" name="cargo" placeholder="Ej: Directora de marketing, Fundador, Gerente..." required></div>
           <div class="fg"><label class="fl">Organización</label><input class="fi" type="text" name="organizacion" placeholder="Nombre de la empresa u organización" required></div>
+          <div class="fg"><label class="fl">Tipo de organización</label><select class="fse" name="tipo_org" required><option value="" disabled selected>Seleccioná</option><option value="empresa">Empresa privada</option><option value="cooperativa">Cooperativa</option><option value="ong">ONG / Fundación</option><option value="marca">Marca / Producto</option><option value="gobierno">Organismo público</option><option value="otro">Otro</option></select></div>
           <div class="fg"><label class="fl">Email</label><input class="fi" type="email" name="email" placeholder="tu@email.com" required></div>
-          <div class="fg"><label class="fl">Mensaje</label><textarea class="fta" name="mensaje" placeholder="¿Qué tipo de alianza tenés en mente?" required></textarea></div>
+          <div class="fg"><label class="fl">WhatsApp</label><input class="fi" type="tel" name="whatsapp" placeholder="+54 299 000 0000"></div>
+          <div class="fg"><label class="fl">¿Qué alianza tenés en mente?</label><textarea class="fta" name="mensaje" placeholder="Contanos brevemente qué tipo de participación te interesa." required></textarea></div>
           <button type="submit" class="fsub">Enviar mensaje</button>
           <p class="fnote">Sin paquetes cerrados. Cada alianza se diseña a medida.</p>
         </form>
@@ -1027,22 +1036,12 @@
       <div class="fc-form">
         <form onsubmit="handleSubmit(event,'audiencia','Te sumás a la lista. Te avisamos cuando abramos la convocatoria oficial.')">
           <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
-          <div class="fg">
-            <label class="fl">Nombre</label>
-            <input class="fi" type="text" name="nombre" placeholder="Tu nombre completo" required>
-          </div>
-          <div class="fg">
-            <label class="fl">Email</label>
-            <input class="fi" type="email" name="email" placeholder="tu@email.com" required>
-          </div>
-          <div class="fg">
-            <label class="fl">Profesión u ocupación</label>
-            <input class="fi" type="text" name="profesion" placeholder="¿A qué te dedicás?">
-          </div>
-          <div class="fg">
-            <label class="fl">¿Por qué querés estar?</label>
-            <textarea class="fta" name="mensaje" placeholder="Contanos brevemente qué te atrae de este evento."></textarea>
-          </div>
+          <div class="fg"><label class="fl">Nombre</label><input class="fi" type="text" name="nombre" placeholder="Tu nombre completo" required></div>
+          <div class="fg"><label class="fl">Email</label><input class="fi" type="email" name="email" placeholder="tu@email.com" required></div>
+          <div class="fg"><label class="fl">Profesión u ocupación</label><input class="fi" type="text" name="profesion" placeholder="¿A qué te dedicás?"></div>
+          <div class="fg"><label class="fl">Ciudad o provincia</label><input class="fi" type="text" name="ciudad" placeholder="Ej: Neuquén, Buenos Aires, Bariloche..."></div>
+          <div class="fg"><label class="fl">¿Cómo te enteraste?</label><select class="fse" name="como_te_enteraste"><option value="" disabled selected>Seleccioná</option><option value="instagram">Instagram</option><option value="recomendacion">Recomendación de alguien</option><option value="facebook">Facebook</option><option value="google">Google</option><option value="otro">Otro</option></select></div>
+          <div class="fg"><label class="fl">¿Por qué querés estar?</label><textarea class="fta" name="mensaje" placeholder="Contanos brevemente qué te atrae de este evento."></textarea></div>
           <button type="submit" class="fsub">Anotarme en la lista</button>
           <p class="fnote">No compartimos tu información con terceros.</p>
         </form>
@@ -1065,27 +1064,12 @@
       <div class="fc-form">
         <form onsubmit="handleSubmit(event,'voluntario','Recibimos tu postulación. El equipo se va a contactar con vos.')">
           <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
-          <div class="fg">
-            <label class="fl">Nombre</label>
-            <input class="fi" type="text" name="nombre" placeholder="Tu nombre completo" required>
-          </div>
-          <div class="fg">
-            <label class="fl">Email</label>
-            <input class="fi" type="email" name="email" placeholder="tu@email.com" required>
-          </div>
-          <div class="fg">
-            <label class="fl">Disponibilidad</label>
-            <select class="fse" name="disponibilidad" required>
-              <option value="" disabled selected>Seleccioná</option>
-              <option value="fines-de-semana">Fines de semana</option>
-              <option value="entre-semana">Entre semana</option>
-              <option value="ambos">Ambos</option>
-            </select>
-          </div>
-          <div class="fg">
-            <label class="fl">Habilidades o experiencia relevante</label>
-            <textarea class="fta" name="habilidades" placeholder="Diseño, producción, comunicación, logística... contanos qué traés."></textarea>
-          </div>
+          <div class="fg"><label class="fl">Nombre</label><input class="fi" type="text" name="nombre" placeholder="Tu nombre completo" required></div>
+          <div class="fg"><label class="fl">Email</label><input class="fi" type="email" name="email" placeholder="tu@email.com" required></div>
+          <div class="fg"><label class="fl">WhatsApp</label><input class="fi" type="tel" name="whatsapp" placeholder="+54 299 000 0000"></div>
+          <div class="fg"><label class="fl">Área de preferencia</label><select class="fse" name="area" required><option value="" disabled selected>Seleccioná</option><option value="produccion">Producción y logística</option><option value="comunicacion">Comunicación y redes</option><option value="diseno">Diseño</option><option value="audiovisual">Audiovisual y fotografía</option><option value="coordinacion">Coordinación de personas</option><option value="otro">Otro</option></select></div>
+          <div class="fg"><label class="fl">Disponibilidad</label><select class="fse" name="disponibilidad" required><option value="" disabled selected>Seleccioná</option><option value="fines-de-semana">Fines de semana</option><option value="entre-semana">Entre semana</option><option value="ambos">Ambos</option></select></div>
+          <div class="fg"><label class="fl">Experiencia o habilidades relevantes</label><textarea class="fta" name="habilidades" placeholder="Diseño, producción, comunicación, logística... contanos qué traés."></textarea></div>
           <button type="submit" class="fsub">Postularme como voluntario</button>
           <p class="fnote">No compartimos tu información con terceros.</p>
         </form>
@@ -1108,31 +1092,13 @@
       <div class="fc-form">
         <form onsubmit="handleSubmit(event,'speaker','Tu postulación llegó. El equipo de curaduría lee cada idea de forma personal.')">
           <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
-          <div class="fg">
-            <label class="fl">Nombre</label>
-            <input class="fi" type="text" name="nombre" placeholder="Tu nombre completo" required>
-          </div>
-          <div class="fg">
-            <label class="fl">Email</label>
-            <input class="fi" type="email" name="email" placeholder="tu@email.com" required>
-          </div>
-          <div class="fg">
-            <label class="fl">Tu idea en una oración</label>
-            <input class="fi" type="text" name="idea_titulo" placeholder="Una oración concreta, no un tema genérico." required>
-          </div>
-          <div class="fg">
-            <label class="fl">Desarrollá tu idea</label>
-            <textarea class="fta" name="idea_desarrollo" placeholder="¿Qué querés que la audiencia se lleve? ¿Por qué esta idea importa ahora?" required style="min-height:120px;"></textarea>
-          </div>
-          <div class="fg">
-            <label class="fl">¿Hablaste en público antes?</label>
-            <select class="fse" name="experiencia_publica">
-              <option value="" disabled selected>Seleccioná</option>
-              <option value="si">Sí, varias veces</option>
-              <option value="algunas-veces">Algunas veces</option>
-              <option value="no">No, sería mi primera vez</option>
-            </select>
-          </div>
+          <div class="fg"><label class="fl">Nombre</label><input class="fi" type="text" name="nombre" placeholder="Tu nombre completo" required></div>
+          <div class="fg"><label class="fl">Email</label><input class="fi" type="email" name="email" placeholder="tu@email.com" required></div>
+          <div class="fg"><label class="fl">Profesión</label><input class="fi" type="text" name="profesion" placeholder="Tu rol o campo de trabajo" required></div>
+          <div class="fg"><label class="fl">Tu idea en una oración</label><input class="fi" type="text" name="idea_titulo" placeholder="Una oración concreta, no un tema genérico." required></div>
+          <div class="fg"><label class="fl">Desarrollá tu idea</label><textarea class="fta" name="idea_desarrollo" placeholder="¿Qué querés que la audiencia se lleve? ¿Por qué esta idea importa ahora?" required style="min-height:120px;"></textarea></div>
+          <div class="fg"><label class="fl">¿Hablaste en público antes?</label><select class="fse" name="experiencia_publica"><option value="" disabled selected>Seleccioná</option><option value="si">Sí, varias veces</option><option value="algunas-veces">Algunas veces</option><option value="no">No, sería mi primera vez</option></select></div>
+          <div class="fg"><label class="fl">Portfolio o web (opcional)</label><input class="fi" type="url" name="link" placeholder="https://"></div>
           <button type="submit" class="fsub">Enviar postulación</button>
           <p class="fnote">No buscamos oradores perfectos. Buscamos ideas que merezcan ser escuchadas.</p>
         </form>
@@ -1155,22 +1121,13 @@
       <div class="fc-form">
         <form onsubmit="handleSubmit(event,'partner','Tu mensaje llegó. Diseñamos cada alianza a medida — te contactamos pronto.')">
           <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
-          <div class="fg">
-            <label class="fl">Nombre</label>
-            <input class="fi" type="text" name="nombre" placeholder="Tu nombre completo" required>
-          </div>
-          <div class="fg">
-            <label class="fl">Organización</label>
-            <input class="fi" type="text" name="organizacion" placeholder="Nombre de la empresa u organización" required>
-          </div>
-          <div class="fg">
-            <label class="fl">Email</label>
-            <input class="fi" type="email" name="email" placeholder="tu@email.com" required>
-          </div>
-          <div class="fg">
-            <label class="fl">Mensaje</label>
-            <textarea class="fta" name="mensaje" placeholder="Contanos brevemente qué tipo de alianza tenés en mente." required></textarea>
-          </div>
+          <div class="fg"><label class="fl">Nombre</label><input class="fi" type="text" name="nombre" placeholder="Tu nombre completo" required></div>
+          <div class="fg"><label class="fl">Organización</label><input class="fi" type="text" name="organizacion" placeholder="Nombre de la empresa u organización" required></div>
+          <div class="fg"><label class="fl">Cargo</label><input class="fi" type="text" name="cargo" placeholder="Tu rol en la organización" required></div>
+          <div class="fg"><label class="fl">Tipo de organización</label><select class="fse" name="tipo_org" required><option value="" disabled selected>Seleccioná</option><option value="empresa">Empresa</option><option value="cooperativa">Cooperativa</option><option value="ong">ONG</option><option value="marca">Marca</option><option value="gobierno">Gobierno</option><option value="otro">Otro</option></select></div>
+          <div class="fg"><label class="fl">Email</label><input class="fi" type="email" name="email" placeholder="tu@email.com" required></div>
+          <div class="fg"><label class="fl">WhatsApp</label><input class="fi" type="tel" name="whatsapp" placeholder="+54 299 000 0000"></div>
+          <div class="fg"><label class="fl">Mensaje</label><textarea class="fta" name="mensaje" placeholder="Contanos brevemente qué tipo de alianza tenés en mente." required></textarea></div>
           <button type="submit" class="fsub">Enviar mensaje</button>
           <p class="fnote">Sin paquetes cerrados. Cada alianza se diseña a medida.</p>
         </form>
