@@ -196,15 +196,92 @@
     }
     #hero-ticker-seq .ticker-inner { animation: ticker 28s linear infinite; }
 
+    /* ── PARTNERS LOADER ── */
+    #partners-loader {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9997;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    #partners-loader.hidden { display: none; }
+    #partners-loader.pl-exit {
+      transform: translateY(-100%);
+      pointer-events: none;
+    }
+    .pl-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      opacity: 0;
+      animation: plFadeIn 0.5s ease 0.3s forwards;
+    }
+    .pl-headline {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(32px, 6vw, 72px);
+      font-weight: 400;
+      color: #fff;
+      text-align: center;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      max-width: 600px;
+      padding: 0 24px;
+      opacity: 0;
+      animation: plFadeIn 0.8s cubic-bezier(0.16,1,0.3,1) 0.6s forwards;
+    }
+    .pl-headline em {
+      color: var(--red);
+      font-style: italic;
+    }
+    .pl-bar {
+      width: 40px;
+      height: 1px;
+      background: rgba(235,0,40,0.5);
+      opacity: 0;
+      animation: plFadeIn 0.5s ease 1.2s forwards;
+    }
+    .pl-sub {
+      font-size: 13px;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.05em;
+      opacity: 0;
+      animation: plFadeIn 0.5s ease 1.4s forwards;
+    }
+    @keyframes plFadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     /* ── PARTNERS-SPECIFIC STYLES ── */
 
-    /* Main Sponsor CTA — glass backdrop */
-    .hc-inner {
-      background: rgba(0,0,0,0.45);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.07);
-      padding: 48px 40px;
+    /* Hero scroll-only CTA */
+    .hc-scroll-only {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      opacity: 0;
+      animation: fadeInUp 0.8s 1s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+    .hc-scroll-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+    .hc-scroll-line {
+      width: 1px;
+      height: 48px;
+      background: rgba(255,255,255,0.2);
+      animation: scrollPulse 2s ease-in-out infinite;
     }
 
     /* Conector */
@@ -505,31 +582,39 @@
       color: rgba(255,255,255,0.25);
       margin-bottom: 14px;
     }
-    .ec-grid {
+    .ec-icons {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
+      grid-template-columns: repeat(6, 1fr);
+      gap: 24px 16px;
+      padding-top: 8px;
     }
-    .ec-item {
-      background: var(--black);
-      padding: 16px 20px;
-      font-size: 13px;
-      color: rgba(255,255,255,0.45);
-      line-height: 1.55;
-      font-weight: 300;
-      transition: background 0.2s, color 0.2s;
+    .ec-icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
     }
-    .ec-item:hover { background: var(--surface); color: rgba(255,255,255,0.65); }
-    .ec-item strong {
-      display: block;
+    .ec-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--red);
+      transition: border-color 0.2s, background 0.2s;
+      flex-shrink: 0;
+    }
+    .ec-icon-item:hover .ec-icon-wrap {
+      border-color: rgba(235,0,40,0.35);
+      background: rgba(235,0,40,0.04);
+    }
+    .ec-icon-label {
       font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
-      margin-bottom: 5px;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.45;
+      font-weight: 400;
     }
     @media (max-width: 900px) {
       .etapas::before { left: 20px; }
@@ -537,10 +622,10 @@
       .etapa { grid-template-columns: 1fr; }
       .etapa-card { padding: 36px 28px; }
       .etapa-body { grid-template-columns: 1fr; gap: 24px; }
-      .ec-grid { grid-template-columns: 1fr 1fr; }
+      .ec-icons { grid-template-columns: repeat(3, 1fr); }
     }
     @media (max-width: 600px) {
-      .ec-grid { grid-template-columns: 1fr; }
+      .ec-icons { grid-template-columns: repeat(2, 1fr); }
     }
 
     /* Beneficios */
@@ -1032,6 +1117,16 @@
 <body>
 
 <!-- ══════════════════════════════════════════════════════
+     PARTNERS LOADER
+     ══════════════════════════════════════════════════════ -->
+<div id="partners-loader" class="hidden">
+  <div class="pl-eyebrow">TEDxPeninsulaHiroki · 2026</div>
+  <h2 class="pl-headline">Tenemos algo<br>para <em>construir</em><br>juntos.</h2>
+  <div class="pl-bar"></div>
+  <div class="pl-sub">Cargando la propuesta...</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
      ACCESO POR CLAVE — cambiar ACCESS_KEY a algo real
      ══════════════════════════════════════════════════════ -->
 <div id="access-gate">
@@ -1105,22 +1200,11 @@
         <p class="stat-line">3 eventos · 3 años · 1 decisión</p>
       </div>
 
-      <!-- Fase 4: CTAs partner -->
+      <!-- Fase 4: solo scroll hint -->
       <div class="phase-text" id="hero-ctas">
-        <div class="hc-inner">
-          <div class="hc-meta">
-            <span>2026 → 2028</span>
-            <div class="hc-meta-sep"></div>
-            <span>Asociación Civil Cann</span>
-          </div>
-          <h1 class="hc-headline">Main<br><span class="outline">Sponsor</span></h1>
-          <div class="hc-actions">
-            <a href="#modelo" class="ha-primary">
-              Ver el modelo
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-            <a href="#suscripcion" class="ha-ghost">Comenzar ahora</a>
-          </div>
+        <div class="hc-scroll-only">
+          <div class="hc-scroll-label">Scrolleá para ver la propuesta</div>
+          <div class="hc-scroll-line"></div>
         </div>
       </div>
     </div>
@@ -1163,7 +1247,7 @@
     <div class="modelo-header reveal-fade">
       <div class="sec-label">El modelo</div>
       <h2>Empezamos juntos.<br>Lo que sigue,<br>lo construimos.</h2>
-      <p>TEDxPeninsulaHiroki es el primer paso — el validador. De lo que construyamos juntos acá nacen los términos de los capítulos siguientes. No es una obligación de ninguna de las dos partes. Es una invitación a construir algo grande.</p>
+      <p>TEDxPeninsulaHiroki es el primer capítulo. Al cierre de cada etapa nos sentamos, miramos lo que armamos juntos, y acordamos cómo sigue. Sin obligación de ninguna de las dos partes. Con toda la información sobre la mesa.</p>
     </div>
 
     <div class="etapas">
@@ -1180,7 +1264,7 @@
           <p class="etapa-sub">El primer paso. El momento de menor riesgo y mayor primera ventaja.</p>
           <div class="etapa-body">
             <div>
-              <p class="etapa-desc">TEDxPeninsulaHiroki es el evento habilitado por TED Conferences que ya tiene estructura, formularios activos y presencia digital. Es el punto de entrada al ecosistema.<br><br>Siendo Main Sponsor de esta etapa, tu marca aparece en todos los materiales del primer evento TEDx de la Patagonia centrado en cáñamo, salud y territorio. Y tenés precio preferencial garantizado para las dos etapas siguientes.</p>
+              <p class="etapa-desc">TEDxPeninsulaHiroki es el evento habilitado por TED Conferences. Es el punto de entrada al ecosistema — el capítulo donde nos conocemos, construimos juntos, y definimos el camino.</p>
             </div>
             <div class="etapa-pricing">
               <div class="ep-label">Inversión mensual</div>
@@ -1191,17 +1275,34 @@
                 Al ser deducible de Ganancias, tu costo real puede bajar a <strong>~$325–$375 USD / mes</strong> según la alícuota que te aplique.<br><br>
                 Consultalo con tu contador antes de decidir.
               </div>
-              <div class="ep-pref-badge">Precio de acceso anticipado</div>
             </div>
             <div class="etapa-compromisos">
-              <div class="ec-label">Nuestros compromisos en esta etapa</div>
-              <div class="ec-grid">
-                <div class="ec-item"><strong>Visibilidad</strong>Logo en todos los materiales digitales e impresos del evento</div>
-                <div class="ec-item"><strong>Exclusividad</strong>Un solo Main Sponsor por categoría de industria</div>
-                <div class="ec-item"><strong>Presencia en vivo</strong>Stand o espacio de marca durante el evento</div>
-                <div class="ec-item"><strong>Mención</strong>Reconocimiento en apertura, cierre y comunicaciones oficiales</div>
-                <div class="ec-item"><strong>Contenido</strong>Aparición en piezas de redes sociales del evento</div>
-                <div class="ec-item"><strong>Precio preferencial</strong>Tarifa bloqueada para Etapas 02 y 03</div>
+              <div class="ec-label">Lo que construimos juntos</div>
+              <div class="ec-icons">
+                <div class="ec-icon-item">
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="16" height="10" rx="1"/><path d="M6 5V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v1"/></svg></div>
+                  <span class="ec-icon-label">Logo en todos los materiales</span>
+                </div>
+                <div class="ec-icon-item">
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2l2.4 4.8 5.3.8-3.8 3.7.9 5.3L10 14l-4.8 2.6.9-5.3L2.3 7.6l5.3-.8z"/></svg></div>
+                  <span class="ec-icon-label">Exclusividad en tu categoría</span>
+                </div>
+                <div class="ec-icon-item">
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="7" r="3"/><path d="M4 18c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></div>
+                  <span class="ec-icon-label">Espacio de marca en el evento</span>
+                </div>
+                <div class="ec-icon-item">
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h14M3 10h14M3 13h8"/><circle cx="16" cy="13" r="3"/></svg></div>
+                  <span class="ec-icon-label">Mención en apertura y cierre</span>
+                </div>
+                <div class="ec-icon-item">
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="16" height="14" rx="2"/><path d="M2 8h16"/><circle cx="7" cy="13" r="1.5" fill="currentColor" stroke="none"/><circle cx="13" cy="13" r="1.5" fill="currentColor" stroke="none"/></svg></div>
+                  <span class="ec-icon-label">Piezas de redes sociales</span>
+                </div>
+                <div class="ec-icon-item">
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 10l3 3 3-3M10 4v9"/><path d="M4 14v2a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-2"/></svg></div>
+                  <span class="ec-icon-label">Acceso al Capítulo 02</span>
+                </div>
               </div>
             </div>
           </div>
@@ -1217,30 +1318,43 @@
           <span class="etapa-bg-num">02</span>
           <div class="etapa-eyebrow">Capítulo 02 · 2027</div>
           <h3 class="etapa-title">TEDx Neuquén</h3>
-          <p class="etapa-sub">Si TEDxPH sale bien, el siguiente capítulo es en el Auditorio Omuyo. Escala real. La capital de la Patagonia energética.</p>
+          <p class="etapa-sub">El salto de escala. Auditorio Domuyo — el centro de convenciones ícono de la Patagonia. La capital energética del país.</p>
           <div class="etapa-body">
             <div>
-              <p class="etapa-desc">TEDx Neuquén en el Auditorio Omuyo es el salto de escala. Una producción completa con speaker lineup nacional e internacional, en la ciudad donde conviven el petróleo, el agro y la salud.<br><br>Al cierre de TEDxPH nos sentamos juntos y acordamos los términos del siguiente año. Sin obligación de ninguna de las dos partes. Con toda la información sobre la mesa.</p>
+              <p class="etapa-desc">El Auditorio Domuyo es el escenario natural del siguiente capítulo. Una producción completa con speaker lineup nacional e internacional, en la ciudad donde confluyen el petróleo, el agro y la salud.<br><br>Al cierre del Capítulo 01 nos sentamos, miramos lo que armamos juntos, y acordamos cómo sigue. La propuesta se elabora en exclusiva para los partners que recorrieron el primer camino.</p>
             </div>
             <div class="etapa-pricing">
-              <div class="ep-label">Inversión orientativa</div>
-              <div class="ep-price" style="font-size:clamp(24px,3vw,38px);">A acordar<br><span>al cierre de Etapa 01</span></div>
-              <div class="ep-total" style="margin-top:12px;">Referencia: similar escala a Etapa 01, ajustado al proyecto</div>
-              <div class="ep-divider"></div>
-              <div class="ep-real-cost">
-                Los términos del Capítulo 02 se definen en base a lo construido juntos en TEDxPH — visibilidad obtenida, audiencia generada, y relación de trabajo.
-              </div>
-              <div class="ep-pref-badge">Solo para Partners de Capítulo 01</div>
+              <div class="ep-label">Propuesta</div>
+              <div class="ep-price" style="font-size:clamp(22px,2.8vw,34px);line-height:1.2;">En desarrollo<br><span>exclusiva para Cap. 01</span></div>
+              <div class="ep-total" style="margin-top:12px;">Los términos se construyen juntos al cierre del Capítulo 01</div>
             </div>
             <div class="etapa-compromisos">
-              <div class="ec-label">Lo que proyectamos para esta etapa</div>
-              <div class="ec-grid">
-                <div class="ec-item"><strong>Visibilidad ampliada</strong>Materiales del evento + campaña previa de 3 meses</div>
-                <div class="ec-item"><strong>Exclusividad</strong>Un solo Partner por categoría, igual que Capítulo 01</div>
-                <div class="ec-item"><strong>Escena</strong>Mención en vivo desde el escenario del Auditorio Omuyo</div>
-                <div class="ec-item"><strong>Prensa</strong>Inclusión en gacetilla de prensa oficial del evento</div>
-                <div class="ec-item"><strong>Networking</strong>Acceso a cóctel privado post-evento con speakers</div>
-                <div class="ec-item"><strong>Continuidad</strong>Acceso preferencial al Capítulo 03</div>
+              <div class="ec-label">Lo que proyectamos construir</div>
+              <div class="ec-icons">
+                <div class="ec-icon-item">
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="8"/><path d="M10 6v4l3 2"/></svg></div>
+                  <span class="ec-icon-label">Campaña de visibilidad 3 meses antes</span>
+                </div>
+                <div class="ec-icon-item">
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2l2.4 4.8 5.3.8-3.8 3.7.9 5.3L10 14l-4.8 2.6.9-5.3L2.3 7.6l5.3-.8z"/></svg></div>
+                  <span class="ec-icon-label">Exclusividad en tu categoría</span>
+                </div>
+                <div class="ec-icon-item">
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 16V8l6-5 6 5v8"/><path d="M8 16v-5h4v5"/></svg></div>
+                  <span class="ec-icon-label">Mención desde el escenario Domuyo</span>
+                </div>
+                <div class="ec-icon-item">
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h12v9H4z"/><path d="M8 17h4M10 13v4"/></svg></div>
+                  <span class="ec-icon-label">Prensa oficial del evento</span>
+                </div>
+                <div class="ec-icon-item">
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 17c2-4 12-4 14 0M10 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg></div>
+                  <span class="ec-icon-label">Cóctel post-evento con speakers</span>
+                </div>
+                <div class="ec-icon-item">
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10h12M10 4l6 6-6 6"/></svg></div>
+                  <span class="ec-icon-label">Acceso al Capítulo 03</span>
+                </div>
               </div>
             </div>
           </div>
@@ -1255,31 +1369,44 @@
         <div class="etapa-card">
           <span class="etapa-bg-num">03</span>
           <div class="etapa-eyebrow">Capítulo 03 · 2028</div>
-          <h3 class="etapa-title">Confluencia</h3>
-          <p class="etapa-sub">El evento ancla. Cáñamo, salud, agro patagónico y energía — todos convergen en Neuquén.</p>
+          <h3 class="etapa-title">Expo Conciencia</h3>
+          <p class="etapa-sub">El evento ancla. El nombre lo dice todo: ideas que cambian la forma de producir, de habitar y de crecer en la Patagonia.</p>
           <div class="etapa-body">
             <div>
-              <p class="etapa-desc">Confluencia es donde convergen los ríos y las ideas. No existe un evento así en Argentina: cáñamo industrial, biotecnología, agro patagónico y la energía de Vaca Muerta en un mismo espacio.<br><br>Las empresas que lleguen acá habrán construido dos años de presencia en el ecosistema. Ese posicionamiento no se puede comprar a último momento.</p>
+              <p class="etapa-desc">Expo Conciencia es el destino natural de todo lo que empieza en TEDxPH. Un evento que no existe todavía en Argentina, construido por quienes llegaron desde el principio.<br><br>El nombre, la escala, el formato — todo se define con los partners que hicieron el camino completo. Esta propuesta no está disponible para nadie que no haya estado en los capítulos anteriores.</p>
             </div>
             <div class="etapa-pricing">
-              <div class="ep-label">Inversión orientativa</div>
-              <div class="ep-price" style="font-size:clamp(24px,3vw,38px);">A acordar<br><span>al cierre de Capítulo 02</span></div>
-              <div class="ep-total" style="margin-top:12px;">La escala del evento define el precio. Lo conversamos juntos.</div>
-              <div class="ep-divider"></div>
-              <div class="ep-real-cost">
-                Confluencia es la visión a largo plazo. Los términos se construyen con quienes hicieron el camino completo.
-              </div>
-              <div class="ep-pref-badge">Solo para Partners de Capítulos 01 y 02</div>
+              <div class="ep-label">Propuesta</div>
+              <div class="ep-price" style="font-size:clamp(22px,2.8vw,34px);line-height:1.2;">En desarrollo<br><span>exclusiva para Cap. 01 y 02</span></div>
+              <div class="ep-total" style="margin-top:12px;">La escala define los términos. Lo construimos juntos.</div>
             </div>
             <div class="etapa-compromisos">
-              <div class="ec-label">Nuestros compromisos en esta etapa</div>
-              <div class="ec-grid">
-                <div class="ec-item"><strong>Naming</strong>Posibilidad de naming rights en categoría o sala del evento</div>
-                <div class="ec-item"><strong>Escena propia</strong>Espacio de marca destacado dentro de la Expo</div>
-                <div class="ec-item"><strong>Exclusividad total</strong>Sin competidores directos en todo el evento</div>
-                <div class="ec-item"><strong>Co-creación</strong>Participación en definición de agenda y speakers de tu área</div>
-                <div class="ec-item"><strong>Prensa nacional</strong>Inclusión en estrategia de comunicación nacional</div>
-                <div class="ec-item"><strong>Legado</strong>Reconocimiento como fundador del ecosistema en todos los materiales</div>
+              <div class="ec-label">Lo que proyectamos construir</div>
+              <div class="ec-icons">
+                <div class="ec-icon-item">
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2l2.4 4.8 5.3.8-3.8 3.7.9 5.3L10 14l-4.8 2.6.9-5.3L2.3 7.6l5.3-.8z"/><circle cx="10" cy="10" r="2" fill="currentColor" stroke="none"/></svg></div>
+                  <span class="ec-icon-label">Naming rights en tu categoría</span>
+                </div>
+                <div class="ec-icon-item">
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="8" width="14" height="10"/><path d="M3 8l7-6 7 6"/><path d="M8 18v-5h4v5"/></svg></div>
+                  <span class="ec-icon-label">Espacio propio dentro de la Expo</span>
+                </div>
+                <div class="ec-icon-item">
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3a7 7 0 1 1 0 14A7 7 0 0 1 10 3z"/><path d="M10 7v3l2 2"/></svg></div>
+                  <span class="ec-icon-label">Sin competidores en el evento</span>
+                </div>
+                <div class="ec-icon-item">
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2v16M2 10h16M5.9 5.9l8.2 8.2M14.1 5.9l-8.2 8.2"/></svg></div>
+                  <span class="ec-icon-label">Co-creación de agenda</span>
+                </div>
+                <div class="ec-icon-item">
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="8"/><path d="M2 10h16M10 2a13 13 0 0 1 0 16M10 2a13 13 0 0 0 0 16"/></svg></div>
+                  <span class="ec-icon-label">Estrategia de prensa nacional</span>
+                </div>
+                <div class="ec-icon-item">
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 10l3 3 7-7"/><circle cx="10" cy="10" r="8"/></svg></div>
+                  <span class="ec-icon-label">Fundador del ecosistema</span>
+                </div>
               </div>
             </div>
           </div>
@@ -1437,13 +1564,13 @@
       <!-- Plan 3 -->
       <div class="plan-card">
         <div class="plan-etapa">Capítulo 03 · 2028</div>
-        <div class="plan-name">Confluencia</div>
+        <div class="plan-name">Expo Conciencia</div>
         <div class="plan-year">Neuquén · Evento ancla</div>
         <div class="plan-price" style="font-size:clamp(22px,3vw,34px);line-height:1.2;">A acordar<br><sub>al cierre del Cap. 02</sub></div>
         <div class="plan-total" style="margin-top:12px;">Términos definidos en conjunto</div>
         <ul class="plan-features">
           <li>Posibilidad de naming rights en categoría</li>
-          <li>Espacio de marca propio dentro de Confluencia</li>
+          <li>Espacio de marca propio dentro de Expo Conciencia</li>
           <li>Sin competidores directos en todo el evento</li>
           <li>Co-creación de agenda en tu área</li>
           <li>Reconocimiento como fundador del ecosistema</li>
@@ -1510,7 +1637,7 @@
               <option value="">Seleccioná una opción</option>
               <option value="etapa-1">Etapa 01 — TEDxPeninsulaHiroki 2026</option>
               <option value="etapa-2">Capítulo 02 — TEDx Neuquén 2027</option>
-              <option value="etapa-3">Capítulo 03 — Confluencia 2028</option>
+              <option value="etapa-3">Capítulo 03 — Expo Conciencia 2028</option>
               <option value="todas">Las tres etapas</option>
             </select>
           </div>
@@ -1563,9 +1690,20 @@
 
 <script>
   /* ── Clave de acceso al micrositio ── */
-  // Cambiar ACCESS_KEY por la clave real antes de deployar
   var ACCESS_KEY = 'hiroki2026';
   var SESSION_KEY = 'tedx_partners_access';
+
+  function showLoader() {
+    var loader = document.getElementById('partners-loader');
+    if (!loader) return;
+    loader.classList.remove('hidden');
+    setTimeout(function() {
+      loader.classList.add('pl-exit');
+      loader.addEventListener('transitionend', function() {
+        loader.style.display = 'none';
+      }, { once: true });
+    }, 2800);
+  }
 
   function checkAccess() {
     var val = document.getElementById('ag-input').value.trim().toLowerCase();
@@ -1573,6 +1711,7 @@
       sessionStorage.setItem(SESSION_KEY, '1');
       document.getElementById('access-gate').classList.add('unlocked');
       document.getElementById('ag-error').classList.remove('visible');
+      showLoader();
     } else {
       document.getElementById('ag-error').classList.add('visible');
       document.getElementById('ag-input').value = '';
@@ -1580,12 +1719,11 @@
     }
   }
 
-  // Verificar sesión al cargar
   (function() {
     if (sessionStorage.getItem(SESSION_KEY) === '1') {
       document.getElementById('access-gate').classList.add('unlocked');
+      showLoader();
     }
-    // Enter en input
     document.getElementById('ag-input').addEventListener('keydown', function(e) {
       if (e.key === 'Enter') checkAccess();
     });
