@@ -616,6 +616,23 @@
       line-height: 1.45;
       font-weight: 400;
     }
+    .etapa-photo {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      object-position: center 40%;
+      margin-bottom: 32px;
+      border: 1px solid rgba(255,255,255,0.06);
+      display: block;
+    }
+    .etapa-photo-caption {
+      font-size: 11px;
+      color: rgba(255,255,255,0.28);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: -24px;
+      margin-bottom: 32px;
+    }
     @media (max-width: 900px) {
       .etapas::before { left: 20px; }
       .etapa-num-col { display: none; }
@@ -626,6 +643,7 @@
     }
     @media (max-width: 600px) {
       .ec-icons { grid-template-columns: repeat(2, 1fr); }
+      .etapa-photo { height: 160px; }
     }
 
     /* Beneficios */
@@ -1192,7 +1210,7 @@
 
       <!-- Fase 2: headline -->
       <div class="phase-text" id="phase-text-2">
-        <h1>Esto no<br><em style="font-style:italic;color:rgba(255,255,255,0.55);">es para</em><br>cualquiera</h1>
+        <h1>Ser primero<br><em style="font-style:italic;color:rgba(255,255,255,0.55);">es una decisión</em><br>que se toma<br><em style="font-style:italic;color:rgba(255,255,255,0.55);">una sola vez.</em></h1>
       </div>
 
       <!-- Fase 3: stat -->
@@ -1220,13 +1238,12 @@
   <div class="container">
     <div class="pi-grid">
       <div class="pi-inner reveal-fade">
-        <div class="pi-label">Solo para vos</div>
         <h2 class="pi-headline">Hay empresas que<br>llegan cuando<br>todo ya está armado.</h2>
         <p class="pi-body">Y hay empresas que estuvieron desde el primer día. Que pusieron su nombre cuando el proyecto era una apuesta, no una certeza. Que construyeron algo junto a nosotros antes de que nadie más lo viera.</p>
-        <p class="pi-body" style="margin-top:20px;">Eso es lo que te estamos ofreciendo. Entrar primero. Construir con nosotros. Quedarte con el posicionamiento que después no se puede comprar.</p>
+        <p class="pi-body" style="margin-top:20px;">El nombre de tu empresa en el primer capítulo de esto no es un detalle. Es la diferencia entre haber estado cuando todavía era una apuesta y llegar cuando ya es una certeza. Ese lugar no se puede comprar después. Ya no existe.</p>
         <div class="pi-access-note">
           <svg class="pi-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          <p>Este sitio no está indexado ni vinculado al sitio público. Lo compartimos solo con empresas a las que invitamos personalmente. Si llegaste hasta acá, es porque creemos que tenés algo para aportar a esto.</p>
+          <p>Este sitio no está publicado ni vinculado al sitio público. Circula solo entre las empresas que invitamos. Si llegaste hasta acá, es porque hay algo que queremos construir con vos.</p>
         </div>
       </div>
       <div class="pi-video-wrap reveal-fade delay-1">
@@ -1247,7 +1264,7 @@
     <div class="modelo-header reveal-fade">
       <div class="sec-label">El modelo</div>
       <h2>Empezamos juntos.<br>Lo que sigue,<br>lo construimos.</h2>
-      <p>TEDxPeninsulaHiroki es el primer capítulo. Al cierre de cada etapa nos sentamos, miramos lo que armamos juntos, y acordamos cómo sigue. Sin obligación de ninguna de las dos partes. Con toda la información sobre la mesa.</p>
+      <p>El primer paso es TEDxPeninsulaHiroki. El punto de entrada — el capítulo de menor riesgo, primera ventaja y mayor cercanía con el proyecto. Al cierre de cada etapa nos sentamos, miramos lo que armamos juntos, y acordamos cómo sigue. Sin obligación de ninguna de las dos partes. Con toda la información sobre la mesa.</p>
     </div>
 
     <div class="etapas">
@@ -1262,6 +1279,8 @@
           <div class="etapa-eyebrow">Etapa 01 · 2026</div>
           <h3 class="etapa-title">TEDxPeninsulaHiroki</h3>
           <p class="etapa-sub">El primer paso. El momento de menor riesgo y mayor primera ventaja.</p>
+          <img src="assets/territorio/peninsula-hiroki.webp" alt="Península Hiroki, Neuquén" class="etapa-photo" loading="lazy">
+          <p class="etapa-photo-caption">Península Hiroki · Neuquén · Patagonia</p>
           <div class="etapa-body">
             <div>
               <p class="etapa-desc">TEDxPeninsulaHiroki es el evento habilitado por TED Conferences. Es el punto de entrada al ecosistema — el capítulo donde nos conocemos, construimos juntos, y definimos el camino.</p>
@@ -1319,14 +1338,16 @@
           <div class="etapa-eyebrow">Capítulo 02 · 2027</div>
           <h3 class="etapa-title">TEDx Neuquén</h3>
           <p class="etapa-sub">El salto de escala. Auditorio Domuyo — el centro de convenciones ícono de la Patagonia. La capital energética del país.</p>
+          <img src="assets/domuyo-exterior.jpg" alt="Centro de Convenciones Domuyo, Neuquén" class="etapa-photo" loading="lazy">
+          <p class="etapa-photo-caption">Centro de Convenciones Domuyo · Isla 132, Paseo de la Costa · Neuquén</p>
           <div class="etapa-body">
             <div>
               <p class="etapa-desc">El Auditorio Domuyo es el escenario natural del siguiente capítulo. Una producción completa con speaker lineup nacional e internacional, en la ciudad donde confluyen el petróleo, el agro y la salud.<br><br>Al cierre del Capítulo 01 nos sentamos, miramos lo que armamos juntos, y acordamos cómo sigue. La propuesta se elabora en exclusiva para los partners que recorrieron el primer camino.</p>
             </div>
             <div class="etapa-pricing">
-              <div class="ep-label">Propuesta</div>
-              <div class="ep-price" style="font-size:clamp(22px,2.8vw,34px);line-height:1.2;">En desarrollo<br><span>exclusiva para Cap. 01</span></div>
+              <div class="ep-price" style="font-size:clamp(22px,2.8vw,34px);line-height:1.2;">En producción<br><span>al cierre del Cap. 01</span></div>
               <div class="ep-total" style="margin-top:12px;">Los términos se construyen juntos al cierre del Capítulo 01</div>
+              <div class="ep-pref-badge">Prioridad · Partners del Capítulo 01</div>
             </div>
             <div class="etapa-compromisos">
               <div class="ec-label">Lo que proyectamos construir</div>
@@ -1369,16 +1390,16 @@
         <div class="etapa-card">
           <span class="etapa-bg-num">03</span>
           <div class="etapa-eyebrow">Capítulo 03 · 2028</div>
-          <h3 class="etapa-title">Expo Conciencia</h3>
-          <p class="etapa-sub">El evento ancla. El nombre lo dice todo: ideas que cambian la forma de producir, de habitar y de crecer en la Patagonia.</p>
+          <h3 class="etapa-title">Vaca Verde</h3>
+          <p class="etapa-sub">El evento que solo puede nacer en Neuquén. Donde la energía y el verde se encuentran.</p>
           <div class="etapa-body">
             <div>
-              <p class="etapa-desc">Expo Conciencia es el destino natural de todo lo que empieza en TEDxPH. Un evento que no existe todavía en Argentina, construido por quienes llegaron desde el principio.<br><br>El nombre, la escala, el formato — todo se define con los partners que hicieron el camino completo. Esta propuesta no está disponible para nadie que no haya estado en los capítulos anteriores.</p>
+              <p class="etapa-desc">En ningún lugar del mundo la industria energética y la agenda de sustentabilidad conviven con la proximidad que tienen en Neuquén. Vaca Verde es el evento que nombra esa tensión — y la convierte en plataforma.<br><br>No es un congreso de energía. No es una feria verde. Es el espacio donde los dos mundos se sientan en la misma mesa: empresas de capital intensivo y economías regenerativas, líderes industriales y referentes de impacto, tecnología de extracción y tecnología de fijación.<br><br>La escala, el formato y los actores se construyen con los partners que recorrieron el camino completo.</p>
             </div>
             <div class="etapa-pricing">
-              <div class="ep-label">Propuesta</div>
-              <div class="ep-price" style="font-size:clamp(22px,2.8vw,34px);line-height:1.2;">En desarrollo<br><span>exclusiva para Cap. 01 y 02</span></div>
+              <div class="ep-price" style="font-size:clamp(22px,2.8vw,34px);line-height:1.2;">En producción<br><span>al cierre del Cap. 02</span></div>
               <div class="ep-total" style="margin-top:12px;">La escala define los términos. Lo construimos juntos.</div>
+              <div class="ep-pref-badge">Prioridad · Partners de los Cap. 01 y 02</div>
             </div>
             <div class="etapa-compromisos">
               <div class="ec-label">Lo que proyectamos construir</div>
@@ -1389,19 +1410,19 @@
                 </div>
                 <div class="ec-icon-item">
                   <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="8" width="14" height="10"/><path d="M3 8l7-6 7 6"/><path d="M8 18v-5h4v5"/></svg></div>
-                  <span class="ec-icon-label">Espacio propio dentro de la Expo</span>
-                </div>
-                <div class="ec-icon-item">
-                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3a7 7 0 1 1 0 14A7 7 0 0 1 10 3z"/><path d="M10 7v3l2 2"/></svg></div>
-                  <span class="ec-icon-label">Sin competidores en el evento</span>
-                </div>
-                <div class="ec-icon-item">
-                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2v16M2 10h16M5.9 5.9l8.2 8.2M14.1 5.9l-8.2 8.2"/></svg></div>
-                  <span class="ec-icon-label">Co-creación de agenda</span>
+                  <span class="ec-icon-label">Stand propio en el predio</span>
                 </div>
                 <div class="ec-icon-item">
                   <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="8"/><path d="M2 10h16M10 2a13 13 0 0 1 0 16M10 2a13 13 0 0 0 0 16"/></svg></div>
-                  <span class="ec-icon-label">Estrategia de prensa nacional</span>
+                  <span class="ec-icon-label">Prensa nacional e internacional</span>
+                </div>
+                <div class="ec-icon-item">
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h5v5H4zM11 4h5v5h-5zM4 11h5v5H4zM11 11h5v5h-5z"/></svg></div>
+                  <span class="ec-icon-label">Agenda B2B co-diseñada</span>
+                </div>
+                <div class="ec-icon-item">
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 17c2-4 12-4 14 0M10 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg></div>
+                  <span class="ec-icon-label">Red de líderes industriales</span>
                 </div>
                 <div class="ec-icon-item">
                   <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 10l3 3 7-7"/><circle cx="10" cy="10" r="8"/></svg></div>
@@ -1564,13 +1585,13 @@
       <!-- Plan 3 -->
       <div class="plan-card">
         <div class="plan-etapa">Capítulo 03 · 2028</div>
-        <div class="plan-name">Expo Conciencia</div>
+        <div class="plan-name">Vaca Verde</div>
         <div class="plan-year">Neuquén · Evento ancla</div>
         <div class="plan-price" style="font-size:clamp(22px,3vw,34px);line-height:1.2;">A acordar<br><sub>al cierre del Cap. 02</sub></div>
         <div class="plan-total" style="margin-top:12px;">Términos definidos en conjunto</div>
         <ul class="plan-features">
           <li>Posibilidad de naming rights en categoría</li>
-          <li>Espacio de marca propio dentro de Expo Conciencia</li>
+          <li>Espacio de marca propio dentro de Vaca Verde</li>
           <li>Sin competidores directos en todo el evento</li>
           <li>Co-creación de agenda en tu área</li>
           <li>Reconocimiento como fundador del ecosistema</li>
@@ -1637,7 +1658,7 @@
               <option value="">Seleccioná una opción</option>
               <option value="etapa-1">Etapa 01 — TEDxPeninsulaHiroki 2026</option>
               <option value="etapa-2">Capítulo 02 — TEDx Neuquén 2027</option>
-              <option value="etapa-3">Capítulo 03 — Expo Conciencia 2028</option>
+              <option value="etapa-3">Capítulo 03 — Vaca Verde 2028</option>
               <option value="todas">Las tres etapas</option>
             </select>
           </div>
