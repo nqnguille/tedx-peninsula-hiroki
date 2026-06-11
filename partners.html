@@ -884,22 +884,6 @@
       padding: 24px;
       overflow: hidden;
     }
-    #ag-bg-video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.28;
-      filter: saturate(0.7) brightness(0.6);
-      pointer-events: none;
-    }
-    #ag-bg-overlay {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.75) 100%);
-      pointer-events: none;
-    }
     #access-gate.unlocked { display: none; }
     .ag-inner {
       position: relative;
@@ -1006,6 +990,56 @@
       text-decoration-color: rgba(255,255,255,0.15);
     }
     .ag-back a:hover { color: rgba(255,255,255,0.6); }
+
+    /* ── CTA Final ── */
+    #cta-final {
+      background: #EB0028;
+      padding: 100px 24px;
+      text-align: center;
+    }
+    .cta-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 28px;
+    }
+    .cta-headline {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 400;
+      font-style: italic;
+      color: #fff;
+      line-height: 1.15;
+      max-width: 760px;
+      margin: 0 auto 24px;
+    }
+    .cta-sub {
+      font-size: 16px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.75);
+      max-width: 520px;
+      margin: 0 auto 44px;
+    }
+    .cta-btn {
+      display: inline-block;
+      padding: 18px 48px;
+      background: #fff;
+      color: #EB0028;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 2px solid transparent;
+      transition: background .2s, color .2s;
+    }
+    .cta-btn:hover {
+      background: transparent;
+      color: #fff;
+      border-color: rgba(255,255,255,0.6);
+    }
   </style>
 </head>
 <body>
@@ -1014,10 +1048,7 @@
      ACCESO POR CLAVE — cambiar ACCESS_KEY a algo real
      ══════════════════════════════════════════════════════ -->
 <div id="access-gate">
-  <video id="ag-bg-video" autoplay muted loop playsinline>
-    <source src="assets/territorio/hiroki-web.mp4" type="video/mp4">
-  </video>
-  <div id="ag-bg-overlay"></div>
+
   <div class="ag-inner">
     <div class="ag-logo">
       <div class="ag-ted">TEDx</div>
@@ -1027,9 +1058,9 @@
     <h1 class="ag-title">Propuesta<br>para Partners</h1>
     <p class="ag-desc">Este documento es confidencial. Ingresá la clave de acceso que te compartimos.</p>
     <div class="ag-form">
-      <input type="password" id="ag-input" class="ag-input" placeholder="••••••••" autocomplete="off">
-      <button class="ag-btn" onclick="checkAccess()">Ingresar</button>
-      <p class="ag-error" id="ag-error">Clave incorrecta. Pedile la clave a Guillén.</p>
+      <input type="text" id="ag-input" class="ag-input" placeholder="Contraseña de acceso" autocomplete="off">
+      <button class="ag-btn" id="ag-btn" onclick="checkAccess()">Ingresar</button>
+      <p class="ag-error" id="ag-error">Contraseña incorrecta.</p>
     </div>
     <p class="ag-back"><a href="https://tedxpeninsulahiroki.com.ar">← Volver al sitio público</a></p>
   </div>
@@ -1145,7 +1176,7 @@
           <div class="etapa-eyebrow">Etapa 01 · 2026</div>
           <h3 class="etapa-title">TEDxPeninsulaHiroki</h3>
           <p class="etapa-sub">100 personas. Íntimo por diseño — el formato donde cada marca tiene nombre y cara.</p>
-          <img src="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=1200&q=80" alt="Speaker en escenario — TEDxPeninsulaHiroki" class="etapa-photo" loading="lazy">
+          <img src="assets/territorio/hiroki-sendero-otono.webp" alt="Sendero otoñal — Península Hiroki" class="etapa-photo" loading="lazy">
           <p class="etapa-photo-caption">100 personas · Península Hiroki · Neuquén · Patagonia</p>
           <div class="etapa-body">
             <div>
@@ -1258,7 +1289,7 @@
           <div class="etapa-eyebrow">Capítulo 03 · 2028</div>
           <h3 class="etapa-title">Vaca Verde</h3>
           <p class="etapa-sub">El evento que solo puede nacer en Neuquén. Donde la energía y el verde se encuentran.</p>
-          <img src="https://images.unsplash.com/photo-1646239586015-8ece57dd48d1?w=1200&q=80" alt="Patagonia — Vaca Verde" class="etapa-photo" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1711390811937-1b061eaf28ea?w=1200&q=80" alt="Expo industria cáñamo — Vaca Verde" class="etapa-photo" loading="lazy">
           <p class="etapa-photo-caption">Vaca Verde · Neuquén · vaca-verde.ar</p>
           <div class="etapa-body">
             <div>
@@ -1349,6 +1380,20 @@
 </section>
 
 <!-- ══════════════════════════════════════════════════════
+     CTA FINAL
+     ══════════════════════════════════════════════════════ -->
+<section id="cta-final">
+  <div class="cta-eyebrow reveal-fade">TEDx Península Hiroki · 2026</div>
+  <h2 class="cta-headline reveal-fade">Lo que se construye juntos<br>no lo borra nadie.</h2>
+  <p class="cta-sub reveal-fade">Hay lugar para pocas marcas en el origen de algo nuevo. Si llegaste hasta acá, es porque creemos que la tuya es una de ellas.</p>
+  <a class="cta-btn reveal-fade"
+     href="https://wa.me/5492994229436?text=Hola%20Guillermo%2C%20vi%20la%20propuesta%20de%20TEDxPeninsulaHiroki%20y%20quiero%20saber%20m%C3%A1s."
+     target="_blank" rel="noopener">
+    Hablemos →
+  </a>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
      FOOTER
      ══════════════════════════════════════════════════════ -->
 <footer>
@@ -1363,20 +1408,45 @@
 <script src="script.js"></script>
 
 <script>
-  /* ── Clave de acceso al micrositio ──
-     Cambiar ACCESS_KEY al nombre+apellido del destinatario (ej: 'gabriellopez')
-     El visitante puede escribirlo con espacios, mayúsculas o minúsculas. */
-  var ACCESS_KEY = 'hiroki2026';
-  var SESSION_KEY = 'tedx_partners_access';
+  var SESSION_KEY = 'tedx_partners_session';
+  var _pendingToken = null;
 
-  var normalize = function(s) { return s.toLowerCase().replace(/\s+/g, ''); };
+  function unlock() {
+    document.getElementById('access-gate').classList.add('unlocked');
+  }
 
-  function checkAccess() {
-    var val = normalize(document.getElementById('ag-input').value.trim());
-    if (val === normalize(ACCESS_KEY)) {
+  function setBtnLoading(loading) {
+    var btn = document.getElementById('ag-btn');
+    btn.disabled = loading;
+    btn.textContent = loading ? '…' : 'Ingresar';
+  }
+
+  function showPasswordStep() {
+    document.getElementById('ag-input').value = '';
+    document.getElementById('ag-input').placeholder = 'Contraseña de acceso';
+    document.getElementById('ag-input').focus();
+  }
+
+  async function callValidate(token, password) {
+    try {
+      var params = new URLSearchParams();
+      if (token) params.set('token', token);
+      if (password) params.set('password', password);
+      var res = await fetch('/api/validate?' + params.toString());
+      return await res.json();
+    } catch(e) { return { valid: false }; }
+  }
+
+  async function checkAccess() {
+    var val = document.getElementById('ag-input').value.trim();
+    if (!val) return;
+    setBtnLoading(true);
+    var data = await callValidate(_pendingToken, val);
+    setBtnLoading(false);
+    if (data.valid) {
       sessionStorage.setItem(SESSION_KEY, '1');
-      document.getElementById('access-gate').classList.add('unlocked');
       document.getElementById('ag-error').classList.remove('visible');
+      unlock();
     } else {
       document.getElementById('ag-error').classList.add('visible');
       document.getElementById('ag-input').value = '';
@@ -1384,13 +1454,32 @@
     }
   }
 
-  (function() {
-    if (sessionStorage.getItem(SESSION_KEY) === '1') {
-      document.getElementById('access-gate').classList.add('unlocked');
-    }
+  (async function() {
+    if (sessionStorage.getItem(SESSION_KEY) === '1') { unlock(); return; }
+
+    // Input siempre activo (permite master password y contraseña post-token)
     document.getElementById('ag-input').addEventListener('keydown', function(e) {
       if (e.key === 'Enter') checkAccess();
     });
+
+    var urlToken = new URLSearchParams(window.location.search).get('token');
+    if (!urlToken) return; // espera entrada manual
+
+    history.replaceState(null, '', window.location.pathname);
+
+    var data = await callValidate(urlToken, null);
+
+    if (data.valid) {
+      sessionStorage.setItem(SESSION_KEY, '1');
+      unlock();
+    } else if (data.requires_password) {
+      _pendingToken = urlToken;
+      showPasswordStep();
+    } else {
+      var errEl = document.getElementById('ag-error');
+      errEl.textContent = 'Este link no es válido o ya expiró.';
+      errEl.classList.add('visible');
+    }
   })();
 </script>
 

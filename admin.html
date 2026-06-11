@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TEDxPeninsulaHiroki · Panel Partners</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { overflow-x: hidden; max-width: 100%; }
+
+    :root {
+      --red: #EB0028;
+      --black: #0a0a0a;
+      --dark: #111;
+      --surface: #1a1a1a;
+      --border: rgba(255,255,255,0.08);
+      --text: #fff;
+      --muted: rgba(255,255,255,0.45);
+      --green: #22c55e;
+      --yellow: #eab308;
+      --gray: rgba(255,255,255,0.25);
+      --font: 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    body { background: var(--black); color: var(--text); font-family: var(--font); min-height: 100vh; }
+
+    /* ── LOGIN ── */
+    #login-screen {
+      position: fixed; inset: 0; background: var(--black);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 100;
+    }
+    #login-screen.hidden { display: none; }
+
+    .login-box {
+      width: 360px; padding: 48px 40px;
+      border: 1px solid var(--border); border-top: 3px solid var(--red);
+      background: var(--surface);
+    }
+    .login-logo { font-size: 20px; font-weight: 700; color: var(--red); margin-bottom: 4px; }
+    .login-sub { font-size: 12px; color: var(--muted); margin-bottom: 32px; letter-spacing: 0.05em; text-transform: uppercase; }
+    .login-title { font-size: 22px; font-weight: 700; margin-bottom: 28px; }
+    .login-input {
+      width: 100%; padding: 14px 16px; background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border); color: var(--text); font-size: 15px;
+      font-family: var(--font); outline: none; transition: border .2s;
+    }
+    .login-input:focus { border-color: rgba(255,255,255,0.25); }
+    .login-btn {
+      width: 100%; margin-top: 14px; padding: 14px;
+      background: var(--red); color: #fff; border: none; cursor: pointer;
+      font-size: 14px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      font-family: var(--font); transition: opacity .2s;
+    }
+    .login-btn:hover { opacity: 0.88; }
+    .login-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .login-err { font-size: 13px; color: var(--red); margin-top: 12px; display: none; }
+    .login-err.visible { display: block; }
+
+    /* ── DASHBOARD ── */
+    #dashboard { display: none; }
+    #dashboard.visible { display: block; }
+
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--dark); border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 60px;
+    }
+    .header-left { display: flex; align-items: center; gap: 12px; }
+    .header-logo { font-size: 16px; font-weight: 700; color: var(--red); }
+    .header-title { font-size: 13px; color: var(--muted); letter-spacing: 0.04em; }
+    .header-sep { width: 1px; height: 20px; background: var(--border); }
+
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .btn-ghost {
+      padding: 8px 16px; background: transparent; border: 1px solid var(--border);
+      color: var(--muted); font-size: 12px; font-family: var(--font);
+      cursor: pointer; transition: all .2s; letter-spacing: 0.04em;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+
+    main { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+
+    /* ── STATS ── */
+    .stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 32px; }
+    .stat-card {
+      padding: 24px 28px; background: var(--surface); border: 1px solid var(--border);
+      border-top: 2px solid transparent;
+    }
+    .stat-card.s-total { border-top-color: rgba(255,255,255,0.15); }
+    .stat-card.s-sent  { border-top-color: var(--yellow); }
+    .stat-card.s-viewed { border-top-color: var(--green); }
+    .stat-num { font-size: 40px; font-weight: 700; line-height: 1; margin-bottom: 6px; }
+    .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+    /* ── TOOLBAR ── */
+    .toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .toolbar h2 { font-size: 16px; font-weight: 600; }
+    .toolbar-right { display: flex; gap: 10px; }
+    .btn-primary {
+      padding: 10px 20px; background: var(--red); color: #fff; border: none;
+      font-size: 13px; font-weight: 700; font-family: var(--font); cursor: pointer;
+      letter-spacing: 0.04em; transition: opacity .2s;
+    }
+    .btn-primary:hover { opacity: 0.88; }
+    .btn-sm {
+      padding: 6px 12px; font-size: 11px; font-weight: 600; font-family: var(--font);
+      border: 1px solid var(--border); background: transparent; color: var(--muted);
+      cursor: pointer; transition: all .15s; letter-spacing: 0.04em; white-space: nowrap;
+    }
+    .btn-sm:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+    .btn-sm.btn-danger:hover { color: #f87171; border-color: #f87171; }
+    .btn-sm.btn-send { color: #facc15; border-color: #facc1550; }
+    .btn-sm.btn-send:hover { background: #facc1510; border-color: #facc15; }
+    .btn-sm.btn-resend { color: var(--muted); }
+
+    /* ── TABLE ── */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      text-align: left; padding: 10px 14px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); border-bottom: 1px solid var(--border);
+    }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
+    tbody tr:hover { background: rgba(255,255,255,0.03); }
+    tbody td { padding: 14px 14px; font-size: 14px; vertical-align: middle; }
+    td.td-num { color: var(--muted); font-size: 12px; width: 40px; }
+    td.td-name { font-weight: 600; }
+    td.td-email { color: var(--muted); font-size: 13px; }
+    td.td-date { color: var(--muted); font-size: 12px; white-space: nowrap; }
+    td.td-actions { white-space: nowrap; }
+    .actions-row { display: flex; gap: 6px; align-items: center; }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: 999px; font-size: 10px;
+      font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .badge-pending { background: rgba(255,255,255,0.07); color: var(--muted); }
+    .badge-sent    { background: rgba(234,179,8,0.15); color: var(--yellow); border: 1px solid rgba(234,179,8,0.3); }
+    .badge-viewed  { background: rgba(34,197,94,0.12); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+
+    .empty-state {
+      text-align: center; padding: 64px 24px; color: var(--muted); font-size: 14px;
+    }
+
+    /* ── MODAL ── */
+    #modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+      display: none; align-items: center; justify-content: center; z-index: 200;
+    }
+    #modal-overlay.visible { display: flex; }
+    .modal-box {
+      width: 420px; background: var(--surface);
+      border: 1px solid var(--border); border-top: 3px solid var(--red);
+      padding: 36px 32px;
+    }
+    .modal-title { font-size: 18px; font-weight: 700; margin-bottom: 24px; }
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; font-size: 11px; color: var(--muted); letter-spacing: 0.08em;
+                  text-transform: uppercase; margin-bottom: 7px; }
+    .form-input {
+      width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border); color: var(--text); font-size: 14px;
+      font-family: var(--font); outline: none; transition: border .2s;
+    }
+    .form-input:focus { border-color: rgba(255,255,255,0.25); }
+    .modal-actions { display: flex; gap: 10px; margin-top: 24px; justify-content: flex-end; }
+    .modal-err { font-size: 12px; color: var(--red); margin-top: 12px; display: none; }
+    .modal-err.visible { display: block; }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed; bottom: 28px; right: 28px; z-index: 999;
+      padding: 14px 20px; background: #1e1e1e; border: 1px solid var(--border);
+      border-left: 3px solid var(--red); font-size: 13px; color: var(--text);
+      pointer-events: none; opacity: 0; transform: translateY(8px);
+      transition: all .25s; max-width: 320px;
+    }
+    #toast.show { opacity: 1; transform: translateY(0); }
+    #toast.success { border-left-color: var(--green); }
+    #toast.warning { border-left-color: var(--yellow); }
+
+    /* ── LOADING ── */
+    .spinner {
+      display: inline-block; width: 12px; height: 12px;
+      border: 2px solid rgba(255,255,255,0.15); border-top-color: var(--text);
+      border-radius: 50%; animation: spin .6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 700px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .stats-row .stat-card:last-child { grid-column: span 2; }
+      header { padding: 0 16px; }
+      main { padding: 24px 14px; }
+      .modal-box { width: calc(100vw - 32px); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── LOGIN ─────────────────────────────── -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">TEDx</div>
+    <div class="login-sub">PeninsulaHiroki · Panel Partners</div>
+    <h1 class="login-title">Acceso admin</h1>
+    <input type="password" id="login-input" class="login-input"
+           placeholder="Contraseña de administrador"
+           autocomplete="current-password">
+    <button class="login-btn" id="login-btn" onclick="doLogin()">Ingresar</button>
+    <p class="login-err" id="login-err">Contraseña incorrecta.</p>
+  </div>
+</div>
+
+<!-- ── DASHBOARD ──────────────────────────── -->
+<div id="dashboard">
+  <header>
+    <div class="header-left">
+      <span class="header-logo">TEDx</span>
+      <span class="header-sep"></span>
+      <span class="header-title">Panel de Invitaciones</span>
+    </div>
+    <div class="header-right">
+      <button class="btn-ghost" onclick="loadInvites()">↺ Actualizar</button>
+      <button class="btn-ghost" onclick="doLogout()">Salir</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="stats-row">
+      <div class="stat-card s-total">
+        <div class="stat-num" id="stat-total">—</div>
+        <div class="stat-label">Total invitaciones</div>
+      </div>
+      <div class="stat-card s-sent">
+        <div class="stat-num" id="stat-sent">—</div>
+        <div class="stat-label">Emails enviados</div>
+      </div>
+      <div class="stat-card s-viewed">
+        <div class="stat-num" id="stat-viewed">—</div>
+        <div class="stat-label">Propuesta vista</div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <h2>Invitaciones</h2>
+      <div class="toolbar-right">
+        <button class="btn-primary" onclick="openModal()">+ Nueva invitación</button>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Contraseña</th>
+            <th>Estado</th>
+            <th>Enviado</th>
+            <th>Vista</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="invites-body">
+          <tr><td colspan="7"><div class="empty-state">Cargando…</div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<!-- ── MODAL ──────────────────────────────── -->
+<div id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal-box">
+    <h2 class="modal-title">Nueva invitación</h2>
+    <div class="form-group">
+      <label class="form-label" for="field-name">Nombre completo</label>
+      <input type="text" id="field-name" class="form-input" placeholder="Gabriel López" autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="field-email">Email</label>
+      <input type="email" id="field-email" class="form-input" placeholder="gabriel@empresa.com">
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="field-password">Contraseña personal <span style="color:var(--muted);font-weight:400;">(opcional)</span></label>
+      <input type="text" id="field-password" class="form-input" placeholder="Ej: hiroki2026" autocomplete="off">
+      <div style="font-size:11px;color:var(--muted);margin-top:6px;">Si la configurás, el invitado deberá ingresarla además del link. Compartila por separado (WhatsApp, llamada).</div>
+    </div>
+    <p class="modal-err" id="modal-err"></p>
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal()">Cancelar</button>
+      <button class="btn-primary" id="create-btn" onclick="createInvite()">Crear invitación</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOAST ──────────────────────────────── -->
+<div id="toast"></div>
+
+<script>
+  const BASE = '';
+  let adminToken = '';
+
+  // ── Auth ─────────────────────────────────────────────
+  async function doLogin() {
+    const input = document.getElementById('login-input');
+    const pass = input.value.trim();
+    if (!pass) return;
+
+    const btn = document.getElementById('login-btn');
+    btn.disabled = true; btn.textContent = '…';
+
+    const res = await fetch(`${BASE}/api/invites`, {
+      headers: { 'Authorization': `Bearer ${pass}` }
+    });
+
+    if (res.ok) {
+      adminToken = pass;
+      sessionStorage.setItem('tedx_admin_token', pass);
+      document.getElementById('login-screen').classList.add('hidden');
+      document.getElementById('dashboard').classList.add('visible');
+      renderInvites(await res.json());
+    } else {
+      document.getElementById('login-err').classList.add('visible');
+      btn.disabled = false; btn.textContent = 'Ingresar';
+      input.value = ''; input.focus();
+    }
+  }
+
+  function doLogout() {
+    sessionStorage.removeItem('tedx_admin_token');
+    adminToken = '';
+    document.getElementById('dashboard').classList.remove('visible');
+    document.getElementById('login-screen').classList.remove('hidden');
+    document.getElementById('login-input').value = '';
+    document.getElementById('login-err').classList.remove('visible');
+  }
+
+  document.getElementById('login-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') doLogin();
+  });
+
+  // ── Load ─────────────────────────────────────────────
+  async function loadInvites() {
+    const res = await fetch(`${BASE}/api/invites`, {
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+    if (res.status === 401) { doLogout(); return; }
+    renderInvites(await res.json());
+  }
+
+  // ── Render ───────────────────────────────────────────
+  function renderInvites(list) {
+    const body = document.getElementById('invites-body');
+    const total = list.length;
+    const sent  = list.filter(i => i.sent).length;
+    const viewed = list.filter(i => i.accessed).length;
+
+    document.getElementById('stat-total').textContent  = total;
+    document.getElementById('stat-sent').textContent   = sent;
+    document.getElementById('stat-viewed').textContent = viewed;
+
+    if (!total) {
+      body.innerHTML = `<tr><td colspan="8"><div class="empty-state">No hay invitaciones todavía. Creá la primera con el botón de arriba.</div></td></tr>`;
+      return;
+    }
+
+    body.innerHTML = list.map((inv, idx) => {
+      const badge = inv.accessed
+        ? `<span class="badge badge-viewed">● Vista</span>`
+        : inv.sent
+          ? `<span class="badge badge-sent">● Enviada</span>`
+          : `<span class="badge badge-pending">● Pendiente</span>`;
+
+      const sentDate  = inv.sent_at      ? fmtDate(inv.sent_at)      : '—';
+      const viewDate  = inv.first_access ? fmtDate(inv.first_access) : '—';
+
+      const passCell = inv.password
+        ? `<code style="font-size:12px;background:rgba(255,255,255,0.07);padding:3px 8px;border-radius:3px;letter-spacing:0.04em;">${esc(inv.password)}</code>`
+        : `<span style="color:var(--muted);font-size:12px;">—</span>`;
+
+      const sendBtn = inv.sent
+        ? `<button class="btn-sm btn-resend" onclick="sendInvite('${inv.id}', this)">Reenviar</button>`
+        : `<button class="btn-sm btn-send"   onclick="sendInvite('${inv.id}', this)">✉ Enviar</button>`;
+
+      return `<tr id="row-${inv.id}">
+        <td class="td-num">${idx + 1}</td>
+        <td class="td-name">${esc(inv.name)}</td>
+        <td class="td-email">${esc(inv.email)}</td>
+        <td>${passCell}</td>
+        <td>${badge}</td>
+        <td class="td-date">${sentDate}</td>
+        <td class="td-date">${viewDate}</td>
+        <td class="td-actions">
+          <div class="actions-row">
+            ${sendBtn}
+            <button class="btn-sm" onclick="copyLink('${inv.id}')">Copiar link</button>
+            <button class="btn-sm btn-danger" onclick="deleteInvite('${inv.id}', '${esc(inv.name)}')">Eliminar</button>
+          </div>
+        </td>
+      </tr>`;
+    }).join('');
+  }
+
+  // ── Create ───────────────────────────────────────────
+  function openModal() {
+    document.getElementById('field-name').value = '';
+    document.getElementById('field-email').value = '';
+    document.getElementById('field-password').value = '';
+    document.getElementById('modal-err').classList.remove('visible');
+    document.getElementById('modal-overlay').classList.add('visible');
+    setTimeout(() => document.getElementById('field-name').focus(), 80);
+  }
+
+  function closeModal(e) {
+    if (e && e.target !== document.getElementById('modal-overlay')) return;
+    document.getElementById('modal-overlay').classList.remove('visible');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') document.getElementById('modal-overlay').classList.remove('visible');
+  });
+
+  async function createInvite() {
+    const name     = document.getElementById('field-name').value.trim();
+    const email    = document.getElementById('field-email').value.trim();
+    const password = document.getElementById('field-password').value.trim() || null;
+    const errEl    = document.getElementById('modal-err');
+    errEl.classList.remove('visible');
+
+    if (!name || !email) { errEl.textContent = 'Completá nombre y email.'; errEl.classList.add('visible'); return; }
+    if (!email.includes('@')) { errEl.textContent = 'El email no parece válido.'; errEl.classList.add('visible'); return; }
+
+    const btn = document.getElementById('create-btn');
+    btn.disabled = true; btn.textContent = 'Creando…';
+
+    const res = await fetch(`${BASE}/api/invites`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}` },
+      body: JSON.stringify({ name, email, password })
+    });
+
+    btn.disabled = false; btn.textContent = 'Crear invitación';
+
+    if (res.ok) {
+      document.getElementById('modal-overlay').classList.remove('visible');
+      toast(`Invitación creada para ${name}`, 'success');
+      loadInvites();
+    } else {
+      const d = await res.json();
+      errEl.textContent = d.error || 'Error al crear.'; errEl.classList.add('visible');
+    }
+  }
+
+  document.getElementById('field-email').addEventListener('keydown', e => {
+    if (e.key === 'Enter') createInvite();
+  });
+
+  // ── Send ─────────────────────────────────────────────
+  async function sendInvite(token, btn) {
+    const origText = btn.textContent;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>';
+
+    const res = await fetch(`${BASE}/api/send`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${adminToken}` },
+      body: JSON.stringify({ token })
+    });
+
+    btn.disabled = false; btn.textContent = origText;
+
+    if (res.ok) {
+      toast('Email enviado correctamente.', 'success');
+      loadInvites();
+    } else {
+      const d = await res.json();
+      toast(d.error || 'Error al enviar el email.', 'error');
+    }
+  }
+
+  // ── Copy link ────────────────────────────────────────
+  function copyLink(token) {
+    const link = `https://tedxpeninsulahiroki.com.ar/partners.html?token=${token}`;
+    navigator.clipboard.writeText(link).then(() => {
+      toast('Link copiado al portapapeles.', 'success');
+    }).catch(() => {
+      prompt('Copiá este link:', link);
+    });
+  }
+
+  // ── Delete ───────────────────────────────────────────
+  async function deleteInvite(token, name) {
+    if (!confirm(`¿Eliminar la invitación de ${name}?\n\nEsta acción no se puede deshacer.`)) return;
+
+    const res = await fetch(`${BASE}/api/invites?token=${token}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${adminToken}` }
+    });
+
+    if (res.ok) {
+      toast(`Invitación de ${name} eliminada.`, 'warning');
+      loadInvites();
+    } else {
+      toast('Error al eliminar.', 'error');
+    }
+  }
+
+  // ── Toast ────────────────────────────────────────────
+  let toastTimer;
+  function toast(msg, type = '') {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = type ? `show ${type}` : 'show';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { el.className = ''; }, 3500);
+  }
+
+  // ── Utils ────────────────────────────────────────────
+  function fmtDate(iso) {
+    const d = new Date(iso);
+    return d.toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: '2-digit' }) +
+           ' ' + d.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── Auto-login from session ───────────────────────────
+  (function() {
+    const saved = sessionStorage.getItem('tedx_admin_token');
+    if (saved) {
+      document.getElementById('login-input').value = saved;
+      doLogin();
+    }
+  })();
+</script>
+
+</body>
+</html>

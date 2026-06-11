@@ -1,0 +1,7 @@
+name = "tedx-peninsula-hiroki"
+compatibility_date = "2024-11-01"
+pages_build_output_dir = "."
+
+[[kv_namespaces]]
+binding = "PARTNERS_KV"
+id = "d06a4fb031864c19915baa4ed3a0a825"
