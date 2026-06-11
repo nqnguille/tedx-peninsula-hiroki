@@ -591,7 +591,7 @@
     }
     .beneficios-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
@@ -625,9 +625,6 @@
       line-height: 1.75;
       color: rgba(255,255,255,0.4);
       font-weight: 300;
-    }
-    @media (max-width: 900px) {
-      .beneficios-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 600px) {
       .beneficios-grid { grid-template-columns: 1fr; }
@@ -872,83 +869,6 @@
       .plan-card.featured { border-top: 1px solid var(--border); border-left: 3px solid var(--red); margin-top: 0; }
     }
 
-    /* Contacto alternativo */
-    #contacto-alt {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      padding: 100px 0;
-    }
-    .ca-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
-    }
-    .ca-info h2 { margin-bottom: 20px; }
-    .ca-info > p {
-      font-size: 17px;
-      line-height: 1.78;
-      color: rgba(255,255,255,0.45);
-      margin-bottom: 40px;
-    }
-    .ca-data {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .ca-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      padding: 18px 20px;
-      border: 1px solid var(--border);
-      transition: border-color 0.2s;
-    }
-    .ca-row:hover { border-color: var(--border-mid); }
-    .ca-row-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-      min-width: 80px;
-      flex-shrink: 0;
-      padding-top: 2px;
-    }
-    .ca-row-val {
-      font-size: 14px;
-      color: rgba(255,255,255,0.65);
-      font-weight: 300;
-      line-height: 1.6;
-    }
-    /* Formulario de contacto alternativo */
-    .ca-form-wrap { }
-    .ca-form-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(22px, 2.5vw, 30px);
-      color: var(--white);
-      margin-bottom: 8px;
-    }
-    .ca-form-sub {
-      font-size: 14px;
-      color: var(--muted);
-      margin-bottom: 28px;
-      font-style: italic;
-    }
-    .ca-form {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .ca-form .fg-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    @media (max-width: 900px) {
-      .ca-inner { grid-template-columns: 1fr; gap: 48px; }
-      .ca-form .fg-row { grid-template-columns: 1fr; }
-    }
 
     /* Acceso bloqueado (protección por clave) */
     #access-gate {
@@ -1209,8 +1129,8 @@
   <div class="container">
     <div class="modelo-header reveal-fade">
       <div class="sec-label">El modelo</div>
-      <h2>Empezamos juntos.<br>Lo que sigue,<br>lo construimos.</h2>
-      <p>Este es el primer paso de algo mucho más grande. Tres capítulos, tres años, una escala que crece con cada uno.</p>
+      <h2>Este es el primer paso<br>de algo mucho<br>más grande.</h2>
+      <p>Un TEDx íntimo para 100 personas en la Península Hiroki. Un auditorio de 1.600 en el Domuyo. Y una plataforma industrial que conecta dos mundos. Cada capítulo se construye sobre el anterior — con los mismos partners desde el comienzo.</p>
     </div>
 
     <div class="etapas">
@@ -1225,8 +1145,8 @@
           <div class="etapa-eyebrow">Etapa 01 · 2026</div>
           <h3 class="etapa-title">TEDxPeninsulaHiroki</h3>
           <p class="etapa-sub">100 personas. Íntimo por diseño — el formato donde cada marca tiene nombre y cara.</p>
-          <img src="assets/territorio/peninsula-hiroki.webp" alt="Península Hiroki, Neuquén" class="etapa-photo" loading="lazy">
-          <p class="etapa-photo-caption">Península Hiroki · Neuquén · Patagonia</p>
+          <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1200&q=80" alt="Evento íntimo — TEDxPeninsulaHiroki" class="etapa-photo" loading="lazy">
+          <p class="etapa-photo-caption">100 personas · Península Hiroki · Neuquén · Patagonia</p>
           <div class="etapa-body">
             <div>
               <p class="etapa-desc">TEDxPeninsulaHiroki es el evento habilitado por TED Conferences. 100 personas: el formato donde cada marca tiene nombre y cara, donde los speakers comparten espacio con los sponsors, y donde se forma el primer lazo del ecosistema. La exclusividad no es un límite — es la condición que hace que todo importe.</p>
@@ -1338,7 +1258,7 @@
           <div class="etapa-eyebrow">Capítulo 03 · 2028</div>
           <h3 class="etapa-title">Vaca Verde</h3>
           <p class="etapa-sub">El evento que solo puede nacer en Neuquén. Donde la energía y el verde se encuentran.</p>
-          <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&q=80" alt="Expo industrial — referencia Vaca Verde" class="etapa-photo" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&q=80" alt="Energía y naturaleza — Vaca Verde" class="etapa-photo" loading="lazy">
           <p class="etapa-photo-caption">Vaca Verde · Neuquén · vaca-verde.ar</p>
           <div class="etapa-body">
             <div>
@@ -1429,72 +1349,6 @@
 </section>
 
 <!-- ══════════════════════════════════════════════════════
-     CONTACTO ALTERNATIVO
-     ══════════════════════════════════════════════════════ -->
-<section id="contacto-alt">
-  <div class="container">
-    <div class="ca-inner">
-      <div class="ca-info reveal-fade">
-        <div class="sec-label">Hablemos</div>
-        <h2>¿Querés hablar antes de decidir?</h2>
-        <p>Podés escribirnos directamente. Te respondemos en 24 horas para coordinar una reunión o resolver cualquier duda sobre el modelo.</p>
-        <div class="ca-data">
-          <div class="ca-row">
-            <span class="ca-row-label">Email</span>
-            <span class="ca-row-val">nqnguille@gmail.com</span>
-          </div>
-          <div class="ca-row">
-            <span class="ca-row-label">Entidad</span>
-            <span class="ca-row-val">Asociación Civil Cann<br>CUIT 30-71827609-4</span>
-          </div>
-          <div class="ca-row">
-            <span class="ca-row-label">PayPal</span>
-            <span class="ca-row-val">Cuenta verificada como ONG<br>paypal.me/accann</span>
-          </div>
-        </div>
-      </div>
-      <div class="ca-form-wrap reveal-fade delay-1">
-        <div class="ca-form-title">Contacto directo</div>
-        <p class="ca-form-sub">Te respondemos en menos de 24 horas.</p>
-        <form class="ca-form" onsubmit="handlePartnerContact(event)">
-          <div class="fg-row">
-            <div class="fg">
-              <label class="fl" for="ca_nombre">Nombre</label>
-              <input type="text" id="ca_nombre" name="nombre" class="fi" placeholder="Tu nombre" required>
-            </div>
-            <div class="fg">
-              <label class="fl" for="ca_empresa">Empresa</label>
-              <input type="text" id="ca_empresa" name="empresa" class="fi" placeholder="Nombre de la empresa" required>
-            </div>
-          </div>
-          <div class="fg">
-            <label class="fl" for="ca_email">Email</label>
-            <input type="email" id="ca_email" name="email" class="fi" placeholder="tu@empresa.com" required>
-          </div>
-          <div class="fg">
-            <label class="fl" for="ca_etapa">Etapa de interés</label>
-            <select id="ca_etapa" name="etapa" class="fse">
-              <option value="">Seleccioná una opción</option>
-              <option value="etapa-1">Etapa 01 — TEDxPeninsulaHiroki 2026</option>
-              <option value="etapa-2">Capítulo 02 — TEDx Neuquén 2027</option>
-              <option value="etapa-3">Capítulo 03 — Vaca Verde 2028</option>
-              <option value="todas">Las tres etapas</option>
-            </select>
-          </div>
-          <div class="fg">
-            <label class="fl" for="ca_mensaje">Mensaje (opcional)</label>
-            <textarea id="ca_mensaje" name="mensaje" class="fta" placeholder="Contanos brevemente a qué se dedica la empresa o qué dudas tenés..."></textarea>
-          </div>
-          <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
-          <button type="submit" class="fsub" id="ca-submit-btn">Enviar consulta</button>
-          <p class="fnote">Tu información no se comparte con terceros.</p>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════════════════
      FOOTER
      ══════════════════════════════════════════════════════ -->
 <footer>
@@ -1506,151 +1360,7 @@
   </div>
 </footer>
 
-<!-- ══════════════════════════════════════════════════════
-     PAYPAL SDK
-     Reemplazar CLIENT_ID con tu Client ID de PayPal.
-     Reemplazar PLAN_ID_1, PLAN_ID_2, PLAN_ID_3 con los
-     Plan IDs creados en tu dashboard de PayPal:
-     business.paypal.com → Products & Plans → Create Plan
-     ══════════════════════════════════════════════════════ -->
-<script>
-  // ── CONFIGURACIÓN PAYPAL ──
-  // Reemplazá estos valores con los tuyos antes de deployar:
-  var PAYPAL_CLIENT_ID = 'TU_PAYPAL_CLIENT_ID_AQUI';
-  var PAYPAL_PLAN_IDS  = {
-    etapa1: 'TU_PLAN_ID_ETAPA_1',
-    etapa2: 'TU_PLAN_ID_ETAPA_2',
-    etapa3: 'TU_PLAN_ID_ETAPA_3',
-  };
-  var PAYPAL_CONFIGURED = (
-    PAYPAL_CLIENT_ID !== 'TU_PAYPAL_CLIENT_ID_AQUI' &&
-    PAYPAL_PLAN_IDS.etapa1 !== 'TU_PLAN_ID_ETAPA_1'
-  );
-</script>
-
-<script>
-  /* ── Clave de acceso al micrositio ──
-     Cambiar ACCESS_KEY al nombre+apellido del destinatario (ej: 'gabriellopez')
-     El visitante puede escribirlo con espacios, mayúsculas o minúsculas — todo funciona. */
-  var ACCESS_KEY = 'hiroki2026';
-  var SESSION_KEY = 'tedx_partners_access';
-
-  var normalize = function(s) { return s.toLowerCase().replace(/\s+/g, ''); };
-
-  function checkAccess() {
-    var val = normalize(document.getElementById('ag-input').value.trim());
-    if (val === normalize(ACCESS_KEY)) {
-      sessionStorage.setItem(SESSION_KEY, '1');
-      document.getElementById('access-gate').classList.add('unlocked');
-      document.getElementById('ag-error').classList.remove('visible');
-    } else {
-      document.getElementById('ag-error').classList.add('visible');
-      document.getElementById('ag-input').value = '';
-      document.getElementById('ag-input').focus();
-    }
-  }
-
-  (function() {
-    if (sessionStorage.getItem(SESSION_KEY) === '1') {
-      document.getElementById('access-gate').classList.add('unlocked');
-    }
-    document.getElementById('ag-input').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') checkAccess();
-    });
-  })();
-</script>
-
 <script src="script.js"></script>
-
-<script>
-  /* ── Formulario de contacto partners ── */
-  var WORKER_URL_PARTNERS = 'https://tedx-forms.nqnguille.workers.dev';
-
-  async function handlePartnerContact(e) {
-    e.preventDefault();
-    var form = e.target;
-    var btn = document.getElementById('ca-submit-btn');
-    var hp = form.querySelector('[name="_hp"]');
-    if (hp && hp.value) return;
-
-    btn.textContent = 'Enviando...';
-    btn.disabled = true;
-    form.style.opacity = '0.6';
-    form.style.pointerEvents = 'none';
-
-    var payload = { formType: 'partners-contact' };
-    new FormData(form).forEach(function(v, k) { payload[k] = v; });
-
-    try {
-      var res = await fetch(WORKER_URL_PARTNERS, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      if (res.ok) {
-        form.innerHTML = '<div class="fc-success visible" role="alert"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="#E62B1E" stroke-width="1.5"/><path d="M9 16l5 5 9-9" stroke="#E62B1E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><h4>Mensaje recibido.</h4><p>Te respondemos en menos de 24 horas para coordinar la reunión.</p></div>';
-      } else { throw new Error('server'); }
-    } catch {
-      form.style.opacity = '1';
-      form.style.pointerEvents = '';
-      btn.disabled = false;
-      btn.textContent = 'Reintentar';
-      var err = form.querySelector('.form-error-msg');
-      if (!err) { err = document.createElement('p'); err.className = 'form-error-msg'; err.setAttribute('role','alert'); form.appendChild(err); }
-      err.textContent = 'Algo salió mal. Intentá de nuevo.';
-    }
-  }
-
-  /* ── PayPal Subscriptions ── */
-  function renderPayPalButtons() {
-    if (!window.paypal || !PAYPAL_CONFIGURED) {
-      // Fallback: botón que lleva a la sección de contacto
-      ['paypal-btn-1', 'paypal-btn-2', 'paypal-btn-3'].forEach(function(id, i) {
-        var wrap = document.getElementById(id);
-        if (!wrap) return;
-        var btn = document.createElement('button');
-        btn.className = 'paypal-btn-fallback';
-        btn.textContent = 'Quiero empezar la Etapa 0' + (i + 1);
-        btn.onclick = function() {
-          document.getElementById('contacto-alt').scrollIntoView({ behavior: 'smooth' });
-        };
-        wrap.appendChild(btn);
-      });
-      return;
-    }
-
-    var planMap = [
-      { containerId: 'paypal-btn-1', planId: PAYPAL_PLAN_IDS.etapa1 },
-      { containerId: 'paypal-btn-2', planId: PAYPAL_PLAN_IDS.etapa2 },
-      { containerId: 'paypal-btn-3', planId: PAYPAL_PLAN_IDS.etapa3 },
-    ];
-
-    planMap.forEach(function(p) {
-      window.paypal.Buttons({
-        style: { layout: 'vertical', color: 'black', shape: 'rect', label: 'subscribe' },
-        createSubscription: function(data, actions) {
-          return actions.subscription.create({ plan_id: p.planId });
-        },
-        onApprove: function(data) {
-          var wrap = document.getElementById(p.containerId);
-          wrap.innerHTML = '<div class="fc-success visible" style="padding:20px 16px;text-align:center;"><svg width="28" height="28" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="#E62B1E" stroke-width="1.5"/><path d="M9 16l5 5 9-9" stroke="#E62B1E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><h4 style="font-family:DM Serif Display,serif;font-size:18px;color:#fff;margin:12px 0 8px;">Suscripción activa.</h4><p style="font-size:13px;color:#5A5A5A;">ID: ' + data.subscriptionID + '<br>Te contactamos en 24hs.</p></div>';
-        },
-        onError: function(err) { console.error('PayPal error', err); }
-      }).render('#' + p.containerId);
-    });
-  }
-
-  // Cargar SDK de PayPal dinámicamente solo si está configurado
-  if (PAYPAL_CONFIGURED) {
-    var ppScript = document.createElement('script');
-    ppScript.src = 'https://www.paypal.com/sdk/js?client-id=' + PAYPAL_CLIENT_ID + '&vault=true&intent=subscription&currency=USD';
-    ppScript.onload = renderPayPalButtons;
-    ppScript.onerror = renderPayPalButtons;
-    document.body.appendChild(ppScript);
-  } else {
-    document.addEventListener('DOMContentLoaded', renderPayPalButtons);
-  }
-</script>
 
 </body>
 </html>
