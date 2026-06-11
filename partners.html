@@ -196,69 +196,6 @@
     }
     #hero-ticker-seq .ticker-inner { animation: ticker 28s linear infinite; }
 
-    /* ── PARTNERS LOADER ── */
-    #partners-loader {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      z-index: 9997;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 40px;
-      transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
-    }
-    #partners-loader.hidden { display: none; }
-    #partners-loader.pl-exit {
-      transform: translateY(-100%);
-      pointer-events: none;
-    }
-    .pl-eyebrow {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.2);
-      opacity: 0;
-      animation: plFadeIn 0.5s ease 0.3s forwards;
-    }
-    .pl-headline {
-      font-family: 'DM Serif Display', Georgia, serif;
-      font-size: clamp(32px, 6vw, 72px);
-      font-weight: 400;
-      color: #fff;
-      text-align: center;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      max-width: 600px;
-      padding: 0 24px;
-      opacity: 0;
-      animation: plFadeIn 0.8s cubic-bezier(0.16,1,0.3,1) 0.6s forwards;
-    }
-    .pl-headline em {
-      color: var(--red);
-      font-style: italic;
-    }
-    .pl-bar {
-      width: 40px;
-      height: 1px;
-      background: rgba(235,0,40,0.5);
-      opacity: 0;
-      animation: plFadeIn 0.5s ease 1.2s forwards;
-    }
-    .pl-sub {
-      font-size: 13px;
-      color: rgba(255,255,255,0.25);
-      letter-spacing: 0.05em;
-      opacity: 0;
-      animation: plFadeIn 0.5s ease 1.4s forwards;
-    }
-    @keyframes plFadeIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
     /* ── PARTNERS-SPECIFIC STYLES ── */
 
     /* Hero scroll-only CTA */
@@ -1135,16 +1072,6 @@
 <body>
 
 <!-- ══════════════════════════════════════════════════════
-     PARTNERS LOADER
-     ══════════════════════════════════════════════════════ -->
-<div id="partners-loader" class="hidden">
-  <div class="pl-eyebrow">TEDxPeninsulaHiroki · 2026</div>
-  <h2 class="pl-headline">Tenemos algo<br>para <em>construir</em><br>juntos.</h2>
-  <div class="pl-bar"></div>
-  <div class="pl-sub">Cargando la propuesta...</div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════
      ACCESO POR CLAVE — cambiar ACCESS_KEY a algo real
      ══════════════════════════════════════════════════════ -->
 <div id="access-gate">
@@ -1210,7 +1137,7 @@
 
       <!-- Fase 2: headline -->
       <div class="phase-text" id="phase-text-2">
-        <h1>Ser primero<br><em style="font-style:italic;color:rgba(255,255,255,0.55);">es una decisión</em><br>que se toma<br><em style="font-style:italic;color:rgba(255,255,255,0.55);">una sola vez.</em></h1>
+        <h1>Tenemos algo<br><em style="font-style:italic;color:rgba(255,255,255,0.55);">para construir</em><br>juntos.</h1>
       </div>
 
       <!-- Fase 3: stat -->
@@ -1714,25 +1641,12 @@
   var ACCESS_KEY = 'hiroki2026';
   var SESSION_KEY = 'tedx_partners_access';
 
-  function showLoader() {
-    var loader = document.getElementById('partners-loader');
-    if (!loader) return;
-    loader.classList.remove('hidden');
-    setTimeout(function() {
-      loader.classList.add('pl-exit');
-      loader.addEventListener('transitionend', function() {
-        loader.style.display = 'none';
-      }, { once: true });
-    }, 2800);
-  }
-
   function checkAccess() {
     var val = document.getElementById('ag-input').value.trim().toLowerCase();
     if (val === ACCESS_KEY.toLowerCase()) {
       sessionStorage.setItem(SESSION_KEY, '1');
       document.getElementById('access-gate').classList.add('unlocked');
       document.getElementById('ag-error').classList.remove('visible');
-      showLoader();
     } else {
       document.getElementById('ag-error').classList.add('visible');
       document.getElementById('ag-input').value = '';
@@ -1743,7 +1657,6 @@
   (function() {
     if (sessionStorage.getItem(SESSION_KEY) === '1') {
       document.getElementById('access-gate').classList.add('unlocked');
-      showLoader();
     }
     document.getElementById('ag-input').addEventListener('keydown', function(e) {
       if (e.key === 'Enter') checkAccess();
