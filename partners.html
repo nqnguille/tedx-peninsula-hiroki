@@ -1362,5 +1362,37 @@
 
 <script src="script.js"></script>
 
+<script>
+  /* ── Clave de acceso al micrositio ──
+     Cambiar ACCESS_KEY al nombre+apellido del destinatario (ej: 'gabriellopez')
+     El visitante puede escribirlo con espacios, mayúsculas o minúsculas. */
+  var ACCESS_KEY = 'hiroki2026';
+  var SESSION_KEY = 'tedx_partners_access';
+
+  var normalize = function(s) { return s.toLowerCase().replace(/\s+/g, ''); };
+
+  function checkAccess() {
+    var val = normalize(document.getElementById('ag-input').value.trim());
+    if (val === normalize(ACCESS_KEY)) {
+      sessionStorage.setItem(SESSION_KEY, '1');
+      document.getElementById('access-gate').classList.add('unlocked');
+      document.getElementById('ag-error').classList.remove('visible');
+    } else {
+      document.getElementById('ag-error').classList.add('visible');
+      document.getElementById('ag-input').value = '';
+      document.getElementById('ag-input').focus();
+    }
+  }
+
+  (function() {
+    if (sessionStorage.getItem(SESSION_KEY) === '1') {
+      document.getElementById('access-gate').classList.add('unlocked');
+    }
+    document.getElementById('ag-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') checkAccess();
+    });
+  })();
+</script>
+
 </body>
 </html>
