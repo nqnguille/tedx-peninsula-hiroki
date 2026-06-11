@@ -962,9 +962,28 @@
       flex-direction: column;
       gap: 32px;
       padding: 24px;
+      overflow: hidden;
+    }
+    #ag-bg-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.28;
+      filter: saturate(0.7) brightness(0.6);
+      pointer-events: none;
+    }
+    #ag-bg-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.75) 100%);
+      pointer-events: none;
     }
     #access-gate.unlocked { display: none; }
     .ag-inner {
+      position: relative;
+      z-index: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1075,6 +1094,10 @@
      ACCESO POR CLAVE — cambiar ACCESS_KEY a algo real
      ══════════════════════════════════════════════════════ -->
 <div id="access-gate">
+  <video id="ag-bg-video" autoplay muted loop playsinline>
+    <source src="assets/territorio/hiroki-web.mp4" type="video/mp4">
+  </video>
+  <div id="ag-bg-overlay"></div>
   <div class="ag-inner">
     <div class="ag-logo">
       <div class="ag-ted">TEDx</div>
@@ -1137,7 +1160,7 @@
 
       <!-- Fase 2: headline -->
       <div class="phase-text" id="phase-text-2">
-        <h1>Tenemos algo<br><em style="font-style:italic;color:rgba(255,255,255,0.55);">para construir</em><br>juntos.</h1>
+        <h1>Tenemos algo<br><em style="font-style:italic;color:rgba(255,255,255,0.55);">para construir</em><br><span style="color:#EB0028">juntos.</span></h1>
       </div>
 
       <!-- Fase 3: stat -->
@@ -1168,10 +1191,6 @@
         <h2 class="pi-headline">Hay empresas que<br>llegan cuando<br>todo ya está armado.</h2>
         <p class="pi-body">Y hay empresas que estuvieron desde el primer día. Que pusieron su nombre cuando el proyecto era una apuesta, no una certeza. Que construyeron algo junto a nosotros antes de que nadie más lo viera.</p>
         <p class="pi-body" style="margin-top:20px;">El nombre de tu empresa en el primer capítulo de esto no es un detalle. Es la diferencia entre haber estado cuando todavía era una apuesta y llegar cuando ya es una certeza. Ese lugar no se puede comprar después. Ya no existe.</p>
-        <div class="pi-access-note">
-          <svg class="pi-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          <p>Este sitio no está publicado ni vinculado al sitio público. Circula solo entre las empresas que invitamos. Si llegaste hasta acá, es porque hay algo que queremos construir con vos.</p>
-        </div>
       </div>
       <div class="pi-video-wrap reveal-fade delay-1">
         <video autoplay muted loop playsinline preload="none">
@@ -1191,7 +1210,7 @@
     <div class="modelo-header reveal-fade">
       <div class="sec-label">El modelo</div>
       <h2>Empezamos juntos.<br>Lo que sigue,<br>lo construimos.</h2>
-      <p>El primer paso es TEDxPeninsulaHiroki. El punto de entrada — el capítulo de menor riesgo, primera ventaja y mayor cercanía con el proyecto. Al cierre de cada etapa nos sentamos, miramos lo que armamos juntos, y acordamos cómo sigue. Sin obligación de ninguna de las dos partes. Con toda la información sobre la mesa.</p>
+      <p>Capítulo 01 es el punto de entrada. De ahí escala: un Auditorio Domuyo con 800 personas, y una plataforma industrial para 2028. Tres años, tres capítulos, algo mucho más grande.</p>
     </div>
 
     <div class="etapas">
@@ -1205,7 +1224,7 @@
           <span class="etapa-bg-num">01</span>
           <div class="etapa-eyebrow">Etapa 01 · 2026</div>
           <h3 class="etapa-title">TEDxPeninsulaHiroki</h3>
-          <p class="etapa-sub">El primer paso. El momento de menor riesgo y mayor primera ventaja.</p>
+          <p class="etapa-sub">Capítulo 01 · 100 personas. El evento más íntimo y el de mayor primera ventaja.</p>
           <img src="assets/territorio/peninsula-hiroki.webp" alt="Península Hiroki, Neuquén" class="etapa-photo" loading="lazy">
           <p class="etapa-photo-caption">Península Hiroki · Neuquén · Patagonia</p>
           <div class="etapa-body">
@@ -1227,15 +1246,15 @@
               <div class="ec-icons">
                 <div class="ec-icon-item">
                   <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="16" height="10" rx="1"/><path d="M6 5V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v1"/></svg></div>
-                  <span class="ec-icon-label">Logo en todos los materiales</span>
+                  <span class="ec-icon-label">Logo en todos los materiales del evento</span>
                 </div>
                 <div class="ec-icon-item">
                   <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2l2.4 4.8 5.3.8-3.8 3.7.9 5.3L10 14l-4.8 2.6.9-5.3L2.3 7.6l5.3-.8z"/></svg></div>
                   <span class="ec-icon-label">Exclusividad en tu categoría</span>
                 </div>
                 <div class="ec-icon-item">
-                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="7" r="3"/><path d="M4 18c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></div>
-                  <span class="ec-icon-label">Espacio de marca en el evento</span>
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3a3 3 0 1 1 0 6 3 3 0 0 1 0-6zM4 17c0-2.8 2.7-5 6-5s6 2.2 6 5"/><circle cx="15" cy="6" r="2"/><path d="M17 13c1.5.5 3 1.7 3 3.5"/></svg></div>
+                  <span class="ec-icon-label">Contacto directo con los 100 asistentes</span>
                 </div>
                 <div class="ec-icon-item">
                   <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h14M3 10h14M3 13h8"/><circle cx="16" cy="13" r="3"/></svg></div>
@@ -1243,11 +1262,11 @@
                 </div>
                 <div class="ec-icon-item">
                   <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="16" height="14" rx="2"/><path d="M2 8h16"/><circle cx="7" cy="13" r="1.5" fill="currentColor" stroke="none"/><circle cx="13" cy="13" r="1.5" fill="currentColor" stroke="none"/></svg></div>
-                  <span class="ec-icon-label">Piezas de redes sociales</span>
+                  <span class="ec-icon-label">Contenido co-branded para redes</span>
                 </div>
                 <div class="ec-icon-item">
-                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 10l3 3 3-3M10 4v9"/><path d="M4 14v2a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-2"/></svg></div>
-                  <span class="ec-icon-label">Acceso al Capítulo 02</span>
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10h12M10 4l6 6-6 6"/></svg></div>
+                  <span class="ec-icon-label">Prioridad sobre los Capítulos 02 y 03</span>
                 </div>
               </div>
             </div>
@@ -1264,12 +1283,12 @@
           <span class="etapa-bg-num">02</span>
           <div class="etapa-eyebrow">Capítulo 02 · 2027</div>
           <h3 class="etapa-title">TEDx Neuquén</h3>
-          <p class="etapa-sub">El salto de escala. Auditorio Domuyo — el centro de convenciones ícono de la Patagonia. La capital energética del país.</p>
+          <p class="etapa-sub">Capítulo 02 · Auditorio Domuyo · 800 personas. Speakers nacionales e internacionales. La capital energética del país.</p>
           <img src="assets/domuyo-exterior.jpg" alt="Centro de Convenciones Domuyo, Neuquén" class="etapa-photo" loading="lazy">
           <p class="etapa-photo-caption">Centro de Convenciones Domuyo · Isla 132, Paseo de la Costa · Neuquén</p>
           <div class="etapa-body">
             <div>
-              <p class="etapa-desc">El Auditorio Domuyo es el escenario natural del siguiente capítulo. Una producción completa con speaker lineup nacional e internacional, en la ciudad donde confluyen el petróleo, el agro y la salud.<br><br>Al cierre del Capítulo 01 nos sentamos, miramos lo que armamos juntos, y acordamos cómo sigue. La propuesta se elabora en exclusiva para los partners que recorrieron el primer camino.</p>
+              <p class="etapa-desc">El Auditorio Domuyo — 800 personas — es el escenario del siguiente capítulo. Una producción completa con speakers nacionales e internacionales, en la ciudad donde confluyen el petróleo, el agro y la tecnología.<br><br>Los términos se elaboran en exclusiva para los partners que hicieron el camino desde el Capítulo 01.</p>
             </div>
             <div class="etapa-pricing">
               <div class="ep-price" style="font-size:clamp(22px,2.8vw,34px);line-height:1.2;">En producción<br><span>al cierre del Cap. 01</span></div>
@@ -1280,12 +1299,12 @@
               <div class="ec-label">Lo que proyectamos construir</div>
               <div class="ec-icons">
                 <div class="ec-icon-item">
-                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="8"/><path d="M10 6v4l3 2"/></svg></div>
-                  <span class="ec-icon-label">Campaña de visibilidad 3 meses antes</span>
+                  <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="8"/><path d="M2 10h16M10 2a13 13 0 0 1 0 16M10 2a13 13 0 0 0 0 16"/></svg></div>
+                  <span class="ec-icon-label">Speakers nacionales e internacionales</span>
                 </div>
                 <div class="ec-icon-item">
                   <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2l2.4 4.8 5.3.8-3.8 3.7.9 5.3L10 14l-4.8 2.6.9-5.3L2.3 7.6l5.3-.8z"/></svg></div>
-                  <span class="ec-icon-label">Exclusividad en tu categoría</span>
+                  <span class="ec-icon-label">Exclusividad total en tu categoría</span>
                 </div>
                 <div class="ec-icon-item">
                   <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 16V8l6-5 6 5v8"/><path d="M8 16v-5h4v5"/></svg></div>
@@ -1297,11 +1316,11 @@
                 </div>
                 <div class="ec-icon-item">
                   <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 17c2-4 12-4 14 0M10 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8z"/></svg></div>
-                  <span class="ec-icon-label">Cóctel post-evento con speakers</span>
+                  <span class="ec-icon-label">Cóctel privado post-evento con speakers</span>
                 </div>
                 <div class="ec-icon-item">
                   <div class="ec-icon-wrap"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10h12M10 4l6 6-6 6"/></svg></div>
-                  <span class="ec-icon-label">Acceso al Capítulo 03</span>
+                  <span class="ec-icon-label">Prioridad sobre el Capítulo 03</span>
                 </div>
               </div>
             </div>
@@ -1324,8 +1343,8 @@
               <p class="etapa-desc">En ningún lugar del mundo la industria energética y la agenda de sustentabilidad conviven con la proximidad que tienen en Neuquén. Vaca Verde es el evento que nombra esa tensión — y la convierte en plataforma.<br><br>No es un congreso de energía. No es una feria verde. Es el espacio donde los dos mundos se sientan en la misma mesa: empresas de capital intensivo y economías regenerativas, líderes industriales y referentes de impacto, tecnología de extracción y tecnología de fijación.<br><br>La escala, el formato y los actores se construyen con los partners que recorrieron el camino completo.</p>
             </div>
             <div class="etapa-pricing">
-              <div class="ep-price" style="font-size:clamp(22px,2.8vw,34px);line-height:1.2;">En producción<br><span>al cierre del Cap. 02</span></div>
-              <div class="ep-total" style="margin-top:12px;">La escala define los términos. Lo construimos juntos.</div>
+              <div class="ep-price" style="font-size:clamp(22px,2.8vw,34px);line-height:1.2;">Horizonte 2028<br><span>Fecha a definir</span></div>
+              <div class="ep-total" style="margin-top:12px;">Un proyecto de tres años. La escala y los actores se construyen junto a los partners del camino completo.</div>
               <div class="ep-pref-badge">Prioridad · Partners de los Cap. 01 y 02</div>
             </div>
             <div class="etapa-compromisos">
@@ -1375,13 +1394,6 @@
       <h2>Lo que obtenés<br>como Main Sponsor</h2>
     </div>
     <div class="beneficios-grid">
-      <div class="beneficio-card reveal-fade">
-        <svg class="bc-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="18" cy="18" r="16"/><path d="M18 8v10l6 3"/>
-        </svg>
-        <div class="bc-title">Primera ventaja temporal</div>
-        <p class="bc-desc">En 2026 nadie más está construyendo este tipo de posicionamiento en Neuquén. Las marcas que entran primero definen el territorio.</p>
-      </div>
       <div class="beneficio-card reveal-fade delay-1">
         <svg class="bc-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5">
           <rect x="4" y="4" width="28" height="28" rx="2"/><path d="M12 4v28M24 4v28M4 18h28"/>
@@ -1395,13 +1407,6 @@
         </svg>
         <div class="bc-title">Construcción de comunidad</div>
         <p class="bc-desc">No solo visibilidad. Sos parte de algo que está armando el tejido productivo, cultural y científico de la Patagonia.</p>
-      </div>
-      <div class="beneficio-card reveal-fade">
-        <svg class="bc-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M6 18h24M6 12h24M6 24h16"/><circle cx="28" cy="24" r="5"/>
-        </svg>
-        <div class="bc-title">Respaldo de TED</div>
-        <p class="bc-desc">Tu marca asociada a la licencia global de TED Conferences. No es un evento local cualquiera — es parte de la red de ideas más influyente del mundo.</p>
       </div>
       <div class="beneficio-card reveal-fade delay-1">
         <svg class="bc-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -1422,121 +1427,6 @@
 </section>
 
 <!-- ══════════════════════════════════════════════════════
-     ARGUMENTO FISCAL
-     ══════════════════════════════════════════════════════ -->
-<section id="fiscal">
-  <div class="container">
-    <div class="fiscal-layout">
-      <div class="fiscal-sticky reveal-fade">
-        <div class="sec-label">El argumento fiscal</div>
-        <h2>El Estado<br>subsidia parte<br>de tu decisión.</h2>
-        <div class="fiscal-example">
-          <div class="fe-label">Ejemplo — Etapa 01 · $500 USD/mes</div>
-          <div class="fe-row">
-            <span class="label">Cuota mensual</span>
-            <span class="value">$500 USD</span>
-          </div>
-          <div class="fe-row">
-            <span class="label">Ahorro fiscal estimado</span>
-            <span class="value red">−$125 a $175 USD</span>
-          </div>
-          <div class="fe-row">
-            <span class="label">Costo real de bolsillo</span>
-            <span class="value green">~$325–$375 USD</span>
-          </div>
-          <p class="fe-disclaimer">El ahorro depende de la alícuota de Ganancias que aplique a tu empresa (25%–35%) y del límite del 5% de la ganancia neta imponible. Verificarlo con tu contador es obligatorio antes de decidir.</p>
-        </div>
-      </div>
-      <div class="fiscal-right reveal-fade delay-1">
-        <p>Al donar a una Asociación Civil con reconocimiento de AFIP como entidad sin fines de lucro, el monto completo de la donación es deducible de tu base imponible de Ganancias.</p>
-        <p>Eso significa que el impuesto que pagás se calcula sobre una base menor. El ahorro real es igual a la alícuota de Ganancias que te aplique, multiplicada por lo que donaste.</p>
-        <div class="fiscal-quote">
-          <p>"No estás eligiendo entre gastar o no gastar. Estás eligiendo si esa plata va a Ganancias o a construir presencia de marca en Neuquén."</p>
-        </div>
-        <p>Este mecanismo funciona para empresas que tributan Ganancias bajo el régimen general. Las fundaciones y entidades sin fines de lucro tienen condiciones distintas. En todos los casos, la decisión final debe tomarse con tu contador, que tiene el cuadro completo de tu situación fiscal.</p>
-        <p style="margin-top:24px;font-size:15px;color:rgba(255,255,255,0.35);">AC Cann está tramitando ante AFIP la exención de Ganancias (Art. 26 LIG). La validez de la deducción para el donante está condicionada a la resolución de ese trámite. Tu contador puede verificar el estado actual.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════════════════
-     SUSCRIPCIÓN / PAYPAL
-     ══════════════════════════════════════════════════════ -->
-<section id="suscripcion">
-  <div class="container">
-    <div class="sus-header reveal-fade">
-      <div class="sec-label">Comenzar</div>
-      <h2>Elegí tu etapa<br>de entrada.</h2>
-      <p>Podés adherir tu tarjeta ahora mismo. El cobro es mensual, en dólares, a través de PayPal. Podés cancelar en cualquier momento antes del próximo ciclo.</p>
-    </div>
-
-    <div class="sus-planes reveal-fade">
-
-      <!-- Plan 1 -->
-      <div class="plan-card">
-        <div class="plan-etapa">Etapa 01 · 2026</div>
-        <div class="plan-name">TEDxPeninsulaHiroki</div>
-        <div class="plan-year">Neuquén · Patagonia</div>
-        <div class="plan-price">$500 <sub>USD/mes</sub></div>
-        <div class="plan-total">$6.000 USD · 12 meses</div>
-        <ul class="plan-features">
-          <li>Logo en todos los materiales del evento</li>
-          <li>Exclusividad en tu categoría de industria</li>
-          <li>Presencia de marca en el evento en vivo</li>
-          <li>Mención en apertura y cierre oficial</li>
-          <li>Precio preferencial Etapas 02 y 03</li>
-        </ul>
-        <div class="plan-pref">Punto de entrada recomendado</div>
-        <div class="paypal-btn-wrap" id="paypal-btn-1"></div>
-      </div>
-
-      <!-- Plan 2 — Featured -->
-      <div class="plan-card featured">
-        <div class="plan-etapa">Capítulo 02 · 2027</div>
-        <div class="plan-name">TEDx Neuquén</div>
-        <div class="plan-year">Auditorio Omuyo · Neuquén Capital</div>
-        <div class="plan-price" style="font-size:clamp(22px,3vw,34px);line-height:1.2;">A acordar<br><sub>al cierre del Cap. 01</sub></div>
-        <div class="plan-total" style="margin-top:12px;">Términos definidos en conjunto</div>
-        <ul class="plan-features">
-          <li>Campaña de visibilidad previa de 3 meses</li>
-          <li>Exclusividad total en tu categoría</li>
-          <li>Mención desde el escenario del Omuyo</li>
-          <li>Inclusión en prensa oficial del evento</li>
-          <li>Acceso a cóctel privado con speakers</li>
-        </ul>
-        <div class="plan-pref">Solo para Partners de Capítulo 01</div>
-        <div class="paypal-btn-wrap" id="paypal-btn-2"></div>
-      </div>
-
-      <!-- Plan 3 -->
-      <div class="plan-card">
-        <div class="plan-etapa">Capítulo 03 · 2028</div>
-        <div class="plan-name">Vaca Verde</div>
-        <div class="plan-year">Neuquén · Evento ancla</div>
-        <div class="plan-price" style="font-size:clamp(22px,3vw,34px);line-height:1.2;">A acordar<br><sub>al cierre del Cap. 02</sub></div>
-        <div class="plan-total" style="margin-top:12px;">Términos definidos en conjunto</div>
-        <ul class="plan-features">
-          <li>Posibilidad de naming rights en categoría</li>
-          <li>Espacio de marca propio dentro de Vaca Verde</li>
-          <li>Sin competidores directos en todo el evento</li>
-          <li>Co-creación de agenda en tu área</li>
-          <li>Reconocimiento como fundador del ecosistema</li>
-        </ul>
-        <div class="plan-pref">Solo para Partners de Capítulos 01 y 02</div>
-        <div class="paypal-btn-wrap" id="paypal-btn-3"></div>
-      </div>
-
-    </div>
-
-    <div class="sus-nota reveal-fade">
-      <p>Los botones de PayPal generan una suscripción mensual recurrente en USD. El primer débito ocurre al confirmar. Podés cancelar antes del próximo ciclo desde tu cuenta de PayPal.</p>
-      <p>Si preferís coordinar la forma de pago por otro medio, usá el formulario de contacto más abajo.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════════════════
      CONTACTO ALTERNATIVO
      ══════════════════════════════════════════════════════ -->
 <section id="contacto-alt">
@@ -1544,8 +1434,8 @@
     <div class="ca-inner">
       <div class="ca-info reveal-fade">
         <div class="sec-label">Hablemos</div>
-        <h2>¿Preferís una reunión antes de decidir?</h2>
-        <p>Podés escribirnos directamente. Te respondemos en 24 horas para coordinar una reunión, resolver dudas sobre la propuesta o hablar del modelo fiscal con más detalle.</p>
+        <h2>¿Querés hablar antes de decidir?</h2>
+        <p>Podés escribirnos directamente. Te respondemos en 24 horas para coordinar una reunión o resolver cualquier duda sobre el modelo.</p>
         <div class="ca-data">
           <div class="ca-row">
             <span class="ca-row-label">Email</span>
@@ -1637,13 +1527,17 @@
 </script>
 
 <script>
-  /* ── Clave de acceso al micrositio ── */
+  /* ── Clave de acceso al micrositio ──
+     Cambiar ACCESS_KEY al nombre+apellido del destinatario (ej: 'gabriellopez')
+     El visitante puede escribirlo con espacios, mayúsculas o minúsculas — todo funciona. */
   var ACCESS_KEY = 'hiroki2026';
   var SESSION_KEY = 'tedx_partners_access';
 
+  var normalize = function(s) { return s.toLowerCase().replace(/\s+/g, ''); };
+
   function checkAccess() {
-    var val = document.getElementById('ag-input').value.trim().toLowerCase();
-    if (val === ACCESS_KEY.toLowerCase()) {
+    var val = normalize(document.getElementById('ag-input').value.trim());
+    if (val === normalize(ACCESS_KEY)) {
       sessionStorage.setItem(SESSION_KEY, '1');
       document.getElementById('access-gate').classList.add('unlocked');
       document.getElementById('ag-error').classList.remove('visible');
