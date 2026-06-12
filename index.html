@@ -84,16 +84,57 @@
     }
 
     #hero-scroll-hint {
-      color: #EB0028;
-      font-size: 24px;
-      animation: bounce 2s ease-in-out infinite;
-      margin-top: 40px;
-      font-family: 'DM Sans', sans-serif;
+      position: fixed;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 50;
+      opacity: 0;
+      pointer-events: none;
+      animation: scrollHintFade 1s ease 1.6s forwards;
+      transition: opacity 0.6s ease;
     }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); opacity: 1; }
-      50%       { transform: translateY(8px); opacity: 0.5; }
+    #hero-scroll-hint.hide {
+      opacity: 0 !important;
+      animation: none;
+    }
+    #hero-scroll-hint .scroll-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+    #hero-scroll-hint .scroll-mouse {
+      width: 24px;
+      height: 38px;
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 12px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      padding-top: 6px;
+    }
+    #hero-scroll-hint .scroll-dot {
+      width: 3px;
+      height: 7px;
+      background: #EB0028;
+      border-radius: 2px;
+      animation: scrollDot 2s ease-in-out infinite;
+    }
+    @keyframes scrollDot {
+      0%   { transform: translateY(0); opacity: 1; }
+      60%  { transform: translateY(10px); opacity: 0; }
+      61%  { transform: translateY(0); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes scrollHintFade {
+      to { opacity: 1; }
     }
 
     /* Sticky: se ancla en top:0 durante los 350vh */
@@ -743,7 +784,6 @@
     <div id="hero-logo-intro">
       <img src="assets/brand/logo-white.png" alt="TEDxPeninsulaHiroki" style="max-width:min(640px,88vw);width:100%;display:block;">
     </div>
-    <div id="hero-scroll-hint">↓</div>
   </div>
 
   <!-- STICKY: Canvas + overlays de fase -->
@@ -1344,5 +1384,22 @@
 </footer>
 
 <script src="script.js"></script>
+
+<div id="hero-scroll-hint">
+  <span class="scroll-label">Scroll</span>
+  <div class="scroll-mouse"><div class="scroll-dot"></div></div>
+</div>
+
+<script>
+  var hint = document.getElementById('hero-scroll-hint');
+  var target = document.getElementById('manifesto-tema');
+  if (hint && target) {
+    new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) hint.classList.add('hide');
+      else hint.classList.remove('hide');
+    }, { threshold: 0.15 }).observe(target);
+  }
+</script>
+
 </body>
 </html>
