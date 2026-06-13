@@ -824,23 +824,118 @@ a {
   transform: translateY(-1px);
 }
 
-/* Form panel inline dentro de cada role-card */
-.rc-form-panel {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-              margin-top 0.3s ease,
-              padding-top 0.3s ease;
-  margin-top: 0;
+/* El markup del form vive dentro de cada role-card pero se renderiza solo en el modal */
+.rc-form-panel { display: none; }
+
+/* ── Modal centrado de formularios de rol ── */
+html.modal-locked, body.modal-locked { overflow: hidden; }
+
+.role-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+
+.role-modal.open {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.role-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.78);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.role-modal-dialog {
   position: relative;
+  width: 100%;
+  max-width: 520px;
+  max-height: 88vh;
+  overflow-y: auto;
+  background: linear-gradient(160deg, #141414 0%, #0a0a0a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: clamp(28px, 4vw, 44px);
+  transform: translateY(16px) scale(0.98);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.role-modal.open .role-modal-dialog {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.role-modal-dialog::-webkit-scrollbar { width: 8px; }
+.role-modal-dialog::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+}
+
+.role-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
   z-index: 2;
 }
 
-.role-card.form-open .rc-form-panel {
-  max-height: 900px;
-  margin-top: 24px;
-  padding-top: 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+.role-modal-close:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.role-modal-head {
+  margin-bottom: 26px;
+  padding-right: 40px;
+}
+
+.rm-label {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+
+.rm-headline {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.32;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: -0.01em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .role-modal,
+  .role-modal-dialog {
+    transition: opacity 0.2s ease;
+  }
+  .role-modal-dialog { transform: none; }
 }
 
 .rc-bg-icon {

@@ -199,21 +199,103 @@ function openForm(id) {
   card.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-/* ── Role card inline form toggle ── */
-function toggleRoleForm(btn) {
-  const card = btn.closest('.role-card');
-  if (!card) return;
-  const wasOpen = card.classList.contains('form-open');
-  document.querySelectorAll('.role-card.form-open').forEach(function(c) {
-    c.classList.remove('form-open');
-  });
-  if (!wasOpen) {
-    card.classList.add('form-open');
-    setTimeout(function() {
-      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 60);
+/* ── Role card form → centered modal ── */
+(function() {
+  var modal, dialog, bodyWrap, lastFocused;
+
+  function ensureModal() {
+    if (modal) return;
+    modal = document.createElement('div');
+    modal.id = 'role-modal';
+    modal.className = 'role-modal';
+    modal.setAttribute('aria-hidden', 'true');
+    modal.innerHTML =
+      '<div class="role-modal-backdrop" data-close></div>' +
+      '<div class="role-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="role-modal-title">' +
+        '<button type="button" class="role-modal-close" aria-label="Cerrar formulario" data-close>' +
+          '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 4.5l9 9M13.5 4.5l-9 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>' +
+        '</button>' +
+        '<div class="role-modal-head">' +
+          '<div class="rm-label"></div>' +
+          '<h3 class="rm-headline" id="role-modal-title"></h3>' +
+        '</div>' +
+        '<div class="role-modal-body fc-form"></div>' +
+      '</div>';
+    document.body.appendChild(modal);
+    dialog = modal.querySelector('.role-modal-dialog');
+    bodyWrap = modal.querySelector('.role-modal-body');
+
+    modal.addEventListener('mousedown', function(e) {
+      if (e.target.closest('[data-close]')) closeModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (!modal.classList.contains('open')) return;
+      if (e.key === 'Escape') { closeModal(); return; }
+      if (e.key === 'Tab') trapFocus(e);
+    });
   }
-}
+
+  function focusables() {
+    return dialog.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([type=hidden]):not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+  }
+
+  function trapFocus(e) {
+    var items = Array.prototype.filter.call(focusables(), function(el) {
+      return el.offsetParent !== null;
+    });
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  }
+
+  function openModal(card, trigger) {
+    ensureModal();
+    var label = card.querySelector('.rc-label');
+    var headline = card.querySelector('.rc-headline');
+    var srcForm = card.querySelector('.rc-form-panel form');
+    if (!srcForm) return;
+    modal.querySelector('.rm-label').textContent = label ? label.textContent : '';
+    modal.querySelector('.rm-headline').textContent = headline ? headline.textContent : '';
+    bodyWrap.innerHTML = '';
+    bodyWrap.appendChild(srcForm.cloneNode(true));
+    dialog.scrollTop = 0;
+
+    lastFocused = trigger || document.activeElement;
+    document.documentElement.classList.add('modal-locked');
+    document.body.classList.add('modal-locked');
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+
+    setTimeout(function() {
+      var first = Array.prototype.filter.call(
+        bodyWrap.querySelectorAll('input:not([type=hidden]), select, textarea'),
+        function(el) { return el.offsetParent !== null; }
+      )[0];
+      if (first) first.focus();
+    }, 80);
+  }
+
+  function closeModal() {
+    if (!modal || !modal.classList.contains('open')) return;
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('modal-locked');
+    document.body.classList.remove('modal-locked');
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+
+  window.toggleRoleForm = function(btn) {
+    var card = btn.closest('.role-card');
+    if (card) openModal(card, btn);
+  };
+  window.closeRoleModal = closeModal;
+})();
 
 /* ── Inline form submit → Cloudflare Worker ── */
 const WORKER_URL = 'https://tedx-forms.nqnguille.workers.dev';
