@@ -42,7 +42,9 @@ export async function onRequestPost({ request, env }) {
     sent: false,
     sent_at: null,
     accessed: false,
-    first_access: null
+    first_access: null,
+    access_count: 0,
+    last_access: null
   };
 
   await env.PARTNERS_KV.put(`token:${token}`, JSON.stringify(invite));

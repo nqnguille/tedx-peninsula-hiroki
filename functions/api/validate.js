@@ -21,9 +21,25 @@ export async function onRequestGet({ request, env }) {
     if (password !== invite.password) return Response.json({ valid: false, wrong_password: true });
   }
 
+  // Engagement tracking: cuenta visitas reales (throttle de 30 min = una sesión)
+  const now = new Date();
+  const nowIso = now.toISOString();
+  const SESSION_MS = 30 * 60 * 1000;
+  const lastMs = invite.last_access ? new Date(invite.last_access).getTime() : 0;
+  const isNewSession = !lastMs || (now.getTime() - lastMs) > SESSION_MS;
+
+  let changed = false;
   if (!invite.accessed) {
     invite.accessed = true;
-    invite.first_access = new Date().toISOString();
+    invite.first_access = nowIso;
+    changed = true;
+  }
+  if (isNewSession) {
+    invite.access_count = (invite.access_count || 0) + 1;
+    invite.last_access = nowIso;
+    changed = true;
+  }
+  if (changed) {
     await env.PARTNERS_KV.put(`token:${token}`, JSON.stringify(invite));
     await _updateListItem(env, invite);
   }

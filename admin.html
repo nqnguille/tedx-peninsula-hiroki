@@ -3,56 +3,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
   <title>TEDxPeninsulaHiroki · Panel Partners</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { overflow-x: hidden; max-width: 100%; }
 
     :root {
       --red: #EB0028;
+      --red-dark: #c00021;
       --black: #0a0a0a;
       --dark: #111;
-      --surface: #1a1a1a;
+      --surface: #161616;
+      --surface-2: #1c1c1c;
       --border: rgba(255,255,255,0.08);
+      --border-strong: rgba(255,255,255,0.16);
       --text: #fff;
       --muted: rgba(255,255,255,0.45);
+      --muted-2: rgba(255,255,255,0.30);
       --green: #22c55e;
       --yellow: #eab308;
-      --gray: rgba(255,255,255,0.25);
-      --font: 'Helvetica Neue', Arial, sans-serif;
+      --amber: #f59e0b;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
     }
 
-    body { background: var(--black); color: var(--text); font-family: var(--font); min-height: 100vh; }
+    body { background: var(--black); color: var(--text); font-family: var(--sans); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
     /* ── LOGIN ── */
     #login-screen {
       position: fixed; inset: 0; background: var(--black);
       display: flex; align-items: center; justify-content: center;
-      z-index: 100;
+      z-index: 100; padding: 20px;
     }
     #login-screen.hidden { display: none; }
 
     .login-box {
-      width: 360px; padding: 48px 40px;
+      width: 100%; max-width: 380px; padding: 48px 40px;
       border: 1px solid var(--border); border-top: 3px solid var(--red);
       background: var(--surface);
     }
-    .login-logo { font-size: 20px; font-weight: 700; color: var(--red); margin-bottom: 4px; }
-    .login-sub { font-size: 12px; color: var(--muted); margin-bottom: 32px; letter-spacing: 0.05em; text-transform: uppercase; }
-    .login-title { font-size: 22px; font-weight: 700; margin-bottom: 28px; }
+    .login-logo { font-size: 20px; font-weight: 700; color: var(--red); margin-bottom: 4px; letter-spacing: -0.02em; }
+    .login-sub { font-size: 11px; color: var(--muted); margin-bottom: 32px; letter-spacing: 0.12em; text-transform: uppercase; }
+    .login-title { font-family: var(--serif); font-size: 30px; font-weight: 400; margin-bottom: 28px; letter-spacing: -0.01em; }
     .login-input {
       width: 100%; padding: 14px 16px; background: rgba(255,255,255,0.06);
       border: 1px solid var(--border); color: var(--text); font-size: 15px;
-      font-family: var(--font); outline: none; transition: border .2s;
+      font-family: var(--sans); outline: none; transition: border .2s;
     }
-    .login-input:focus { border-color: rgba(255,255,255,0.25); }
+    .login-input:focus { border-color: var(--border-strong); }
     .login-btn {
       width: 100%; margin-top: 14px; padding: 14px;
       background: var(--red); color: #fff; border: none; cursor: pointer;
-      font-size: 14px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
-      font-family: var(--font); transition: opacity .2s;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      font-family: var(--sans); transition: background .2s;
     }
-    .login-btn:hover { opacity: 0.88; }
+    .login-btn:hover { background: var(--red-dark); }
     .login-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .login-err { font-size: 13px; color: var(--red); margin-top: 12px; display: none; }
     .login-err.visible { display: block; }
@@ -63,56 +72,91 @@
 
     header {
       position: sticky; top: 0; z-index: 50;
-      background: var(--dark); border-bottom: 1px solid var(--border);
+      background: rgba(17,17,17,0.92); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 32px; height: 60px;
+      padding: 0 28px; height: 60px;
     }
     .header-left { display: flex; align-items: center; gap: 12px; }
-    .header-logo { font-size: 16px; font-weight: 700; color: var(--red); }
-    .header-title { font-size: 13px; color: var(--muted); letter-spacing: 0.04em; }
+    .header-logo { font-size: 16px; font-weight: 700; color: var(--red); letter-spacing: -0.02em; }
+    .header-title { font-size: 12px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
     .header-sep { width: 1px; height: 20px; background: var(--border); }
 
-    .header-right { display: flex; align-items: center; gap: 12px; }
+    .header-right { display: flex; align-items: center; gap: 10px; }
     .btn-ghost {
-      padding: 8px 16px; background: transparent; border: 1px solid var(--border);
-      color: var(--muted); font-size: 12px; font-family: var(--font);
-      cursor: pointer; transition: all .2s; letter-spacing: 0.04em;
+      padding: 8px 14px; background: transparent; border: 1px solid var(--border);
+      color: var(--muted); font-size: 12px; font-family: var(--sans); font-weight: 500;
+      cursor: pointer; transition: all .2s; letter-spacing: 0.03em; white-space: nowrap;
     }
-    .btn-ghost:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+    .btn-ghost:hover { border-color: var(--border-strong); color: var(--text); }
 
-    main { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+    main { max-width: 1160px; margin: 0 auto; padding: 32px 24px 80px; }
 
     /* ── STATS ── */
-    .stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 32px; }
+    .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 36px; }
     .stat-card {
-      padding: 24px 28px; background: var(--surface); border: 1px solid var(--border);
-      border-top: 2px solid transparent;
+      padding: 22px 24px; background: var(--surface); border: 1px solid var(--border);
+      border-top: 2px solid transparent; transition: transform .15s, border-color .2s;
     }
-    .stat-card.s-total { border-top-color: rgba(255,255,255,0.15); }
-    .stat-card.s-sent  { border-top-color: var(--yellow); }
+    .stat-card.s-total  { border-top-color: var(--border-strong); }
+    .stat-card.s-sent   { border-top-color: var(--yellow); }
     .stat-card.s-viewed { border-top-color: var(--green); }
-    .stat-num { font-size: 40px; font-weight: 700; line-height: 1; margin-bottom: 6px; }
-    .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .stat-card.s-follow { border-top-color: var(--amber); }
+    .stat-num { font-family: var(--serif); font-size: 44px; font-weight: 400; line-height: 1; margin-bottom: 8px; letter-spacing: -0.02em; }
+    .stat-card.s-follow .stat-num { color: var(--amber); }
+    .stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; }
 
     /* ── TOOLBAR ── */
-    .toolbar {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 20px;
+    .toolbar { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
+    .toolbar-title { font-family: var(--serif); font-size: 24px; font-weight: 400; letter-spacing: -0.01em; }
+    .toolbar-right { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+    .search-box { position: relative; }
+    .search-box input {
+      width: 240px; max-width: 100%; padding: 9px 12px 9px 34px; background: var(--surface);
+      border: 1px solid var(--border); color: var(--text); font-size: 13px; font-family: var(--sans);
+      outline: none; transition: border .2s;
     }
-    .toolbar h2 { font-size: 16px; font-weight: 600; }
-    .toolbar-right { display: flex; gap: 10px; }
+    .search-box input:focus { border-color: var(--border-strong); }
+    .search-box input::placeholder { color: var(--muted-2); }
+    .search-box svg { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--muted-2); pointer-events: none; }
+
+    .sort-select {
+      padding: 9px 30px 9px 12px; background: var(--surface); border: 1px solid var(--border);
+      color: var(--muted); font-size: 13px; font-family: var(--sans); cursor: pointer; outline: none;
+      appearance: none; -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23999' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center;
+    }
+    .sort-select:focus { border-color: var(--border-strong); color: var(--text); }
+
     .btn-primary {
-      padding: 10px 20px; background: var(--red); color: #fff; border: none;
-      font-size: 13px; font-weight: 700; font-family: var(--font); cursor: pointer;
-      letter-spacing: 0.04em; transition: opacity .2s;
+      padding: 10px 18px; background: var(--red); color: #fff; border: none;
+      font-size: 12px; font-weight: 700; font-family: var(--sans); cursor: pointer;
+      letter-spacing: 0.05em; text-transform: uppercase; transition: background .2s; white-space: nowrap;
     }
-    .btn-primary:hover { opacity: 0.88; }
+    .btn-primary:hover { background: var(--red-dark); }
+
+    /* ── FILTER CHIPS ── */
+    .filters { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+    .chip {
+      padding: 7px 14px; background: transparent; border: 1px solid var(--border);
+      color: var(--muted); font-size: 12px; font-family: var(--sans); font-weight: 500;
+      cursor: pointer; transition: all .15s; letter-spacing: 0.02em; white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 7px;
+    }
+    .chip:hover { border-color: var(--border-strong); color: var(--text); }
+    .chip.active { background: var(--text); border-color: var(--text); color: var(--black); font-weight: 700; }
+    .chip .chip-count { font-size: 11px; opacity: 0.6; font-weight: 600; }
+    .chip.active .chip-count { opacity: 0.55; }
+    .chip.chip-follow.active { background: var(--amber); border-color: var(--amber); color: #1a1200; }
+
     .btn-sm {
-      padding: 6px 12px; font-size: 11px; font-weight: 600; font-family: var(--font);
+      padding: 6px 12px; font-size: 11px; font-weight: 600; font-family: var(--sans);
       border: 1px solid var(--border); background: transparent; color: var(--muted);
-      cursor: pointer; transition: all .15s; letter-spacing: 0.04em; white-space: nowrap;
+      cursor: pointer; transition: all .15s; letter-spacing: 0.03em; white-space: nowrap;
     }
-    .btn-sm:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+    .btn-sm:hover { color: var(--text); border-color: var(--border-strong); }
     .btn-sm.btn-danger:hover { color: #f87171; border-color: #f87171; }
     .btn-sm.btn-send { color: #facc15; border-color: #facc1550; }
     .btn-sm.btn-send:hover { background: #facc1510; border-color: #facc15; }
@@ -124,17 +168,33 @@
     thead th {
       text-align: left; padding: 10px 14px;
       font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--muted); border-bottom: 1px solid var(--border);
+      color: var(--muted-2); border-bottom: 1px solid var(--border);
     }
     tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
-    tbody tr:hover { background: rgba(255,255,255,0.03); }
+    tbody tr:hover { background: rgba(255,255,255,0.025); }
+    tbody tr.is-follow { box-shadow: inset 3px 0 0 var(--amber); }
     tbody td { padding: 14px 14px; font-size: 14px; vertical-align: middle; }
-    td.td-num { color: var(--muted); font-size: 12px; width: 40px; }
-    td.td-name { font-weight: 600; }
-    td.td-email { color: var(--muted); font-size: 13px; }
-    td.td-date { color: var(--muted); font-size: 12px; white-space: nowrap; }
-    td.td-actions { white-space: nowrap; }
-    .actions-row { display: flex; gap: 6px; align-items: center; }
+    td.td-num { color: var(--muted-2); font-size: 12px; width: 36px; font-variant-numeric: tabular-nums; }
+    .sp-name { font-weight: 600; font-size: 14px; }
+    .sp-email { color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+    td.td-date { color: var(--muted); font-size: 12px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    td.td-actions { white-space: nowrap; text-align: right; }
+    .actions-row { display: flex; gap: 6px; align-items: center; justify-content: flex-end; }
+
+    .pass-code {
+      font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px;
+      background: rgba(255,255,255,0.07); padding: 3px 8px; border-radius: 3px; letter-spacing: 0.04em;
+    }
+    .pass-empty { color: var(--muted-2); font-size: 12px; }
+
+    /* Engagement cell */
+    .eng { display: flex; flex-direction: column; gap: 3px; }
+    .eng-count { font-size: 13px; font-weight: 600; display: inline-flex; align-items: baseline; gap: 5px; }
+    .eng-count b { font-family: var(--serif); font-size: 17px; font-weight: 400; line-height: 1; }
+    .eng-count.zero { color: var(--muted-2); font-weight: 400; }
+    .eng-last { font-size: 11px; color: var(--muted); white-space: nowrap; }
+    .eng-bar { height: 3px; background: rgba(255,255,255,0.08); margin-top: 4px; overflow: hidden; width: 64px; }
+    .eng-bar > i { display: block; height: 100%; background: var(--green); }
 
     .badge {
       display: inline-flex; align-items: center; gap: 5px;
@@ -144,32 +204,36 @@
     .badge-pending { background: rgba(255,255,255,0.07); color: var(--muted); }
     .badge-sent    { background: rgba(234,179,8,0.15); color: var(--yellow); border: 1px solid rgba(234,179,8,0.3); }
     .badge-viewed  { background: rgba(34,197,94,0.12); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
-
-    .empty-state {
-      text-align: center; padding: 64px 24px; color: var(--muted); font-size: 14px;
+    .follow-flag {
+      display: inline-flex; align-items: center; gap: 5px; margin-top: 6px;
+      font-size: 10.5px; color: var(--amber); font-weight: 600; letter-spacing: 0.02em;
     }
+
+    .empty-state { text-align: center; padding: 64px 24px; color: var(--muted); font-size: 14px; }
+    .empty-state b { display: block; font-family: var(--serif); font-size: 20px; color: var(--text); font-weight: 400; margin-bottom: 8px; }
 
     /* ── MODAL ── */
     #modal-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.75);
-      display: none; align-items: center; justify-content: center; z-index: 200;
+      position: fixed; inset: 0; background: rgba(0,0,0,0.78); backdrop-filter: blur(4px);
+      display: none; align-items: center; justify-content: center; z-index: 200; padding: 20px;
     }
     #modal-overlay.visible { display: flex; }
     .modal-box {
-      width: 420px; background: var(--surface);
+      width: 100%; max-width: 440px; background: var(--surface);
       border: 1px solid var(--border); border-top: 3px solid var(--red);
-      padding: 36px 32px;
+      padding: 36px 32px; max-height: 90vh; overflow-y: auto;
     }
-    .modal-title { font-size: 18px; font-weight: 700; margin-bottom: 24px; }
+    .modal-title { font-family: var(--serif); font-size: 24px; font-weight: 400; margin-bottom: 24px; letter-spacing: -0.01em; }
     .form-group { margin-bottom: 16px; }
     .form-label { display: block; font-size: 11px; color: var(--muted); letter-spacing: 0.08em;
-                  text-transform: uppercase; margin-bottom: 7px; }
+                  text-transform: uppercase; margin-bottom: 7px; font-weight: 600; }
     .form-input {
       width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.05);
       border: 1px solid var(--border); color: var(--text); font-size: 14px;
-      font-family: var(--font); outline: none; transition: border .2s;
+      font-family: var(--sans); outline: none; transition: border .2s;
     }
-    .form-input:focus { border-color: rgba(255,255,255,0.25); }
+    .form-input:focus { border-color: var(--border-strong); }
+    .form-hint { font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
     .modal-actions { display: flex; gap: 10px; margin-top: 24px; justify-content: flex-end; }
     .modal-err { font-size: 12px; color: var(--red); margin-top: 12px; display: none; }
     .modal-err.visible { display: block; }
@@ -185,6 +249,7 @@
     #toast.show { opacity: 1; transform: translateY(0); }
     #toast.success { border-left-color: var(--green); }
     #toast.warning { border-left-color: var(--yellow); }
+    #toast.error   { border-left-color: var(--red); }
 
     /* ── LOADING ── */
     .spinner {
@@ -194,12 +259,34 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    @media (max-width: 700px) {
+    /* ── RESPONSIVE: tabla → tarjetas ── */
+    @media (max-width: 860px) {
       .stats-row { grid-template-columns: 1fr 1fr; }
-      .stats-row .stat-card:last-child { grid-column: span 2; }
       header { padding: 0 16px; }
-      main { padding: 24px 14px; }
-      .modal-box { width: calc(100vw - 32px); }
+      main { padding: 24px 14px 64px; }
+      .search-box input { width: 100%; }
+      .toolbar-right { width: 100%; }
+      .search-box { flex: 1; }
+
+      thead { display: none; }
+      table, tbody, tr, td { display: block; width: 100%; }
+      tbody tr {
+        background: var(--surface); border: 1px solid var(--border); border-bottom: 1px solid var(--border);
+        margin-bottom: 14px; padding: 16px 16px 8px; position: relative;
+      }
+      tbody tr.is-follow { box-shadow: inset 3px 0 0 var(--amber); }
+      tbody td { padding: 7px 0; border: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+      tbody td::before {
+        content: attr(data-label); font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+        text-transform: uppercase; color: var(--muted-2); flex-shrink: 0;
+      }
+      td.td-num { display: none; }
+      td.td-sponsor { flex-direction: column; align-items: flex-start; gap: 2px; padding-top: 0; }
+      td.td-sponsor::before { display: none; }
+      td.td-actions { text-align: left; padding-top: 12px; margin-top: 6px; border-top: 1px solid var(--border); }
+      td.td-actions::before { display: none; }
+      .actions-row { justify-content: flex-start; flex-wrap: wrap; width: 100%; }
+      .eng { align-items: flex-end; }
     }
   </style>
 </head>
@@ -247,13 +334,35 @@
         <div class="stat-num" id="stat-viewed">—</div>
         <div class="stat-label">Propuesta vista</div>
       </div>
+      <div class="stat-card s-follow">
+        <div class="stat-num" id="stat-follow">—</div>
+        <div class="stat-label">Necesitan follow-up</div>
+      </div>
     </div>
 
     <div class="toolbar">
-      <h2>Invitaciones</h2>
+      <div class="toolbar-title">Invitaciones</div>
       <div class="toolbar-right">
+        <div class="search-box">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="M9.5 9.5L13 13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          <input type="text" id="search-input" placeholder="Buscar por nombre o email…" autocomplete="off">
+        </div>
+        <select class="sort-select" id="sort-select" onchange="applyView()">
+          <option value="recent">Más recientes</option>
+          <option value="views">Más visitadas</option>
+          <option value="lastvisit">Última visita</option>
+          <option value="name">Nombre (A–Z)</option>
+        </select>
         <button class="btn-primary" onclick="openModal()">+ Nueva invitación</button>
       </div>
+    </div>
+
+    <div class="filters" id="filters">
+      <button class="chip active" data-filter="all"     onclick="setFilter('all', this)">Todas <span class="chip-count" id="c-all">0</span></button>
+      <button class="chip"        data-filter="pending" onclick="setFilter('pending', this)">Pendientes <span class="chip-count" id="c-pending">0</span></button>
+      <button class="chip"        data-filter="sent"    onclick="setFilter('sent', this)">Enviadas <span class="chip-count" id="c-sent">0</span></button>
+      <button class="chip"        data-filter="viewed"  onclick="setFilter('viewed', this)">Vistas <span class="chip-count" id="c-viewed">0</span></button>
+      <button class="chip chip-follow" data-filter="follow" onclick="setFilter('follow', this)">Follow-up <span class="chip-count" id="c-follow">0</span></button>
     </div>
 
     <div class="table-wrap">
@@ -261,13 +370,12 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Nombre</th>
-            <th>Email</th>
+            <th>Sponsor</th>
             <th>Contraseña</th>
             <th>Estado</th>
             <th>Enviado</th>
-            <th>Vista</th>
-            <th>Acciones</th>
+            <th>Engagement</th>
+            <th></th>
           </tr>
         </thead>
         <tbody id="invites-body">
@@ -291,9 +399,9 @@
       <input type="email" id="field-email" class="form-input" placeholder="gabriel@empresa.com">
     </div>
     <div class="form-group">
-      <label class="form-label" for="field-password">Contraseña personal <span style="color:var(--muted);font-weight:400;">(opcional)</span></label>
+      <label class="form-label" for="field-password">Contraseña personal <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;">(opcional)</span></label>
       <input type="text" id="field-password" class="form-input" placeholder="Ej: hiroki2026" autocomplete="off">
-      <div style="font-size:11px;color:var(--muted);margin-top:6px;">Si la configurás, el invitado deberá ingresarla además del link. Compartila por separado (WhatsApp, llamada).</div>
+      <div class="form-hint">Si la configurás, el invitado deberá ingresarla además del link. Compartila por separado (WhatsApp, llamada).</div>
     </div>
     <p class="modal-err" id="modal-err"></p>
     <div class="modal-actions">
@@ -310,6 +418,12 @@
   const BASE = '';
   let adminToken = '';
 
+  // ── Estado de vista ──────────────────────────────────
+  let allInvites = [];
+  let activeFilter = 'all';
+  let searchTerm = '';
+  let sortKey = 'recent';
+
   // ── Auth ─────────────────────────────────────────────
   async function doLogin() {
     const input = document.getElementById('login-input');
@@ -319,17 +433,24 @@
     const btn = document.getElementById('login-btn');
     btn.disabled = true; btn.textContent = '…';
 
-    const res = await fetch(`${BASE}/api/invites`, {
-      headers: { 'Authorization': `Bearer ${pass}` }
-    });
+    let res;
+    try {
+      res = await fetch(`${BASE}/api/invites`, { headers: { 'Authorization': `Bearer ${pass}` } });
+    } catch {
+      document.getElementById('login-err').textContent = 'Error de conexión. Reintentá.';
+      document.getElementById('login-err').classList.add('visible');
+      btn.disabled = false; btn.textContent = 'Ingresar';
+      return;
+    }
 
     if (res.ok) {
       adminToken = pass;
       sessionStorage.setItem('tedx_admin_token', pass);
       document.getElementById('login-screen').classList.add('hidden');
       document.getElementById('dashboard').classList.add('visible');
-      renderInvites(await res.json());
+      ingest(await res.json());
     } else {
+      document.getElementById('login-err').textContent = 'Contraseña incorrecta.';
       document.getElementById('login-err').classList.add('visible');
       btn.disabled = false; btn.textContent = 'Ingresar';
       input.value = ''; input.focus();
@@ -355,51 +476,167 @@
       headers: { 'Authorization': `Bearer ${adminToken}` }
     });
     if (res.status === 401) { doLogout(); return; }
-    renderInvites(await res.json());
+    ingest(await res.json());
   }
 
-  // ── Render ───────────────────────────────────────────
-  function renderInvites(list) {
-    const body = document.getElementById('invites-body');
-    const total = list.length;
-    const sent  = list.filter(i => i.sent).length;
-    const viewed = list.filter(i => i.accessed).length;
+  // ── Ingest + stats ───────────────────────────────────
+  function ingest(list) {
+    allInvites = Array.isArray(list) ? list : [];
+
+    const total  = allInvites.length;
+    const sent   = allInvites.filter(i => i.sent).length;
+    const viewed = allInvites.filter(i => i.accessed).length;
+    const follow = allInvites.filter(needsFollowup).length;
 
     document.getElementById('stat-total').textContent  = total;
     document.getElementById('stat-sent').textContent   = sent;
     document.getElementById('stat-viewed').textContent = viewed;
+    document.getElementById('stat-follow').textContent = follow;
 
-    if (!total) {
-      body.innerHTML = `<tr><td colspan="8"><div class="empty-state">No hay invitaciones todavía. Creá la primera con el botón de arriba.</div></td></tr>`;
+    document.getElementById('c-all').textContent     = total;
+    document.getElementById('c-pending').textContent = allInvites.filter(i => !i.sent).length;
+    document.getElementById('c-sent').textContent    = allInvites.filter(i => i.sent && !i.accessed).length;
+    document.getElementById('c-viewed').textContent  = viewed;
+    document.getElementById('c-follow').textContent  = follow;
+
+    applyView();
+  }
+
+  // ── Follow-up ────────────────────────────────────────
+  function daysSince(iso) {
+    if (!iso) return Infinity;
+    return Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
+  }
+  function followupReason(inv) {
+    if (inv.sent && !inv.accessed) {
+      const d = daysSince(inv.sent_at);
+      if (d >= 3) return `Enviada hace ${d} día${d === 1 ? '' : 's'}, sin abrir`;
+    }
+    if (inv.accessed) {
+      const d = daysSince(inv.last_access || inv.first_access);
+      if (d >= 5) return `Vista, ${d} días sin volver`;
+    }
+    return '';
+  }
+  function needsFollowup(inv) { return followupReason(inv) !== ''; }
+
+  // ── Filtro + búsqueda + orden ────────────────────────
+  function setFilter(f, btn) {
+    activeFilter = f;
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    applyView();
+  }
+
+  document.getElementById('search-input').addEventListener('input', e => {
+    searchTerm = e.target.value.trim().toLowerCase();
+    applyView();
+  });
+
+  function applyView() {
+    sortKey = document.getElementById('sort-select').value;
+
+    let rows = allInvites.slice();
+
+    // Filtro por estado
+    rows = rows.filter(inv => {
+      switch (activeFilter) {
+        case 'pending': return !inv.sent;
+        case 'sent':    return inv.sent && !inv.accessed;
+        case 'viewed':  return inv.accessed;
+        case 'follow':  return needsFollowup(inv);
+        default:        return true;
+      }
+    });
+
+    // Búsqueda
+    if (searchTerm) {
+      rows = rows.filter(inv =>
+        (inv.name || '').toLowerCase().includes(searchTerm) ||
+        (inv.email || '').toLowerCase().includes(searchTerm)
+      );
+    }
+
+    // Orden
+    rows.sort((a, b) => {
+      switch (sortKey) {
+        case 'views':     return (b.access_count || 0) - (a.access_count || 0);
+        case 'lastvisit': return new Date(b.last_access || 0) - new Date(a.last_access || 0);
+        case 'name':      return (a.name || '').localeCompare(b.name || '', 'es');
+        default:          return new Date(b.created || 0) - new Date(a.created || 0);
+      }
+    });
+
+    renderRows(rows);
+  }
+
+  // ── Render ───────────────────────────────────────────
+  function renderRows(rows) {
+    const body = document.getElementById('invites-body');
+
+    if (!allInvites.length) {
+      body.innerHTML = `<tr><td colspan="7"><div class="empty-state"><b>Todavía no hay invitaciones</b>Creá la primera con el botón “Nueva invitación”.</div></td></tr>`;
+      return;
+    }
+    if (!rows.length) {
+      body.innerHTML = `<tr><td colspan="7"><div class="empty-state"><b>Sin resultados</b>Probá con otro filtro o término de búsqueda.</div></td></tr>`;
       return;
     }
 
-    body.innerHTML = list.map((inv, idx) => {
+    const maxViews = Math.max(1, ...allInvites.map(i => i.access_count || 0));
+
+    body.innerHTML = rows.map((inv, idx) => {
+      const flagged = needsFollowup(inv);
+      const reason  = followupReason(inv);
+
       const badge = inv.accessed
         ? `<span class="badge badge-viewed">● Vista</span>`
         : inv.sent
           ? `<span class="badge badge-sent">● Enviada</span>`
           : `<span class="badge badge-pending">● Pendiente</span>`;
 
-      const sentDate  = inv.sent_at      ? fmtDate(inv.sent_at)      : '—';
-      const viewDate  = inv.first_access ? fmtDate(inv.first_access) : '—';
+      const followFlag = flagged
+        ? `<div class="follow-flag" title="${esc(reason)}">⚠ ${esc(reason)}</div>`
+        : '';
+
+      const sentDate = inv.sent_at ? fmtDate(inv.sent_at) : '<span class="pass-empty">—</span>';
 
       const passCell = inv.password
-        ? `<code style="font-size:12px;background:rgba(255,255,255,0.07);padding:3px 8px;border-radius:3px;letter-spacing:0.04em;">${esc(inv.password)}</code>`
-        : `<span style="color:var(--muted);font-size:12px;">—</span>`;
+        ? `<code class="pass-code">${esc(inv.password)}</code>`
+        : `<span class="pass-empty">—</span>`;
+
+      // Engagement
+      const count = inv.access_count || 0;
+      let engCell;
+      if (count > 0) {
+        const last = inv.last_access || inv.first_access;
+        const pct = Math.round((count / maxViews) * 100);
+        engCell = `<div class="eng">
+          <span class="eng-count"><b>${count}</b> visita${count === 1 ? '' : 's'}</span>
+          <span class="eng-last">última: ${fmtDate(last)}</span>
+          <span class="eng-bar"><i style="width:${pct}%"></i></span>
+        </div>`;
+      } else if (inv.accessed) {
+        engCell = `<div class="eng"><span class="eng-count"><b>1</b> visita</span><span class="eng-last">${fmtDate(inv.first_access)}</span></div>`;
+      } else {
+        engCell = `<span class="eng-count zero">Sin visitas</span>`;
+      }
 
       const sendBtn = inv.sent
         ? `<button class="btn-sm btn-resend" onclick="sendInvite('${inv.id}', this)">Reenviar</button>`
         : `<button class="btn-sm btn-send"   onclick="sendInvite('${inv.id}', this)">✉ Enviar</button>`;
 
-      return `<tr id="row-${inv.id}">
+      return `<tr id="row-${inv.id}" class="${flagged ? 'is-follow' : ''}">
         <td class="td-num">${idx + 1}</td>
-        <td class="td-name">${esc(inv.name)}</td>
-        <td class="td-email">${esc(inv.email)}</td>
-        <td>${passCell}</td>
-        <td>${badge}</td>
-        <td class="td-date">${sentDate}</td>
-        <td class="td-date">${viewDate}</td>
+        <td class="td-sponsor" data-label="Sponsor">
+          <div class="sp-name">${esc(inv.name)}</div>
+          <div class="sp-email">${esc(inv.email)}</div>
+          ${followFlag}
+        </td>
+        <td data-label="Contraseña">${passCell}</td>
+        <td data-label="Estado">${badge}</td>
+        <td class="td-date" data-label="Enviado">${sentDate}</td>
+        <td data-label="Engagement">${engCell}</td>
         <td class="td-actions">
           <div class="actions-row">
             ${sendBtn}
@@ -456,7 +693,7 @@
       toast(`Invitación creada para ${name}`, 'success');
       loadInvites();
     } else {
-      const d = await res.json();
+      const d = await res.json().catch(() => ({}));
       errEl.textContent = d.error || 'Error al crear.'; errEl.classList.add('visible');
     }
   }
@@ -483,7 +720,7 @@
       toast('Email enviado correctamente.', 'success');
       loadInvites();
     } else {
-      const d = await res.json();
+      const d = await res.json().catch(() => ({}));
       toast(d.error || 'Error al enviar el email.', 'error');
     }
   }
