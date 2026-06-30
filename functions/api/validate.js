@@ -10,7 +10,7 @@ export async function onRequestGet(context) {
   if (!token && password && env.MASTER_PASSWORD && password === env.MASTER_PASSWORD) {
     contextWaitUntilGateEvent(context, {
       project: 'tedx-peninsula-hiroki',
-      gate: 'partners-master',
+      gate: 'partners',
       key: 'MASTER_PASSWORD',
       who: 'master',
       visitor_id,
@@ -23,7 +23,7 @@ export async function onRequestGet(context) {
   if (!token && password) {
     contextWaitUntilGateEvent(context, {
       project: 'tedx-peninsula-hiroki',
-      gate: 'partners-master',
+      gate: 'partners',
       event: 'fail',
       key: 'wrong-master',
       visitor_id,
@@ -46,7 +46,7 @@ export async function onRequestGet(context) {
     if (password !== invite.password) {
       contextWaitUntilGateEvent(context, {
         project: 'tedx-peninsula-hiroki',
-        gate: 'partners-invite-password',
+        gate: 'partners',
         event: 'fail',
         key: 'wrong-invite-password',
         who: invite.name || invite.email || invite.id || '',
@@ -83,7 +83,7 @@ export async function onRequestGet(context) {
 
   contextWaitUntilGateEvent(context, {
     project: 'tedx-peninsula-hiroki',
-    gate: invite.password ? 'partners-invite-password' : 'partners-invite',
+    gate: 'partners',
     key: invite.password ? 'invite-password' : 'invite-token',
     who: invite.name || invite.email || invite.id || '',
     visitor_id,
