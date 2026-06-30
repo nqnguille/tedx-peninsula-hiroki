@@ -1447,6 +1447,31 @@
   var SESSION_KEY = 'tedx_partners_session';
   var _pendingToken = null;
 
+  function gateId(kind) {
+    try {
+      var store = kind === 'visitor' ? localStorage : sessionStorage;
+      var k = 'tedx_' + kind + '_id';
+      var v = store.getItem(k);
+      if (!v) {
+        v = kind + '-' + (crypto.randomUUID ? crypto.randomUUID() : (Date.now() + '-' + Math.random().toString(16).slice(2)));
+        store.setItem(k, v);
+      }
+      return v;
+    } catch(e) { return kind + '-unknown'; }
+  }
+
+  function trackGateView() {
+    try {
+      if (sessionStorage.getItem('tedx_gate_view') === '1') return;
+      sessionStorage.setItem('tedx_gate_view', '1');
+      fetch('https://gates-analytics.nqnguille.workers.dev/event', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ project: 'tedx-peninsula-hiroki', gate: 'partners', event: 'view', visitor_id: gateId('visitor'), session_id: gateId('session'), path: location.pathname }),
+        keepalive: true
+      }).catch(function(){});
+    } catch(e){}
+  }
+
   function unlock() {
     document.getElementById('access-gate').classList.add('unlocked');
   }
@@ -1468,6 +1493,8 @@
       var params = new URLSearchParams();
       if (token) params.set('token', token);
       if (password) params.set('password', password);
+      params.set('visitor_id', gateId('visitor'));
+      params.set('session_id', gateId('session'));
       var res = await fetch('/api/validate?' + params.toString());
       return await res.json();
     } catch(e) { return { valid: false }; }
@@ -1492,6 +1519,7 @@
 
   (async function() {
     if (sessionStorage.getItem(SESSION_KEY) === '1') { unlock(); return; }
+    trackGateView();
 
     // Input siempre activo (permite master password y contraseña post-token)
     document.getElementById('ag-input').addEventListener('keydown', function(e) {
