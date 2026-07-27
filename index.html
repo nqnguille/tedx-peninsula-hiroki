@@ -83,58 +83,188 @@
       line-height: 1;
     }
 
+    /* ────────────────────────────────────────────────────────
+       Invitación a scrollear — clickeable + scrolleable
+       · Es un <button> real: click/tap avanza a la fase siguiente
+         de la secuencia; el scroll normal sigue funcionando igual.
+       · Adaptativo: mousito en desktop (pointer fino),
+         glifo de swipe en mobile (pointer grueso).
+       · La barra inferior muestra el avance de los 350vh.
+       ──────────────────────────────────────────────────────── */
     #hero-scroll-hint {
       position: fixed;
-      bottom: 36px;
+      bottom: calc(26px + env(safe-area-inset-bottom, 0px));
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 11px;
       z-index: 50;
       opacity: 0;
-      pointer-events: none;
+      /* clickeable: el hint también es un atajo a la fase siguiente */
+      pointer-events: auto;
+      cursor: pointer;
+      margin: 0;
+      padding: 12px 20px;
+      border: 0;
+      border-radius: 16px;
+      background: transparent;
+      font: inherit;
+      -webkit-tap-highlight-color: transparent;
       animation: scrollHintFade 1s ease 1.6s forwards;
-      transition: opacity 0.6s ease;
+      transition: opacity 0.6s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #hero-scroll-hint:hover,
+    #hero-scroll-hint:focus-visible {
+      transform: translateX(-50%) translateY(-3px);
+    }
+    #hero-scroll-hint:focus-visible {
+      outline: 2px solid rgba(235, 0, 40, 0.9);
+      outline-offset: 4px;
+    }
+    #hero-scroll-hint:active {
+      transform: translateX(-50%) translateY(1px);
     }
     #hero-scroll-hint.hide {
       opacity: 0 !important;
       animation: none;
+      pointer-events: none;
     }
+
     #hero-scroll-hint .scroll-label {
       font-family: 'DM Sans', sans-serif;
       font-size: 10px;
       font-weight: 600;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
+      /* legible de verdad: antes estaba al 35% sobre negro */
+      color: rgba(255,255,255,0.72);
+      text-shadow: 0 1px 12px rgba(0,0,0,0.9);
+      transition: color 0.3s ease;
     }
+    #hero-scroll-hint:hover .scroll-label,
+    #hero-scroll-hint:focus-visible .scroll-label { color: #fff; }
+
+    /* Glifos: uno por tipo de puntero. Por defecto se muestra el de mouse. */
+    #hero-scroll-hint .scroll-swipe { display: none; }
+
     #hero-scroll-hint .scroll-mouse {
-      width: 24px;
-      height: 38px;
-      border: 2px solid rgba(255,255,255,0.25);
-      border-radius: 12px;
-      position: relative;
+      width: 26px;
+      height: 40px;
+      border: 2px solid rgba(255,255,255,0.55);
+      border-radius: 13px;
       display: flex;
       justify-content: center;
-      padding-top: 6px;
+      padding-top: 7px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.7);
+      transition: border-color 0.3s ease;
     }
+    #hero-scroll-hint:hover .scroll-mouse,
+    #hero-scroll-hint:focus-visible .scroll-mouse { border-color: rgba(255,255,255,0.9); }
+
     #hero-scroll-hint .scroll-dot {
       width: 3px;
-      height: 7px;
+      height: 8px;
       background: #EB0028;
       border-radius: 2px;
       animation: scrollDot 2s ease-in-out infinite;
     }
+
+    #hero-scroll-hint .scroll-swipe svg {
+      display: block;
+      filter: drop-shadow(0 2px 10px rgba(0,0,0,0.8));
+      animation: scrollSwipe 2s ease-in-out infinite;
+    }
+
+    /* Progreso de la secuencia: cuánto falta para que la sala se llene */
+    #hero-scroll-hint .scroll-track {
+      width: 48px;
+      height: 2px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.18);
+      overflow: hidden;
+    }
+    #hero-scroll-hint .scroll-fill {
+      display: block;
+      width: 0%;
+      height: 100%;
+      background: #EB0028;
+      border-radius: 2px;
+      transition: width 0.15s linear;
+    }
+
+    /* Mobile / touch: el mousito no aplica — va el gesto de deslizar */
+    @media (hover: none), (pointer: coarse) {
+      #hero-scroll-hint {
+        gap: 9px;
+        padding: 14px 24px;
+        bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+      }
+      #hero-scroll-hint .scroll-mouse { display: none; }
+      #hero-scroll-hint .scroll-swipe { display: block; }
+      #hero-scroll-hint .scroll-label { font-size: 9px; letter-spacing: 0.18em; }
+      #hero-scroll-hint .scroll-track { width: 40px; }
+      /* sin hover en touch: el lift quedaría pegado tras el tap */
+      #hero-scroll-hint:hover { transform: translateX(-50%); }
+    }
+
     @keyframes scrollDot {
       0%   { transform: translateY(0); opacity: 1; }
       60%  { transform: translateY(10px); opacity: 0; }
       61%  { transform: translateY(0); opacity: 0; }
       100% { transform: translateY(0); opacity: 1; }
     }
+    @keyframes scrollSwipe {
+      0%, 100% { transform: translateY(-3px); opacity: 0.65; }
+      50%      { transform: translateY(3px); opacity: 1; }
+    }
     @keyframes scrollHintFade {
       to { opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #hero-scroll-hint { animation: none; opacity: 1; transition: opacity 0.3s ease; }
+      #hero-scroll-hint .scroll-dot,
+      #hero-scroll-hint .scroll-swipe svg { animation: none; }
+      #hero-scroll-hint .scroll-fill { transition: none; }
+    }
+
+    /* ────────────────────────────────────────────────────────
+       Modo "un swipe = un paso" (solo mobile).
+       La clase la pone el JS recién cuando el canvas puede pintar,
+       así que si el JS falla el hero queda como el de siempre.
+       ──────────────────────────────────────────────────────── */
+    #hero-sequence.hero-pasos {
+      height: 100svh;
+      min-height: 100svh;
+    }
+    /* Con pasos discretos la barra continua miente: la reemplazan los dots */
+    body.modo-pasos #hero-scroll-hint .scroll-track { display: none; }
+
+    #hero-dots {
+      position: fixed;
+      bottom: calc(112px + env(safe-area-inset-bottom, 0px));
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 9px;
+      z-index: 49;
+      pointer-events: none;
+      opacity: 0;
+      animation: scrollHintFade 1s ease 1.6s forwards;
+    }
+    #hero-dots span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.28);
+      box-shadow: 0 1px 8px rgba(0,0,0,0.8);
+      transition: background 0.35s ease, transform 0.35s ease;
+    }
+    #hero-dots span.on {
+      background: #EB0028;
+      transform: scale(1.35);
     }
 
     /* Sticky: se ancla en top:0 durante los 350vh */
@@ -1366,20 +1496,321 @@
 
 <script src="script.js"></script>
 
-<div id="hero-scroll-hint">
-  <span class="scroll-label">Scroll</span>
-  <div class="scroll-mouse"><div class="scroll-dot"></div></div>
-</div>
+<button id="hero-scroll-hint" type="button" aria-label="Avanzar a la siguiente parte de la secuencia de apertura">
+  <span class="scroll-label" id="scroll-hint-label">Scrolleá</span>
+  <span class="scroll-mouse" aria-hidden="true"><span class="scroll-dot"></span></span>
+  <span class="scroll-swipe" aria-hidden="true">
+    <!-- Apunta hacia abajo: indica dónde está el contenido, no la dirección del dedo -->
+    <svg width="22" height="30" viewBox="0 0 22 30" fill="none">
+      <path d="M11 3v23" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+      <path d="M4 19l7 7 7-7" stroke="#EB0028" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </span>
+  <span class="scroll-track" aria-hidden="true"><span class="scroll-fill" id="scroll-hint-fill"></span></span>
+</button>
 
 <script>
-  var hint = document.getElementById('hero-scroll-hint');
-  var target = document.getElementById('manifesto-tema');
-  if (hint && target) {
-    new IntersectionObserver(function(entries) {
-      if (entries[0].isIntersecting) hint.classList.add('hide');
-      else hint.classList.remove('hide');
-    }, { threshold: 0.15 }).observe(target);
+/* ============================================================
+   Invitación a scrollear — clickeable, scrolleable y adaptativa
+   El hero es una secuencia de 350vh con 4 momentos. El hint:
+     · se puede scrollear normal (no interfiere),
+     · o clickear/tapear para saltar al momento siguiente,
+     · muestra cuánto falta para que la sala se llene,
+     · se esconde cuando arranca el manifiesto.
+   ============================================================ */
+(function() {
+  var hint    = document.getElementById('hero-scroll-hint');
+  var label   = document.getElementById('scroll-hint-label');
+  var fill    = document.getElementById('scroll-hint-fill');
+  var section = document.getElementById('hero-sequence');
+  var manif   = document.getElementById('manifesto-tema');
+  if (!hint || !section) return;
+
+  var reduce   = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* Se consulta en vivo, no una sola vez: en híbridos (iPad con trackpad,
+     Surface) el puntero cambia y el copy debe seguir al glifo que muestra CSS. */
+  var mqCoarse = window.matchMedia('(hover: none), (pointer: coarse)');
+
+  /* Momentos de la secuencia, en progreso 0..1 del canvas del hero.
+     Coinciden con las fases de script.js: bare → sillas → gente → CTAs. */
+  var STOPS = [0.22, 0.52, 0.88];
+
+  /* Copy por momento: el primero explica el gesto, los demás confirman avance */
+  function labelFor(p) {
+    if (p < 0.12) return mqCoarse.matches ? 'Deslizá' : 'Scrolleá';
+    if (p < 0.85) return 'Seguí';
+    return 'Ya casi';
   }
+
+  function progress() {
+    var total = section.offsetHeight - window.innerHeight;
+    if (total <= 0) return 0;
+    var scrolled = Math.max(0, -section.getBoundingClientRect().top);
+    return Math.min(1, scrolled / total);
+  }
+
+  /* Click/tap/Enter → siguiente momento; pasado el último, al manifiesto */
+  hint.addEventListener('click', function() {
+    var p = progress();
+    var total = section.offsetHeight - window.innerHeight;
+    var next = null;
+
+    for (var i = 0; i < STOPS.length; i++) {
+      if (STOPS[i] > p + 0.04) { next = STOPS[i]; break; }
+    }
+
+    var y = next !== null
+      ? section.offsetTop + next * total
+      : (manif ? manif.offsetTop : section.offsetTop + total);
+
+    window.scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
+  });
+
+  /* Estado visual: barra de avance + copy, sin trabajo fuera de frame */
+  var pending = false;
+  function sync() {
+    if (pending) return;
+    pending = true;
+    requestAnimationFrame(function() {
+      pending = false;
+      var p = progress();
+      if (fill) fill.style.width = (p * 100).toFixed(1) + '%';
+      if (label) {
+        var next = labelFor(p);
+        if (label.textContent !== next) label.textContent = next;
+      }
+    });
+  }
+
+  window.addEventListener('scroll', sync, { passive: true });
+  window.addEventListener('resize', sync, { passive: true });
+  /* Si cambia el tipo de puntero, CSS cambia el glifo al instante:
+     el copy tiene que seguirlo o queda "Deslizá" al lado de un mouse. */
+  if (mqCoarse.addEventListener) mqCoarse.addEventListener('change', sync);
+  else if (mqCoarse.addListener) mqCoarse.addListener(sync);
+  sync();
+
+  /* Se retira cuando el manifiesto entra en escena */
+  if (manif) {
+    new IntersectionObserver(function(entries) {
+      hint.classList.toggle('hide', entries[0].isIntersecting);
+    }, { threshold: 0.15 }).observe(manif);
+  }
+
+  /* El modo por pasos (mobile) maneja el hint por su cuenta */
+  window.__hintSync = sync;
+})();
+
+/* ============================================================
+   MOBILE — "un swipe = un paso"
+   Portado del hero de floraong.ar (flora-cinematic, initWelcome).
+
+   El problema: en desktop la rueda avanza de a poco y la secuencia
+   del auditorio se ve entera. En mobile un flick del pulgar arrastra
+   miles de píxeles con inercia y atraviesa los 350vh de una: la sala
+   se llena en un puñado de frames y no se ve nada.
+
+   La solución: en touch el scroll deja de manejar la secuencia.
+   Cada gesto — sin importar si fue de 40px o de 900px — vale
+   EXACTAMENTE un momento. Cuatro momentos y sale al sitio.
+
+   Precauciones (en Flora hubo que revertir una primera versión que
+   dejó el sitio entero trabado):
+     · Si el JS falla o el canvas no carga, no se toca nada: queda el
+       scroll de 350vh de siempre, que funciona.
+     · El menú es la única salida, así que cualquier link del header
+       libera el scroll antes de navegar.
+     · Dos temporizadores de seguridad liberan todo si algo se cuelga.
+   ============================================================ */
+(function() {
+  var mq = window.matchMedia('(hover: none), (pointer: coarse)');
+  if (!mq.matches) return;                       /* desktop sigue igual */
+  if (!window.TEDxHero) return;                  /* sin canvas no hay secuencia */
+
+  var section = document.getElementById('hero-sequence');
+  var hint    = document.getElementById('hero-scroll-hint');
+  var manif   = document.getElementById('manifesto-tema');
+  if (!section || !manif) return;
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Los cuatro momentos, en progreso del canvas:
+     negro+logo → sala vacía ("2026" / "Cultivando Conciencia")
+     → las sillas aparecen → la sala llena */
+  var MOMENTOS  = [0, 0.28, 0.55, 0.96];
+  var DURACION  = reduce ? 0 : 700;   /* ms de transición entre momentos */
+  var SWIPE_MIN = 36;                 /* px — piso para contar como gesto */
+
+  var actual = 0, animando = false, terminado = false;
+  var safety = null, globalSafety = null, raf = null;
+
+  /* ── Lock de scroll ──
+     Reusa `.modal-locked`, el mecanismo que el sitio ya tiene probado para
+     sus modales (style.css), en vez de pisar estilos inline — mismo criterio
+     que en Flora, donde se reusó el lock del gate de edad. Y TEDx no usa
+     Lenis, que fue lo que rompió el primer intento allá. */
+  function bloquear() {
+    document.documentElement.classList.add('modal-locked');
+    document.body.classList.add('modal-locked');
+  }
+  function liberar() {
+    document.documentElement.classList.remove('modal-locked');
+    document.body.classList.remove('modal-locked');
+  }
+
+  function pintar(p) { try { window.TEDxHero.draw(p); } catch (e) {} }
+
+  function easeInOut(t) { return t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2)/2; }
+
+  function irA(i) {
+    if (i < 0 || i >= MOMENTOS.length) return;
+    var desde = MOMENTOS[actual], hasta = MOMENTOS[i];
+    actual = i;
+    animando = true;
+    dibujarDots();
+    actualizarHint();
+
+    /* Salvavidas: si el rAF muriera, 'animando' no puede quedar trabado */
+    if (safety) clearTimeout(safety);
+    safety = setTimeout(function() { animando = false; }, DURACION + 1200);
+
+    if (DURACION === 0) { pintar(hasta); animando = false; return; }
+
+    var t0 = null;
+    if (raf) cancelAnimationFrame(raf);
+    (function paso(ts) {
+      if (t0 === null) t0 = ts;
+      var t = Math.min(1, (ts - t0) / DURACION);
+      pintar(desde + (hasta - desde) * easeInOut(t));
+      if (t < 1) { raf = requestAnimationFrame(paso); }
+      else {
+        animando = false;
+        if (safety) clearTimeout(safety);
+      }
+    })(performance.now());
+  }
+
+  function siguiente() {
+    if (terminado || animando) return;   /* acá se come la ráfaga del flick */
+    if (actual < MOMENTOS.length - 1) irA(actual + 1);
+    else salir();
+  }
+  function anterior() {
+    if (terminado || animando || actual === 0) return;
+    irA(actual - 1);
+  }
+
+  /* Salida: libera el scroll y entrega la página en el manifiesto */
+  function salir() {
+    if (terminado) return;
+    terminado = true;
+    dejarDeEscuchar();
+    liberar();
+    section.classList.remove('hero-pasos');
+    document.body.classList.remove('modo-pasos');
+    if (dots) dots.remove();
+    pintar(1);
+    /* el hero vuelve a medir 350vh: hay que dejarlo pasado, no al principio */
+    window.scrollTo({ top: manif.offsetTop, behavior: 'auto' });
+    if (window.__hintSync) window.__hintSync();
+  }
+
+  /* ── Gestos: cada uno vale un momento, sin leer su magnitud ── */
+  var y0 = 0, x0 = 0;
+  function onWheel(e) {
+    e.preventDefault();
+    if (Math.abs(e.deltaY) < 2) return;
+    if (e.deltaY > 0) siguiente(); else anterior();
+  }
+  function onTouchStart(e) { y0 = e.touches[0].clientY; x0 = e.touches[0].clientX; }
+  function onTouchMove(e)  { e.preventDefault(); }   /* mata inercia y rebote de iOS */
+  function onTouchEnd(e) {
+    var dy = y0 - e.changedTouches[0].clientY;
+    var dx = x0 - e.changedTouches[0].clientX;
+    if (Math.abs(dy) < SWIPE_MIN || Math.abs(dy) < Math.abs(dx)) return;
+    if (dy > 0) siguiente(); else anterior();
+  }
+  function onKey(e) {
+    if (['ArrowDown','ArrowRight',' ','PageDown'].indexOf(e.key) >= 0) { e.preventDefault(); siguiente(); }
+    else if (['ArrowUp','ArrowLeft','PageUp'].indexOf(e.key) >= 0) { e.preventDefault(); anterior(); }
+    else if (e.key === 'Escape') salir();
+  }
+
+  function escuchar() {
+    bloquear();
+    window.addEventListener('wheel', onWheel, { passive: false });
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: false });
+    window.addEventListener('touchend', onTouchEnd, { passive: true });
+    window.addEventListener('keydown', onKey);
+    /* Última red: si algo se colgara, el sitio se libera solo. Son ~15s por
+       momento, de sobra para verlos, y nadie queda encerrado más que eso. */
+    globalSafety = setTimeout(salir, 60000);
+  }
+  function dejarDeEscuchar() {
+    window.removeEventListener('wheel', onWheel);
+    window.removeEventListener('touchstart', onTouchStart);
+    window.removeEventListener('touchmove', onTouchMove);
+    window.removeEventListener('touchend', onTouchEnd);
+    window.removeEventListener('keydown', onKey);
+    if (safety) clearTimeout(safety);
+    if (globalSafety) clearTimeout(globalSafety);
+    if (raf) cancelAnimationFrame(raf);
+  }
+
+  /* ── Dots: con pasos discretos dicen más que una barra continua ── */
+  var dots = null;
+  function crearDots() {
+    dots = document.createElement('div');
+    dots.id = 'hero-dots';
+    dots.setAttribute('aria-hidden', 'true');
+    for (var i = 0; i < MOMENTOS.length; i++) dots.appendChild(document.createElement('span'));
+    document.body.appendChild(dots);
+    dibujarDots();
+  }
+  function dibujarDots() {
+    if (!dots) return;
+    for (var i = 0; i < dots.children.length; i++) {
+      dots.children[i].classList.toggle('on', i === actual);
+    }
+  }
+
+  /* El hint sigue siendo el atajo tocable, pero ahora avanza un momento */
+  function actualizarHint() {
+    if (!hint) return;
+    var lbl = document.getElementById('scroll-hint-label');
+    if (lbl) lbl.textContent = actual === 0 ? 'Deslizá'
+                             : actual < MOMENTOS.length - 1 ? 'Seguí' : 'Ya casi';
+  }
+
+  /* El menú es la única salida: liberar el scroll antes de navegar */
+  document.addEventListener('click', function(e) {
+    var a = e.target.closest ? e.target.closest('header a[href^="#"]') : null;
+    if (a) salir();
+  }, true);
+
+  /* Arranque: recién cuando el canvas puede pintar. Si nunca carga,
+     no se bloquea nada y el hero queda como está hoy. */
+  window.TEDxHero.onReady(function() {
+    /* Sin imágenes reales la secuencia no existe: bloquear el scroll dejaría
+       una pantalla negra trabada. Mejor no tocar nada y dejar el hero de
+       siempre — es el incidente que obligó a revertir la v1 en Flora. */
+    if (!window.TEDxHero.tieneImagenes || !window.TEDxHero.tieneImagenes()) return;
+
+    section.classList.add('hero-pasos');
+    document.body.classList.add('modo-pasos');
+    window.scrollTo(0, 0);
+    pintar(0);
+    crearDots();
+    escuchar();
+    if (hint) {
+      /* el tap del hint ya no salta por scroll: avanza un momento */
+      hint.addEventListener('click', function(e) {
+        e.preventDefault(); e.stopImmediatePropagation(); siguiente();
+      }, true);
+    }
+  });
+})();
 </script>
 
 </body>

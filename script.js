@@ -601,4 +601,23 @@ async function handleSubmit(e, cardId, successMsg) {
     resizeCanvas();
     drawFrame(lastP);
   }, { passive: true });
+
+  /* ── API para el modo "un swipe = un paso" (mobile) ──
+     Ahí el scroll queda bloqueado, así que no llegan eventos de scroll:
+     la secuencia necesita poder pintarse por progreso directo. */
+  window.TEDxHero = {
+    draw: function(p) { lastP = p; drawFrame(p); },
+    isReady: function() { return ready; },
+    /* 'ready' se cumple también cuando las imágenes fallaron (onerror llama
+       a onLoad igual, para no dejar el hero colgado). Para el modo por pasos
+       eso no alcanza: si no hay imágenes reales, la secuencia sería una
+       pantalla negra con el scroll bloqueado. */
+    tieneImagenes: function() {
+      return imgs.every(function(im) { return im.naturalWidth > 0; });
+    },
+    onReady: function(cb) {
+      if (ready) cb();
+      else document.addEventListener('hero-canvas-ready', cb, { once: true });
+    }
+  };
 })();
