@@ -47,6 +47,21 @@
   var vid = document.getElementById('hiroki-video');
   if (!vid) return;
   vid.addEventListener('loadedmetadata', function() { vid.currentTime = 20; });
+
+  /* Un toque más ágil que el original, sin que se note acelerado.
+     Se reaplica en varios eventos porque el navegador vuelve a 1x al
+     cargar y al reiniciar el loop, y porque si el video venía cacheado
+     'loadedmetadata' ya pasó cuando corre este script. */
+  var VELOCIDAD = 1.25;
+  function acelerar() { try { vid.playbackRate = VELOCIDAD; } catch (e) {} }
+
+  vid.addEventListener('loadedmetadata', acelerar);
+  vid.addEventListener('play', acelerar);
+  vid.addEventListener('seeked', acelerar);
+  vid.addEventListener('ratechange', function() {
+    if (vid.playbackRate !== VELOCIDAD) acelerar();
+  });
+  acelerar();
 })();
 
 /* ── Nav: scroll ── */

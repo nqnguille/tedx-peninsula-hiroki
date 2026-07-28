@@ -410,6 +410,16 @@
       color: #EB0028;
       font-style: normal;
     }
+    /* Saltos de línea de la frase: uno para desktop, otro para mobile */
+    .q-br-m { display: none; }
+    .q-br-d { display: inline; }
+    @media (max-width: 560px) {
+      .q-br-m { display: inline; }
+      .q-br-d { display: none; }
+      /* Un punto menos de cuerpo para que "a todo y presentes" entre
+         cómodo incluso en pantallas de 360px */
+      .mt-quote { font-size: clamp(1.95rem, 8.6vw, 2.2rem); }
+    }
     .mt-rule {
       width: 40px;
       height: 2px;
@@ -911,8 +921,12 @@
 
       <div class="sec-label">Cultivando Conciencia · 2026</div>
 
+      <!-- Los saltos cambian con el ancho: en desktop la frase entra en dos
+           líneas, pero en mobile ese mismo corte dejaba "todo" solo en una
+           línea. El espacio va DESPUÉS de cada <br> para que, cuando está
+           oculto, las palabras sigan separadas. -->
       <h2 class="mt-quote">
-        Vivimos conectados a todo<br>y presentes en <em>casi nada.</em>
+        Vivimos conectados<br class="q-br-m"> a todo<br class="q-br-d"> y presentes<br class="q-br-m"> en <em>casi nada.</em>
       </h2>
 
       <div class="mt-rule"></div>
@@ -1044,6 +1058,7 @@
           <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
           <div class="fg"><label class="fl">Nombre</label><input class="fi" type="text" name="nombre" placeholder="Tu nombre completo" required></div>
           <div class="fg"><label class="fl">Email</label><input class="fi" type="email" name="email" placeholder="tu@email.com" required></div>
+          <div class="fg"><label class="fl">WhatsApp</label><input class="fi" type="tel" name="whatsapp" placeholder="+54 299 000 0000"></div>
           <div class="fg"><label class="fl">Profesión u ocupación</label><input class="fi" type="text" name="profesion" placeholder="¿A qué te dedicás?"></div>
           <div class="fg"><label class="fl">Ciudad o provincia</label><input class="fi" type="text" name="ciudad" placeholder="Ej: Neuquén, Buenos Aires, Bariloche..."></div>
           <div class="fg"><label class="fl">¿Cómo te enteraste?</label><select class="fse" name="como_te_enteraste"><option value="" disabled selected>Seleccioná</option><option value="instagram">Instagram</option><option value="recomendacion">Recomendación de alguien</option><option value="facebook">Facebook</option><option value="google">Google</option><option value="otro">Otro</option></select></div>
@@ -1092,6 +1107,7 @@
           <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
           <div class="fg"><label class="fl">Nombre</label><input class="fi" type="text" name="nombre" placeholder="Tu nombre completo" required></div>
           <div class="fg"><label class="fl">Email</label><input class="fi" type="email" name="email" placeholder="tu@email.com" required></div>
+          <div class="fg"><label class="fl">WhatsApp</label><input class="fi" type="tel" name="whatsapp" placeholder="+54 299 000 0000"></div>
           <div class="fg"><label class="fl">Profesión u ocupación</label><input class="fi" type="text" name="profesion" placeholder="¿A qué te dedicás?" required></div>
           <div class="fg"><label class="fl">Tu idea en una oración</label><input class="fi" type="text" name="idea_titulo" placeholder="Una oración concreta, no un tema genérico." required></div>
           <div class="fg"><label class="fl">Desarrollá tu idea</label><textarea class="fta" name="idea_desarrollo" placeholder="¿Qué querés que la audiencia se lleve?" required style="min-height:100px;"></textarea></div>
@@ -1152,6 +1168,7 @@
           <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
           <div class="fg"><label class="fl">Nombre</label><input class="fi" type="text" name="nombre" placeholder="Tu nombre completo" required></div>
           <div class="fg"><label class="fl">Email</label><input class="fi" type="email" name="email" placeholder="tu@email.com" required></div>
+          <div class="fg"><label class="fl">WhatsApp</label><input class="fi" type="tel" name="whatsapp" placeholder="+54 299 000 0000"></div>
           <div class="fg"><label class="fl">Profesión u ocupación</label><input class="fi" type="text" name="profesion" placeholder="¿A qué te dedicás?"></div>
           <div class="fg"><label class="fl">Ciudad o provincia</label><input class="fi" type="text" name="ciudad" placeholder="Ej: Neuquén, Buenos Aires, Bariloche..."></div>
           <div class="fg"><label class="fl">¿Cómo te enteraste?</label><select class="fse" name="como_te_enteraste"><option value="" disabled selected>Seleccioná</option><option value="instagram">Instagram</option><option value="recomendacion">Recomendación de alguien</option><option value="facebook">Facebook</option><option value="google">Google</option><option value="otro">Otro</option></select></div>
@@ -1208,6 +1225,7 @@
           <input type="text" name="_hp" style="display:none" tabindex="-1" autocomplete="off">
           <div class="fg"><label class="fl">Nombre</label><input class="fi" type="text" name="nombre" placeholder="Tu nombre completo" required></div>
           <div class="fg"><label class="fl">Email</label><input class="fi" type="email" name="email" placeholder="tu@email.com" required></div>
+          <div class="fg"><label class="fl">WhatsApp</label><input class="fi" type="tel" name="whatsapp" placeholder="+54 299 000 0000"></div>
           <div class="fg"><label class="fl">Profesión</label><input class="fi" type="text" name="profesion" placeholder="Tu rol o campo de trabajo" required></div>
           <div class="fg"><label class="fl">Tu idea en una oración</label><input class="fi" type="text" name="idea_titulo" placeholder="Una oración concreta, no un tema genérico." required></div>
           <div class="fg"><label class="fl">Desarrollá tu idea</label><textarea class="fta" name="idea_desarrollo" placeholder="¿Qué querés que la audiencia se lleve? ¿Por qué esta idea importa ahora?" required style="min-height:120px;"></textarea></div>
