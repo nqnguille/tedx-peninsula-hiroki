@@ -378,7 +378,7 @@ async function handleSubmit(e, cardId, successMsg) {
    FASE 3 (p 0.62→1.0):  Empty → Full (gente aparece)
      - CTAs: aparecen desde p 0.80
 
-   Scroll total = 350vh → section.offsetHeight - window.innerHeight
+   Scroll total = 500vh → section.offsetHeight - window.innerHeight
    progress = scrolled / total → 0..1
    ============================================================ */
 (function() {
@@ -578,7 +578,10 @@ async function handleSubmit(e, cardId, successMsg) {
     if (loaded < 3) return;
     ready = true;
     resizeCanvas();
-    drawFrame(lastP);
+    /* onScroll() y no drawFrame(lastP): si el navegador restauró el scroll
+       (F5 a mitad del hero), lastP todavía vale 0 y se dibujaría el primer
+       frame con el logo del intro encima de la secuencia. */
+    onScroll();
     document.dispatchEvent(new CustomEvent('hero-canvas-ready'));
   }
 

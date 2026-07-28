@@ -29,7 +29,7 @@
     /*
      * Arquitectura:
      *
-     * #hero-sequence (350vh, position:relative, background:#000)
+     * #hero-sequence (500vh, position:relative, background:#000)
      *   #hero-intro   → position:absolute; 100vh centrado; z-index:20
      *   #hero-sticky  → position:sticky; top:0; height:100vh
      *     #hero-canvas  → position:absolute; inset:0
@@ -39,7 +39,7 @@
 
     #hero-sequence {
       position: relative;
-      height: 350vh;
+      height: 500vh;
       background: #000;
     }
 
@@ -89,7 +89,7 @@
          de la secuencia; el scroll normal sigue funcionando igual.
        · Adaptativo: mousito en desktop (pointer fino),
          glifo de swipe en mobile (pointer grueso).
-       · La barra inferior muestra el avance de los 350vh.
+       · La barra inferior muestra el avance de los 500vh.
        ──────────────────────────────────────────────────────── */
     #hero-scroll-hint {
       position: fixed;
@@ -230,7 +230,7 @@
       #hero-scroll-hint .scroll-fill { transition: none; }
     }
 
-    /* Sticky: se ancla en top:0 durante los 350vh */
+    /* Sticky: se ancla en top:0 durante los 500vh */
     #hero-sticky {
       position: sticky;
       top: 0;
@@ -1475,7 +1475,7 @@
 <script>
 /* ============================================================
    Invitación a scrollear — clickeable, scrolleable y adaptativa
-   El hero es una secuencia de 350vh con 4 momentos. El hint:
+   El hero es una secuencia de 500vh con 4 momentos. El hint:
      · se puede scrollear normal (no interfiere),
      · o clickear/tapear para saltar al momento siguiente,
      · muestra cuánto falta para que la sala se llene,
@@ -1495,8 +1495,11 @@
   var mqCoarse = window.matchMedia('(hover: none), (pointer: coarse)');
 
   /* Momentos de la secuencia, en progreso 0..1 del canvas del hero.
-     Coinciden con las fases de script.js: bare → sillas → gente → CTAs. */
-  var STOPS = [0.22, 0.52, 0.88];
+     Alineados a lo que se ve según las ventanas de script.js: el titular a
+     pleno (0.26-0.32), las sillas (0.42-0.62) y la gente (0.62-1.0).
+     Son varios a propósito: sobre 500vh, saltos más grandes moverían casi
+     una pantalla entera por click. */
+  var STOPS = [0.29, 0.45, 0.62, 0.80, 0.95];
 
   /* Copy por momento: el primero explica el gesto, los demás confirman avance */
   function labelFor(p) {
@@ -1518,8 +1521,10 @@
     var total = section.offsetHeight - window.innerHeight;
     var next = null;
 
+    /* Tolerancia chica: con los stops más juntos, 0.04 dejaría una zona
+       donde el click parece no responder. */
     for (var i = 0; i < STOPS.length; i++) {
-      if (STOPS[i] > p + 0.04) { next = STOPS[i]; break; }
+      if (STOPS[i] > p + 0.02) { next = STOPS[i]; break; }
     }
 
     var y = next !== null
@@ -1565,7 +1570,7 @@
 /* ============================================================
    MOBILE — anti-flick del hero
 
-   El hero es una secuencia de 350vh: la sala vacía, las sillas que
+   El hero es una secuencia de 500vh: la sala vacía, las sillas que
    aparecen, la gente que llega. Con mouse o trackpad se ve entera y
    queda muy bien. En mobile no: arrastrar el dedo se siente igual de
    bien, pero al SOLTAR entra la inercia nativa, que dispara el scroll
