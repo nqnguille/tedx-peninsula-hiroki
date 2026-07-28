@@ -230,43 +230,6 @@
       #hero-scroll-hint .scroll-fill { transition: none; }
     }
 
-    /* ────────────────────────────────────────────────────────
-       Modo "un swipe = un paso" (solo mobile).
-       La clase la pone el JS recién cuando el canvas puede pintar,
-       así que si el JS falla el hero queda como el de siempre.
-       ──────────────────────────────────────────────────────── */
-    #hero-sequence.hero-pasos {
-      height: 100svh;
-      min-height: 100svh;
-    }
-    /* Con pasos discretos la barra continua miente: la reemplazan los dots */
-    body.modo-pasos #hero-scroll-hint .scroll-track { display: none; }
-
-    #hero-dots {
-      position: fixed;
-      bottom: calc(112px + env(safe-area-inset-bottom, 0px));
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 9px;
-      z-index: 49;
-      pointer-events: none;
-      opacity: 0;
-      animation: scrollHintFade 1s ease 1.6s forwards;
-    }
-    #hero-dots span {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.28);
-      box-shadow: 0 1px 8px rgba(0,0,0,0.8);
-      transition: background 0.35s ease, transform 0.35s ease;
-    }
-    #hero-dots span.on {
-      background: #EB0028;
-      transform: scale(1.35);
-    }
-
     /* Sticky: se ancla en top:0 durante los 350vh */
     #hero-sticky {
       position: sticky;
@@ -1597,220 +1560,130 @@
     }, { threshold: 0.15 }).observe(manif);
   }
 
-  /* El modo por pasos (mobile) maneja el hint por su cuenta */
-  window.__hintSync = sync;
 })();
 
 /* ============================================================
-   MOBILE — "un swipe = un paso"
-   Portado del hero de floraong.ar (flora-cinematic, initWelcome).
+   MOBILE — anti-flick del hero
 
-   El problema: en desktop la rueda avanza de a poco y la secuencia
-   del auditorio se ve entera. En mobile un flick del pulgar arrastra
-   miles de píxeles con inercia y atraviesa los 350vh de una: la sala
-   se llena en un puñado de frames y no se ve nada.
+   El hero es una secuencia de 350vh: la sala vacía, las sillas que
+   aparecen, la gente que llega. Con mouse o trackpad se ve entera y
+   queda muy bien. En mobile no: arrastrar el dedo se siente igual de
+   bien, pero al SOLTAR entra la inercia nativa, que dispara el scroll
+   miles de píxeles y atraviesa toda la secuencia en un puñado de
+   frames. No se ve nada.
 
-   La solución: en touch el scroll deja de manejar la secuencia.
-   Cada gesto — sin importar si fue de 40px o de 900px — vale
-   EXACTAMENTE un momento. Cuatro momentos y sale al sitio.
-
-   Precauciones (en Flora hubo que revertir una primera versión que
-   dejó el sitio entero trabado):
-     · Si el JS falla o el canvas no carga, no se toca nada: queda el
-       scroll de 350vh de siempre, que funciona.
-     · El menú es la única salida, así que cualquier link del header
-       libera el scroll antes de navegar.
-     · Dos temporizadores de seguridad liberan todo si algo se cuelga.
+   O sea: el enemigo no es el arrastre, es el fling. Así que el
+   arrastre se deja intacto — 1:1 con el dedo, el scrub tal cual — y
+   solo se reemplaza la inercia por una propia, acotada, para que un
+   swipe ansioso avance rápido pero REPRODUZCA la animación en vez de
+   saltearla. Fuera del hero no se toca nada: el scroll vuelve a ser
+   el nativo de siempre, con su inercia normal.
    ============================================================ */
 (function() {
-  var mq = window.matchMedia('(hover: none), (pointer: coarse)');
-  if (!mq.matches) return;                       /* desktop sigue igual */
-  if (!window.TEDxHero) return;                  /* sin canvas no hay secuencia */
+  if (!window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   var section = document.getElementById('hero-sequence');
-  var hint    = document.getElementById('hero-scroll-hint');
-  var manif   = document.getElementById('manifesto-tema');
-  if (!section || !manif) return;
+  if (!section || !window.TEDxHero) return;
 
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* Tope de la inercia propia, en px/ms. Un flick fuerte nativo ronda
+     los 8-10 px/ms; a 1.7 la secuencia se ve entera igual de rápida
+     que en desktop, sin sensación de freno. */
+  var VEL_MAX  = 1.7;
+  var FRICCION = 0.94;   /* por frame de 16ms */
+  var MIN_VEL  = 0.02;   /* debajo de esto, frenar */
 
-  /* Los cuatro momentos, en progreso del canvas:
-     negro+logo → sala vacía ("2026" / "Cultivando Conciencia")
-     → las sillas aparecen → la sala llena */
-  var MOMENTOS  = [0, 0.28, 0.55, 0.96];
-  var DURACION  = reduce ? 0 : 700;   /* ms de transición entre momentos */
-  var SWIPE_MIN = 36;                 /* px — piso para contar como gesto */
+  var arrastrando = false, yAnt = 0, tAnt = 0, vel = 0, raf = null;
 
-  var actual = 0, animando = false, terminado = false;
-  var safety = null, globalSafety = null, raf = null;
-
-  /* ── Lock de scroll ──
-     Reusa `.modal-locked`, el mecanismo que el sitio ya tiene probado para
-     sus modales (style.css), en vez de pisar estilos inline — mismo criterio
-     que en Flora, donde se reusó el lock del gate de edad. Y TEDx no usa
-     Lenis, que fue lo que rompió el primer intento allá. */
-  function bloquear() {
-    document.documentElement.classList.add('modal-locked');
-    document.body.classList.add('modal-locked');
-  }
-  function liberar() {
-    document.documentElement.classList.remove('modal-locked');
-    document.body.classList.remove('modal-locked');
+  /* El sitio tiene scroll-behavior:smooth, así que un scrollBy pelado
+     se convierte en una animación y el arrastre deja de seguir al dedo.
+     Acá el movimiento tiene que ser instantáneo. */
+  function mover(px) {
+    try { window.scrollBy({ top: px, left: 0, behavior: 'instant' }); }
+    catch (e) { window.scrollBy(0, px); }
   }
 
-  function pintar(p) { try { window.TEDxHero.draw(p); } catch (e) {} }
+  function finDelHero() {
+    return section.offsetTop + section.offsetHeight - window.innerHeight;
+  }
+  /* Solo mientras la secuencia está en pantalla */
+  function enElHero() {
+    var y = window.pageYOffset;
+    return y >= section.offsetTop - 1 && y < finDelHero();
+  }
 
-  function easeInOut(t) { return t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2)/2; }
+  function frenar() {
+    if (raf) { cancelAnimationFrame(raf); raf = null; }
+    vel = 0;
+  }
 
-  function irA(i) {
-    if (i < 0 || i >= MOMENTOS.length) return;
-    var desde = MOMENTOS[actual], hasta = MOMENTOS[i];
-    actual = i;
-    animando = true;
-    dibujarDots();
-    actualizarHint();
-
-    /* Salvavidas: si el rAF muriera, 'animando' no puede quedar trabado */
-    if (safety) clearTimeout(safety);
-    safety = setTimeout(function() { animando = false; }, DURACION + 1200);
-
-    if (DURACION === 0) { pintar(hasta); animando = false; return; }
-
-    var t0 = null;
-    if (raf) cancelAnimationFrame(raf);
-    (function paso(ts) {
-      if (t0 === null) t0 = ts;
-      var t = Math.min(1, (ts - t0) / DURACION);
-      pintar(desde + (hasta - desde) * easeInOut(t));
-      if (t < 1) { raf = requestAnimationFrame(paso); }
-      else {
-        animando = false;
-        if (safety) clearTimeout(safety);
-      }
+  /* Inercia propia: acotada, y se corta sola al salir del hero */
+  function soltar() {
+    if (Math.abs(vel) < MIN_VEL) return;
+    var ultimo = performance.now();
+    (function paso(ahora) {
+      var dt = Math.min(50, ahora - ultimo);
+      ultimo = ahora;
+      mover(vel * dt);
+      vel *= Math.pow(FRICCION, dt / 16);
+      /* Al salir del hero se devuelve el control: de ahí en más el
+         scroll del sitio es el nativo, sin nada encima. */
+      if (Math.abs(vel) < MIN_VEL || !enElHero()) { raf = null; return; }
+      raf = requestAnimationFrame(paso);
     })(performance.now());
   }
 
-  function siguiente() {
-    if (terminado || animando) return;   /* acá se come la ráfaga del flick */
-    if (actual < MOMENTOS.length - 1) irA(actual + 1);
-    else salir();
-  }
-  function anterior() {
-    if (terminado || animando || actual === 0) return;
-    irA(actual - 1);
+  function onTouchStart(e) {
+    frenar();
+    if (!enElHero()) { arrastrando = false; return; }
+    arrastrando = true;
+    yAnt = e.touches[0].clientY;
+    tAnt = performance.now();
   }
 
-  /* Salida: libera el scroll y entrega la página en el manifiesto */
-  function salir() {
-    if (terminado) return;
-    terminado = true;
-    dejarDeEscuchar();
-    liberar();
-    section.classList.remove('hero-pasos');
-    document.body.classList.remove('modo-pasos');
-    if (dots) dots.remove();
-    pintar(1);
-    /* el hero vuelve a medir 350vh: hay que dejarlo pasado, no al principio */
-    window.scrollTo({ top: manif.offsetTop, behavior: 'auto' });
-    if (window.__hintSync) window.__hintSync();
-  }
-
-  /* ── Gestos: cada uno vale un momento, sin leer su magnitud ── */
-  var y0 = 0, x0 = 0;
-  function onWheel(e) {
+  function onTouchMove(e) {
+    if (!arrastrando) return;
+    if (!enElHero()) {
+      /* Se pasó del hero en pleno arrastre: devolver el gesto al
+         navegador para que el resto del sitio scrollee normal. */
+      arrastrando = false;
+      return;
+    }
+    /* Acá está la clave: preventDefault mata la inercia nativa que
+       viene después de soltar, y el scroll lo movemos nosotros 1:1
+       para que el arrastre se sienta idéntico al de siempre. */
     e.preventDefault();
-    if (Math.abs(e.deltaY) < 2) return;
-    if (e.deltaY > 0) siguiente(); else anterior();
-  }
-  function onTouchStart(e) { y0 = e.touches[0].clientY; x0 = e.touches[0].clientX; }
-  function onTouchMove(e)  { e.preventDefault(); }   /* mata inercia y rebote de iOS */
-  function onTouchEnd(e) {
-    var dy = y0 - e.changedTouches[0].clientY;
-    var dx = x0 - e.changedTouches[0].clientX;
-    if (Math.abs(dy) < SWIPE_MIN || Math.abs(dy) < Math.abs(dx)) return;
-    if (dy > 0) siguiente(); else anterior();
-  }
-  function onKey(e) {
-    if (['ArrowDown','ArrowRight',' ','PageDown'].indexOf(e.key) >= 0) { e.preventDefault(); siguiente(); }
-    else if (['ArrowUp','ArrowLeft','PageUp'].indexOf(e.key) >= 0) { e.preventDefault(); anterior(); }
-    else if (e.key === 'Escape') salir();
+    var y  = e.touches[0].clientY;
+    var t  = performance.now();
+    var dy = yAnt - y;
+    var dt = Math.max(1, t - tAnt);
+
+    mover(dy);
+
+    /* Velocidad para la inercia, promediada y con tope */
+    var v = dy / dt;
+    vel = vel * 0.7 + v * 0.3;
+    if (vel >  VEL_MAX) vel =  VEL_MAX;
+    if (vel < -VEL_MAX) vel = -VEL_MAX;
+
+    yAnt = y;
+    tAnt = t;
   }
 
-  function escuchar() {
-    bloquear();
-    window.addEventListener('wheel', onWheel, { passive: false });
-    window.addEventListener('touchstart', onTouchStart, { passive: true });
-    window.addEventListener('touchmove', onTouchMove, { passive: false });
-    window.addEventListener('touchend', onTouchEnd, { passive: true });
-    window.addEventListener('keydown', onKey);
-    /* Última red: si algo se colgara, el sitio se libera solo. Son ~15s por
-       momento, de sobra para verlos, y nadie queda encerrado más que eso. */
-    globalSafety = setTimeout(salir, 60000);
-  }
-  function dejarDeEscuchar() {
-    window.removeEventListener('wheel', onWheel);
-    window.removeEventListener('touchstart', onTouchStart);
-    window.removeEventListener('touchmove', onTouchMove);
-    window.removeEventListener('touchend', onTouchEnd);
-    window.removeEventListener('keydown', onKey);
-    if (safety) clearTimeout(safety);
-    if (globalSafety) clearTimeout(globalSafety);
-    if (raf) cancelAnimationFrame(raf);
+  function onTouchEnd() {
+    if (!arrastrando) return;
+    arrastrando = false;
+    soltar();
   }
 
-  /* ── Dots: con pasos discretos dicen más que una barra continua ── */
-  var dots = null;
-  function crearDots() {
-    dots = document.createElement('div');
-    dots.id = 'hero-dots';
-    dots.setAttribute('aria-hidden', 'true');
-    for (var i = 0; i < MOMENTOS.length; i++) dots.appendChild(document.createElement('span'));
-    document.body.appendChild(dots);
-    dibujarDots();
-  }
-  function dibujarDots() {
-    if (!dots) return;
-    for (var i = 0; i < dots.children.length; i++) {
-      dots.children[i].classList.toggle('on', i === actual);
-    }
-  }
-
-  /* El hint sigue siendo el atajo tocable, pero ahora avanza un momento */
-  function actualizarHint() {
-    if (!hint) return;
-    var lbl = document.getElementById('scroll-hint-label');
-    if (lbl) lbl.textContent = actual === 0 ? 'Deslizá'
-                             : actual < MOMENTOS.length - 1 ? 'Seguí' : 'Ya casi';
-  }
-
-  /* El menú es la única salida: liberar el scroll antes de navegar */
-  document.addEventListener('click', function(e) {
-    var a = e.target.closest ? e.target.closest('header a[href^="#"]') : null;
-    if (a) salir();
-  }, true);
-
-  /* Arranque: recién cuando el canvas puede pintar. Si nunca carga,
-     no se bloquea nada y el hero queda como está hoy. */
-  window.TEDxHero.onReady(function() {
-    /* Sin imágenes reales la secuencia no existe: bloquear el scroll dejaría
-       una pantalla negra trabada. Mejor no tocar nada y dejar el hero de
-       siempre — es el incidente que obligó a revertir la v1 en Flora. */
-    if (!window.TEDxHero.tieneImagenes || !window.TEDxHero.tieneImagenes()) return;
-
-    section.classList.add('hero-pasos');
-    document.body.classList.add('modo-pasos');
-    window.scrollTo(0, 0);
-    pintar(0);
-    crearDots();
-    escuchar();
-    if (hint) {
-      /* el tap del hint ya no salta por scroll: avanza un momento */
-      hint.addEventListener('click', function(e) {
-        e.preventDefault(); e.stopImmediatePropagation(); siguiente();
-      }, true);
-    }
-  });
+  /* passive:false solo en touchmove — es el único que necesita
+     preventDefault; los otros quedan pasivos para no costar scroll. */
+  window.addEventListener('touchstart', onTouchStart, { passive: true });
+  window.addEventListener('touchmove',  onTouchMove,  { passive: false });
+  window.addEventListener('touchend',   onTouchEnd,   { passive: true });
+  window.addEventListener('touchcancel', onTouchEnd,  { passive: true });
 })();
+
 </script>
 
 </body>
