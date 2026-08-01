@@ -1714,7 +1714,8 @@
    fuertes antes de llegar al contenido. En vez de acortar la
    secuencia (que en desktop está calibrada a gusto), acá la intro
    se reproduce sola: si el usuario no toca, el scroll avanza a un
-   ritmo que recorre la secuencia entera en ~12s.
+   ritmo que recorre la secuencia entera en ~12s y sigue de largo
+   hasta aterrizar con el manifiesto completamente en pantalla.
 
    El dedo manda siempre: cualquier gesto pausa el avance al
    instante y el arrastre queda 1:1 como siempre (de eso se ocupa
@@ -1731,10 +1732,12 @@
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   var section = document.getElementById('hero-sequence');
+  var manif   = document.getElementById('manifesto-tema');
   if (!section || !window.TEDxHero) return;
 
-  var DURACION = 12000; /* ms para recorrer la secuencia completa */
+  var DURACION = 12000; /* ms para recorrer la secuencia del hero */
   var ESPERA   = 2000;  /* ms de quietud antes de arrancar o retomar */
+  var FRENADA  = 300;   /* px finales con desaceleración, para aterrizar suave */
 
   var listo = false;    /* el loader ya liberó el scroll */
   var hecho = false;    /* la intro se completó: apagado por esta visita */
@@ -1751,9 +1754,16 @@
   function finDelHero() {
     return section.offsetTop + section.offsetHeight - window.innerHeight;
   }
-  function enElHero() {
+  /* No frena en el último frame del hero (el manifiesto quedaría abajo,
+     fuera de pantalla): sigue hasta dejar el módulo "Vivimos conectados…"
+     completamente visible, con su top alineado al viewport — el mismo
+     destino al que salta el tap del hint. */
+  function objetivo() {
+    return manif ? manif.offsetTop : finDelHero();
+  }
+  function enZona() {
     var y = window.pageYOffset;
-    return y >= section.offsetTop - 1 && y < finDelHero() - 1;
+    return y >= section.offsetTop - 1 && y < objetivo() - 1;
   }
 
   /* Cualquier gesto pausa. No se escucha 'scroll' a propósito: lo
@@ -1790,13 +1800,18 @@
     var dt = Math.min(50, ahora - ultimoT); /* tab en background, etc. */
     ultimoT = ahora;
 
-    /* Llegó al final — sola o porque el usuario la atravesó — y listo:
+    /* Llegó al destino — sola o porque el usuario la atravesó — y listo:
        de acá en más el scroll es 100% del usuario. */
-    if (window.pageYOffset >= finDelHero() - 1) { hecho = true; return; }
+    if (window.pageYOffset >= objetivo() - 1) { hecho = true; return; }
 
-    if (!tocando && ahora - ultimaActividad >= ESPERA && enElHero()) {
+    if (!tocando && ahora - ultimaActividad >= ESPERA && enZona()) {
       var total = section.offsetHeight - window.innerHeight;
-      if (total > 0) mover(total / DURACION * dt);
+      if (total > 0) {
+        var restante = objetivo() - window.pageYOffset;
+        /* Desacelera en los últimos px y nunca se pasa del destino */
+        var freno = Math.min(1, Math.max(0.25, restante / FRENADA));
+        mover(Math.min(total / DURACION * dt * freno, restante));
+      }
     }
     requestAnimationFrame(paso);
   }
