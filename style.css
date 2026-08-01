@@ -1645,6 +1645,19 @@ html.modal-locked, body.modal-locked { overflow: hidden; }
   font-weight: 300;
 }
 
+.faq-a a {
+  color: var(--white);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.35);
+  white-space: nowrap;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+.faq-a a:hover,
+.faq-a a:focus-visible {
+  color: var(--red);
+  border-color: var(--red);
+}
+
 /* ============================================================
    BOTONES GLOBALES
    ============================================================ */
@@ -1787,6 +1800,22 @@ footer {
   font-weight: 400;
   font-style: italic;
   letter-spacing: 0.01em;
+}
+
+/* Link a la página del evento en ted.com: apenas más presente que la
+   leyenda de licencia, sin competir con nada */
+.footer-ted-link {
+  color: rgba(255,255,255,0.45);
+  font-style: normal;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  white-space: nowrap;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+.footer-ted-link:hover,
+.footer-ted-link:focus-visible {
+  color: var(--red);
+  border-color: var(--red);
 }
 
 .footer-bottom {
