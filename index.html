@@ -1565,6 +1565,13 @@
         var next = labelFor(p);
         if (label.textContent !== next) label.textContent = next;
       }
+      /* Vive solo dentro de la secuencia: pasado el hero se retira, y
+         si el usuario vuelve a subir a la intro, reaparece. Antes esto
+         era un IntersectionObserver sobre el manifiesto, pero al ser un
+         toggle el hint resucitaba en las FAQ y el footer (manifiesto ya
+         fuera de pantalla) clavado en "Ya casi" — y un tap ahí abajo
+         pegaba un scroll de vuelta al manifiesto. */
+      hint.classList.toggle('hide', p >= 1);
     });
   }
 
@@ -1575,13 +1582,6 @@
   if (mqCoarse.addEventListener) mqCoarse.addEventListener('change', sync);
   else if (mqCoarse.addListener) mqCoarse.addListener(sync);
   sync();
-
-  /* Se retira cuando el manifiesto entra en escena */
-  if (manif) {
-    new IntersectionObserver(function(entries) {
-      hint.classList.toggle('hide', entries[0].isIntersecting);
-    }, { threshold: 0.15 }).observe(manif);
-  }
 
 })();
 
