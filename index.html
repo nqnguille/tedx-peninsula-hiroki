@@ -1707,6 +1707,102 @@
   window.addEventListener('touchcancel', onTouchEnd,  { passive: true });
 })();
 
+/* ============================================================
+   MOBILE — la intro avanza sola si nadie la maneja
+
+   En mobile los 500vh del hero se sienten largos: son ~4 swipes
+   fuertes antes de llegar al contenido. En vez de acortar la
+   secuencia (que en desktop está calibrada a gusto), acá la intro
+   se reproduce sola: si el usuario no toca, el scroll avanza a un
+   ritmo que recorre la secuencia entera en ~12s.
+
+   El dedo manda siempre: cualquier gesto pausa el avance al
+   instante y el arrastre queda 1:1 como siempre (de eso se ocupa
+   el anti-flick de arriba). Si el usuario se queda quieto ~2s, la
+   intro retoma desde donde quedó. Al completarse — sola o a mano —
+   se apaga por el resto de la visita: no empuja el resto de la
+   página ni persigue al que vuelve a subir a mirar de nuevo.
+
+   Avanza scrolleando de verdad (no un modo aparte): el canvas, la
+   barrita del hint y la posición de la página quedan en sync solos.
+   ============================================================ */
+(function() {
+  if (!window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var section = document.getElementById('hero-sequence');
+  if (!section || !window.TEDxHero) return;
+
+  var DURACION = 12000; /* ms para recorrer la secuencia completa */
+  var ESPERA   = 2000;  /* ms de quietud antes de arrancar o retomar */
+
+  var listo = false;    /* el loader ya liberó el scroll */
+  var hecho = false;    /* la intro se completó: apagado por esta visita */
+  var ultimaActividad = performance.now();
+  var ultimoT = 0;
+
+  /* Mismo cuidado que el anti-flick: con scroll-behavior:smooth un
+     scrollBy pelado se vuelve animación; acá tiene que ser directo. */
+  function mover(px) {
+    try { window.scrollBy({ top: px, left: 0, behavior: 'instant' }); }
+    catch (e) { window.scrollBy(0, px); }
+  }
+
+  function finDelHero() {
+    return section.offsetTop + section.offsetHeight - window.innerHeight;
+  }
+  function enElHero() {
+    var y = window.pageYOffset;
+    return y >= section.offsetTop - 1 && y < finDelHero() - 1;
+  }
+
+  /* Cualquier gesto pausa. No se escucha 'scroll' a propósito: lo
+     dispararíamos nosotros mismos; la inercia propia del anti-flick
+     dura menos que ESPERA contada desde el touchend, así que nunca
+     se pisan. Un dedo APOYADO sin moverse no emite eventos, así que
+     además del último evento se trackea si hay dedos en pantalla:
+     mientras haya uno, la pausa no vence nunca. */
+  var tocando = false;
+  function actividad() { ultimaActividad = performance.now(); }
+  function dedoAbajo(e)  { tocando = true; actividad(); }
+  function dedoArriba(e) { tocando = e.touches.length > 0; actividad(); }
+  window.addEventListener('touchstart',  dedoAbajo,  { passive: true });
+  window.addEventListener('touchmove',   actividad,  { passive: true });
+  window.addEventListener('touchend',    dedoArriba, { passive: true });
+  window.addEventListener('touchcancel', dedoArriba, { passive: true });
+  window.addEventListener('wheel',       actividad,  { passive: true });
+
+  function paso(ahora) {
+    if (hecho) return;
+
+    /* El site loader mantiene overflow:hidden hasta que el hero está
+       listo; recién ahí arranca a contar la quietud inicial. */
+    if (!listo) {
+      if (document.documentElement.style.overflow !== 'hidden') {
+        listo = true;
+        ultimaActividad = ahora;
+      }
+      ultimoT = ahora;
+      requestAnimationFrame(paso);
+      return;
+    }
+
+    var dt = Math.min(50, ahora - ultimoT); /* tab en background, etc. */
+    ultimoT = ahora;
+
+    /* Llegó al final — sola o porque el usuario la atravesó — y listo:
+       de acá en más el scroll es 100% del usuario. */
+    if (window.pageYOffset >= finDelHero() - 1) { hecho = true; return; }
+
+    if (!tocando && ahora - ultimaActividad >= ESPERA && enElHero()) {
+      var total = section.offsetHeight - window.innerHeight;
+      if (total > 0) mover(total / DURACION * dt);
+    }
+    requestAnimationFrame(paso);
+  }
+  requestAnimationFrame(paso);
+})();
+
 </script>
 
 </body>
